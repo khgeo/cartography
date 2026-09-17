@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"name": "health",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"xy_coordinate_resolution": 1e-05,
+"features": [
+{ "type": "Feature", "properties": { "FACILITNAM": "Phsar Chhnang", "TYPE": "Health centre" }, "geometry": { "type": "Point", "coordinates": [ 104.67317, 12.26022 ] } },
+{ "type": "Feature", "properties": { "FACILITNAM": "Kampong Chhnang", "TYPE": "Health centre" }, "geometry": { "type": "Point", "coordinates": [ 104.66968, 12.24984 ] } },
+{ "type": "Feature", "properties": { "FACILITNAM": "Chrey Bak", "TYPE": "Health centre" }, "geometry": { "type": "Point", "coordinates": [ 104.66609, 12.20839 ] } },
+{ "type": "Feature", "properties": { "FACILITNAM": "Srae Thmei", "TYPE": "Health centre" }, "geometry": { "type": "Point", "coordinates": [ 104.64926, 12.23722 ] } },
+{ "type": "Feature", "properties": { "FACILITNAM": "Kampong Chhnang", "TYPE": "Referral hospital" }, "geometry": { "type": "Point", "coordinates": [ 104.669, 12.25059 ] } }
+]
+}

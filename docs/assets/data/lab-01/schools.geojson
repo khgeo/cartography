@@ -1,0 +1,25 @@
+{
+"type": "FeatureCollection",
+"name": "schools",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"xy_coordinate_resolution": 1e-05,
+"features": [
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Samrong", "SCHOOL_TYP": "Primary", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.67843, 12.25936 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Samrong", "SCHOOL_TYP": "Pre school", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.67843, 12.25936 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Koh Krabei", "SCHOOL_TYP": "Primary", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.66828, 12.31013 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Aranh", "SCHOOL_TYP": "Primary", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.67198, 12.24353 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Aknouwat", "SCHOOL_TYP": "Primary", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.6721, 12.23428 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Aknouwat", "SCHOOL_TYP": "Pre school", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.6721, 12.23428 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Aranh", "SCHOOL_TYP": "Pre school", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.67198, 12.24353 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Preah Bat Soramarith", "SCHOOL_TYP": "Lycee G7-12", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.6721, 12.23428 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Mittapheap", "SCHOOL_TYP": "Pre school", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.66974, 12.24965 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Kdei Tnot", "SCHOOL_TYP": "Primary", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.65961, 12.24946 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Kdei Tnot", "SCHOOL_TYP": "Pre school", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.65961, 12.24946 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Komrou Krong", "SCHOOL_TYP": "Primary", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.66716, 12.24974 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Tiruom Khet Kampong Chhnang", "SCHOOL_TYP": "Pre school", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.66716, 12.24974 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "12 Makara", "SCHOOL_TYP": "Pre school", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.6656, 12.25719 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Khsam Masa Chann Leap", "SCHOOL_TYP": "Primary", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.66218, 12.26533 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Khsam Masa Chann Leap", "SCHOOL_TYP": "Pre school", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.66218, 12.26533 ] } },
+{ "type": "Feature", "properties": { "SCHOOL_NAM": "Tiruom Khet", "SCHOOL_TYP": "Lycee G7-12", "Location": "Urban" }, "geometry": { "type": "Point", "coordinates": [ 104.64958, 12.26319 ] } }
+]
+}

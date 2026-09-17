@@ -1,0 +1,131 @@
+site_name: ផែនទីវិទ្យា
+site_description: សៀវភៅសិក្សាផែនទីវិទ្យាជាភាសាខ្មែរ សម្រាប់វគ្គសិក្សា ១ ឆមាស
+site_author: YAM Sarath (យាំ សារដ្ឋ)
+site_url: https://khgeo.github.io/cartography/
+repo_url: https://github.com/khgeo/cartography
+repo_name: cartography
+edit_uri: edit/main/docs/
+copyright: CC BY-SA 4.0 · អាចប្រើ និងកែសម្រួលបាន ដោយដកស្រង់ប្រភព
+
+theme:
+  name: material
+  language: en          # Material has no Khmer UI pack; content is Khmer
+  font: false           # disable Google Fonts CDN; we load Khmer fonts in CSS
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - navigation.indexes
+    - toc.follow
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: ប្ដូរទៅរបៀបងងឹត
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: ប្ដូរទៅរបៀបភ្លឺ
+
+extra_css:
+  - https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Siemreap&family=Moul&display=swap
+  - assets/css/khmer.css
+  - https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css
+  - assets/css/workbook.css
+  - assets/css/lesson-sims.css
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js
+  - assets/js/carto-sims.js
+  - assets/js/lesson-sims.js
+  - assets/js/workbook.js
+
+markdown_extensions:
+  - admonition
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.details
+  - pymdownx.snippets:
+      base_path: [docs]
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - toc:
+      permalink: "¶"
+      toc_depth: 3
+
+plugins:
+  - search
+
+extra:
+  homepage: https://khgeo.github.io/
+  social:
+    - icon: material/bookshelf
+      link: https://khgeo.github.io/
+      name: ស៊េរីសៀវភៅទាំង ៤
+
+
+nav:
+  - ទំព័រដើម: index.md
+  - កម្មវិធីសិក្សា: syllabus.md
+  - ជំពូកទី១៖ ផែនទី និងផែនដី:
+      - មេរៀនទី១៖ ផែនទី និងដំណើរការធ្វើផែនទី: lessons/lesson-01.md
+      - មេរៀនទី២៖ រាងផែនដី ដាតុម និងប្រព័ន្ធកូអរដោនេ: lessons/lesson-02.md
+      - មេរៀនទី៣៖ ចំណោលផែនទី និងការខូចទ្រង់ទ្រាយ: lessons/lesson-03.md
+  - ជំពូកទី២៖ មាត្រដ្ឋាន និងផែនទីទីសណ្ឋាន:
+      - មេរៀនទី៤៖ មាត្រដ្ឋាន និងការវាស់វែងលើផែនទី: lessons/lesson-04.md
+      - មេរៀនទី៥៖ ផែនទីទីសណ្ឋាន ខ្សែវណ្ឌ និងក្រឡាកូអរដោនេ: lessons/lesson-05.md
+  - ជំពូកទី៣៖ និមិត្តសញ្ញា ទិន្នន័យ និងពណ៌:
+      - មេរៀនទី៦៖ អថេរមើលឃើញ និងការរចនានិមិត្តសញ្ញា: lessons/lesson-06.md
+      - មេរៀនទី៧៖ ការចាត់ថ្នាក់ទិន្នន័យសម្រាប់ផែនទី: lessons/lesson-07.md
+      - មេរៀនទី៨៖ ពណ៌ក្នុងផែនទីវិទ្យា: lessons/lesson-08.md
+  - ជំពូកទី៤៖ ផែនទីប្រធានបទ:
+      - មេរៀនទី៩៖ ផែនទី Choropleth និងការធ្វើឲ្យស្តង់ដារ: lessons/lesson-09.md
+      - មេរៀនទី១០៖ និមិត្តសញ្ញាសមាមាត្រ និងផែនទីចំណុចដង់ស៊ីតេ: lessons/lesson-10.md
+      - មេរៀនទី១១៖ ផែនទីអ៊ីសូលីន និងការបង្ហាញរលកដី: lessons/lesson-11.md
+      - មេរៀនទី១២៖ ផែនទីលំហូរ ពហុអថេរ និងពេលវេលា: lessons/lesson-12.md
+  - ជំពូកទី៥៖ ការរចនា និងការផលិតផែនទី:
+      - មេរៀនទី១៣៖ អក្សរ និងការដាក់ស្លាកលើផែនទី: lessons/lesson-13.md
+      - មេរៀនទី១៤៖ ប្លង់ផែនទី និងឋានានុក្រមមើលឃើញ: lessons/lesson-14.md
+      - មេរៀនទី១៥៖ ការធ្វើឲ្យទូទៅ សីលធម៌ផែនទី និងការចេញផ្សាយ: lessons/lesson-15.md
+  - សៀវភៅអនុវត្ត (លំហាត់ QGIS):
+      - លំហាត់ទី១៖ ផែនទី និងដំណើរការធ្វើផែនទី: workbook/lab-01.md
+      - លំហាត់ទី២៖ រាងផែនដី ដាតុម និងប្រព័ន្ធកូអរដោនេ: workbook/lab-02.md
+      - លំហាត់ទី៣៖ ចំណោលផែនទី និងការខូចទ្រង់ទ្រាយ: workbook/lab-03.md
+      - លំហាត់ទី៤៖ មាត្រដ្ឋាន និងការវាស់វែងលើផែនទី: workbook/lab-04.md
+      - លំហាត់ទី៥៖ ផែនទីទីសណ្ឋាន ខ្សែវណ្ឌ និងក្រឡាកូអរដោនេ: workbook/lab-05.md
+      - លំហាត់ទី៦៖ អថេរមើលឃើញ និងការរចនានិមិត្តសញ្ញា: workbook/lab-06.md
+      - លំហាត់ទី៧៖ ការចាត់ថ្នាក់ទិន្នន័យសម្រាប់ផែនទី: workbook/lab-07.md
+      - លំហាត់ទី៨៖ ពណ៌ក្នុងផែនទីវិទ្យា: workbook/lab-08.md
+      - លំហាត់ទី៩៖ ផែនទី Choropleth និងការធ្វើឲ្យស្តង់ដារ: workbook/lab-09.md
+      - លំហាត់ទី១០៖ និមិត្តសញ្ញាសមាមាត្រ និងផែនទីចំណុចដង់ស៊ីតេ: workbook/lab-10.md
+      - លំហាត់ទី១១៖ ផែនទីអ៊ីសូលីន និងការបង្ហាញរលកដី: workbook/lab-11.md
+      - លំហាត់ទី១២៖ ផែនទីលំហូរ ពហុអថេរ និងពេលវេលា: workbook/lab-12.md
+      - លំហាត់ទី១៣៖ អក្សរ និងការដាក់ស្លាកលើផែនទី: workbook/lab-13.md
+      - លំហាត់ទី១៤៖ ប្លង់ផែនទី និងឋានានុក្រមមើលឃើញ: workbook/lab-14.md
+      - លំហាត់ទី១៥៖ ការធ្វើឲ្យទូទៅ សីលធម៌ផែនទី និងការចេញផ្សាយ: workbook/lab-15.md
+  - ឧបសម្ព័ន្ធ:
+      - ក៖ ដំឡើង QGIS: appendix/a-qgis-install.md
+      - ខ៖ ទិន្នន័យកម្ពុជា: appendix/b-cambodia-data.md
+      - គ៖ ឯកសារយោង: appendix/c-references.md
+  - វាក្យសព្ទបច្ចេកទេស: glossary.md

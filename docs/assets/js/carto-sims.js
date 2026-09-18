@@ -323,4 +323,119 @@
     el.querySelectorAll(".vv-v button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".vv-v button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); v = b.dataset.k; draw(); }));
     el.querySelector(".vv-l").onchange = draw; draw();
   };
+
+  /* ---------- L7 · Classification methods ---------- */
+  const breaksOf = (vals, k, method) => {
+    const v = vals.slice().sort((a, b) => a - b), n = v.length, mn = v[0], mx = v[n - 1];
+    if (method === "equal") return Array.from({ length: k + 1 }, (_, i) => mn + ((mx - mn) * i) / k);
+    if (method === "quantile") return Array.from({ length: k + 1 }, (_, i) => { const p = (i / k) * (n - 1), lo = Math.floor(p); return v[lo] + (v[Math.min(n - 1, lo + 1)] - v[lo]) * (p - lo); });
+    if (method === "std") { const m = v.reduce((a, b) => a + b, 0) / n, sd = Math.sqrt(v.reduce((a, b) => a + (b - m) ** 2, 0) / n);
+      const inner = []; for (let i = -(k - 2) / 2; i <= (k - 2) / 2; i++) inner.push(m + sd * i);
+      return [mn, ...inner.map((x) => clamp(x, mn, mx)), mx].sort((a, b) => a - b); }
+    // natural breaks: 1-D k-means (Jenks-like)
+    let c = Array.from({ length: k }, (_, i) => v[Math.min(n - 1, Math.floor(((i + 0.5) / k) * n))]);
+    let lab = [];
+    for (let it = 0; it < 60; it++) {
+      lab = v.map((x) => c.reduce((bi, cc, j) => (Math.abs(x - cc) < Math.abs(x - c[bi]) ? j : bi), 0));
+      const nc = c.map((cc, j) => { const g = v.filter((_, i) => lab[i] === j); return g.length ? g.reduce((a, b) => a + b, 0) / g.length : cc; });
+      if (nc.every((x, j) => Math.abs(x - c[j]) < 1e-9)) break; c = nc;
+    }
+    const br = [mn];
+    for (let j = 0; j < k - 1; j++) { const a = v.filter((_, i) => lab[i] === j), b = v.filter((_, i) => lab[i] === j + 1);
+      br.push(a.length && b.length ? (a[a.length - 1] + b[0]) / 2 : br[br.length - 1]); }
+    br.push(mx); return br;
+  };
+  const PALS = { seq: ["#fef0d9", "#fdd49e", "#fdbb84", "#fc8d59", "#e34a33", "#b30000", "#7f0000"],
+    div: ["#2166ac", "#67a9cf", "#d1e5f0", "#f7f7f7", "#fddbc7", "#ef8a62", "#b2182b"],
+    qual: ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00", "#a65628", "#f781bf"],
+    rainbow: ["#4b0082", "#0000ff", "#00ff00", "#ffff00", "#ff7f00", "#ff0000", "#8b0000"] };
+  const pick = (pal, k, i) => { const P = PALS[pal]; return P[Math.round((i * (P.length - 1)) / Math.max(1, k - 1))]; };
+
+  window.EXTRA_SIMS["classification"] = async (el) => {
+    const D = await load();
+    const { cv, ctx, out, q } = shellC(el, "វិធីចាត់ថ្នាក់៖ ទិន្នន័យដដែល ផែនទីខុសគ្នា",
+      `<span class="sim-seg cls-m"><button type="button" data-m="equal" class="on">ចន្លោះស្មើ</button><button type="button" data-m="quantile">ចំនួនស្មើ</button><button type="button" data-m="natural">ចន្លោះធម្មជាតិ</button><button type="button" data-m="std">គម្លាតគំរូ</button></span>
+       <label>ចំនួនថ្នាក់ <b class="cls-kv"></b> <input type="range" class="cls-k" min="3" max="7" value="5"></label>`);
+    const vals = D.prov.map((p) => p.dens);
+    const W = 640, H = 330;
+    const draw = () => {
+      fitC(cv, ctx, W, H);
+      const k = +q(".cls-k").value, m = el.querySelector(".cls-m .on").dataset.m;
+      q(".cls-kv").textContent = kh(k);
+      const br = breaksOf(vals, k, m);
+      const cls = (v) => { for (let i = k - 1; i >= 0; i--) if (v >= br[i]) return i; return 0; };
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      const sc = 1.05, ox = 10, oy = 15;
+      D.prov.forEach((p) => { ctx.beginPath();
+        p.r.forEach((ring) => ring.forEach(([x, y], i) => (i ? ctx.lineTo(ox + x * sc, oy + y * sc) : ctx.moveTo(ox + x * sc, oy + y * sc))));
+        ctx.closePath(); ctx.fillStyle = pick("seq", k, cls(p.dens)); ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 0.7; ctx.stroke(); });
+      // histogram
+      const hx = 350, hy = 40, hw = 270, hh = 120, mx = Math.max(...vals);
+      ctx.strokeStyle = "#999"; ctx.strokeRect(hx, hy, hw, hh);
+      const bins = 26, cnt = new Array(bins).fill(0);
+      vals.forEach((v) => cnt[Math.min(bins - 1, Math.floor((v / mx) * bins))]++);
+      const cmax = Math.max(...cnt);
+      cnt.forEach((c, i) => { const x = hx + (hw * i) / bins, h = (c / cmax) * (hh - 6);
+        ctx.fillStyle = pick("seq", k, cls(((i + 0.5) / bins) * mx)); ctx.fillRect(x + 1, hy + hh - h, hw / bins - 2, h); });
+      br.slice(1, -1).forEach((b) => { const x = hx + (b / mx) * hw; ctx.strokeStyle = "#c62828"; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(x, hy); ctx.lineTo(x, hy + hh); ctx.stroke(); ctx.setLineDash([]); });
+      ctx.fillStyle = "#555"; ctx.font = `11px ${font()}`;
+      ctx.fillText("ការចែកចាយទិន្នន័យ · បន្ទាត់ក្រហម = ព្រំថ្នាក់", hx, hy - 8);
+      ctx.fillText("០", hx, hy + hh + 14); ctx.fillText(kh(Math.round(mx)) + " នាក់/គម²", hx + hw, hy + hh + 14);
+      // legend + counts
+      let ly = hy + hh + 34;
+      for (let i = k - 1; i >= 0; i--) { const n = vals.filter((v) => cls(v) === i).length;
+        ctx.fillStyle = pick("seq", k, i); ctx.fillRect(hx, ly, 16, 12); ctx.strokeStyle = "#999"; ctx.strokeRect(hx, ly, 16, 12);
+        ctx.fillStyle = "#333"; ctx.fillText(`${fmtN(Math.round(br[i]))} – ${fmtN(Math.round(br[i + 1]))}  (${kh(n)} ខេត្ត)`, hx + 22, ly + 11); ly += 17; }
+      const top = vals.filter((v) => cls(v) === k - 1).length;
+      const note = { equal: "ចន្លោះស្មើ៖ ព្រំថ្នាក់ងាយយល់ ប៉ុន្តែពេលទិន្នន័យលម្អៀង (ភ្នំពេញ ២ ០៤៩) ខេត្តស្ទើរទាំងអស់ធ្លាក់ក្នុងថ្នាក់ទាបតែមួយ។",
+        quantile: "ចំនួនស្មើ៖ ថ្នាក់នីមួយៗមានខេត្តប្រហែលស្មើគ្នា ដែលបង្ហាញលំដាប់ច្បាស់ ប៉ុន្តែអាចបំបែកតម្លៃស្រដៀងគ្នា ឬបញ្ចូលតម្លៃខុសគ្នាឆ្ងាយក្នុងថ្នាក់តែមួយ។",
+        natural: "ចន្លោះធម្មជាតិ (k-means/Jenks)៖ ព្រំថ្នាក់ធ្លាក់ត្រង់កន្លែងដែលទិន្នន័យដាច់ពីគ្នា ដែលសមស្របបំផុតសម្រាប់ទិន្នន័យលម្អៀង។",
+        std: "គម្លាតគំរូ៖ សន្មតថាទិន្នន័យចែកចាយធម្មតា។ ទិន្នន័យនេះលម្អៀងខ្លាំង (មធ្យម ១៩៩ · គម្លាតគំរូ ៣៩១) ដូច្នេះវិធីនេះមិនសមស្របទេ។" }[m];
+      out.innerHTML = `ថ្នាក់ខ្ពស់បំផុតមាន <b>${kh(top)}</b> ខេត្ត · ${note}<br><span class="sim-hint">ទិន្នន័យ៖ ដង់ស៊ីតេប្រជាជន ២០១៧ ពី Kh_Province_Boundary (៦ ដល់ ២ ០៤៩ នាក់/គម²)</span>`;
+    };
+    el.querySelectorAll(".cls-m button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".cls-m button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
+    q(".cls-k").addEventListener("input", draw); draw(); window.addEventListener("resize", () => el.isConnected && draw());
+  };
+
+  /* ---------- L8 · Colour schemes and colour blindness ---------- */
+  const hex2rgb = (h) => [1, 3, 5].map((i) => parseInt(h.substr(i, 2), 16));
+  const cbSim = (rgb, type) => {
+    if (type === "none") return rgb;
+    const [r, g, b] = rgb.map((v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
+    const M = { deut: [[0.625, 0.7, 0], [0.375, 0.3, 0.3], [0, 0, 0.7]], prot: [[0.567, 0.558, 0], [0.433, 0.442, 0.242], [0, 0, 0.758]], trit: [[0.95, 0, 0], [0.05, 0.433, 0], [0, 0.567, 1]] }[type];
+    const o = [M[0][0] * r + M[0][1] * g + M[0][2] * b, M[1][0] * r + M[1][1] * g + M[1][2] * b, M[2][0] * r + M[2][1] * g + M[2][2] * b];
+    return o.map((v) => { v = clamp(v, 0, 1); v = v <= 0.0031308 ? v * 12.92 : 1.055 * v ** (1 / 2.4) - 0.055; return Math.round(v * 255); });
+  };
+  window.EXTRA_SIMS["colour"] = async (el) => {
+    const D = await load();
+    const { cv, ctx, out, q } = shellC(el, "ពណ៌ផែនទី និងភ្នែកខ្វះពណ៌",
+      `<label>ឈុតពណ៌ <select class="co-p"><option value="seq">តគ្នា (Sequential)</option><option value="div">ពីរទិស (Diverging)</option><option value="qual">ប្រភេទ (Qualitative)</option><option value="rainbow">ឥន្ធនូ (Rainbow)</option></select></label>
+       <label>ចំនួនថ្នាក់ <b class="co-kv"></b> <input type="range" class="co-k" min="3" max="7" value="5"></label>
+       <label>ភ្នែក <select class="co-b"><option value="none">ធម្មតា</option><option value="deut">Deuteranopia (បៃតង)</option><option value="prot">Protanopia (ក្រហម)</option><option value="trit">Tritanopia (ខៀវ)</option></select></label>`);
+    const vals = D.prov.map((p) => p.dens), W = 640, H = 320;
+    const draw = () => {
+      fitC(cv, ctx, W, H); const pal = q(".co-p").value, k = +q(".co-k").value, cb = q(".co-b").value;
+      q(".co-kv").textContent = kh(k);
+      const br = breaksOf(vals, k, "natural");
+      const cls = (v) => { for (let i = k - 1; i >= 0; i--) if (v >= br[i]) return i; return 0; };
+      const col = (i) => { const c = cbSim(hex2rgb(pick(pal, k, i)), cb); return `rgb(${c.join(",")})`; };
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      const sc = 1.0, ox = 10, oy = 20;
+      D.prov.forEach((p) => { ctx.beginPath();
+        p.r.forEach((ring) => ring.forEach(([x, y], i) => (i ? ctx.lineTo(ox + x * sc, oy + y * sc) : ctx.moveTo(ox + x * sc, oy + y * sc))));
+        ctx.closePath(); ctx.fillStyle = col(cls(p.dens)); ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 0.7; ctx.stroke(); });
+      ctx.font = `12px ${font()}`; let ly = 50;
+      ctx.fillStyle = "#333"; ctx.fillText("សញ្ញាសម្គាល់ផែនទី", 340, 34);
+      for (let i = k - 1; i >= 0; i--) { ctx.fillStyle = col(i); ctx.fillRect(340, ly, 26, 16); ctx.strokeStyle = "#999"; ctx.strokeRect(340, ly, 26, 16);
+        ctx.fillStyle = "#333"; ctx.fillText(`${fmtN(Math.round(br[i]))} – ${fmtN(Math.round(br[i + 1]))}`, 374, ly + 13); ly += 22; }
+      const NOTE = { seq: "ឈុតតគ្នា៖ ពណ៌តែមួយ ស្រាល → ដិត។ សមស្របសម្រាប់បរិមាណដែលមានទិសតែមួយ (ដង់ស៊ីតេ ភាគរយ)។",
+        div: "ឈុតពីរទិស៖ ពណ៌ពីរ ជួបគ្នានៅតម្លៃកណ្ដាលសំខាន់ (សូន្យ មធ្យម)។ មិនសមស្របសម្រាប់ដង់ស៊ីតេ ដែលគ្មានចំណុចកណ្ដាលធម្មជាតិ។",
+        qual: "ឈុតប្រភេទ៖ ពណ៌ខុសគ្នាដោយគ្មានលំដាប់។ មិនត្រូវប្រើសម្រាប់បរិមាណ ព្រោះអ្នកអានមិនដឹងថាមួយណាច្រើនជាង។",
+        rainbow: "ឈុតឥន្ធនូ៖ ពណ៌ភ្លឺ តែគ្មានលំដាប់ធម្មជាតិ បង្កើតព្រំក្លែងក្លាយ ហើយបាត់អត្ថន័យសម្រាប់អ្នកខ្វះពណ៌។ ជៀសវាងសម្រាប់ទិន្នន័យបរិមាណ។" }[pal];
+      const CB = { none: "", deut: "ប្រហែល ៥% នៃបុរស មានភ្នែកខ្វះពណ៌បៃតង។ ", prot: "ភ្នែកខ្វះពណ៌ក្រហម។ ", trit: "ភ្នែកខ្វះពណ៌ខៀវ (កម្រ)។ " }[cb];
+      out.innerHTML = `${NOTE}<br>${CB}${cb === "none" ? "ប្ដូរជម្រើស «ភ្នែក» ដើម្បីមើលផែនទីតាមភ្នែកអ្នកខ្វះពណ៌។" : "ពិនិត្យថាថ្នាក់នៅតែបែងចែកបានឬទេ។ បើមិនបាន ត្រូវប្ដូរឈុតពណ៌ ឬបន្ថែមភាពខុសគ្នានៃតម្លៃពន្លឺ។"}`;
+    };
+    el.querySelectorAll("select,input").forEach((x) => x.addEventListener("input", draw)); draw();
+    window.addEventListener("resize", () => el.isConnected && draw());
+  };
 })();

@@ -438,4 +438,124 @@
     el.querySelectorAll("select,input").forEach((x) => x.addEventListener("input", draw)); draw();
     window.addEventListener("resize", () => el.isConnected && draw());
   };
+
+  /* ---------- L9 · Normalisation and unit size ---------- */
+  let kcache = null;
+  const loadKC = async () => kcache || (kcache = await (await fetch(new URL("../../assets/data/kc_communes_svg.json", location.href))).json());
+  const drawShapes = (ctx, shapes, ox, oy, sc, colFn, stroke = "#fff", sw = 0.7) => {
+    shapes.forEach((sh) => { ctx.beginPath();
+      sh.r.forEach((ring) => ring.forEach(([x, y], i) => (i ? ctx.lineTo(ox + x * sc, oy + y * sc) : ctx.moveTo(ox + x * sc, oy + y * sc))));
+      ctx.closePath(); ctx.fillStyle = colFn(sh); ctx.fill(); ctx.strokeStyle = stroke; ctx.lineWidth = sw; ctx.stroke(); });
+  };
+  window.EXTRA_SIMS["normalise"] = async (el) => {
+    const D = await load();
+    const { cv, ctx, out, q } = shellC(el, "ចំនួនដុល ឬអត្រា? ការធ្វើឲ្យស្តង់ដារ",
+      `<span class="sim-seg nm-v"><button type="button" data-v="pop" class="on">ចំនួនប្រជាជន (ដុល)</button><button type="button" data-v="dens">ដង់ស៊ីតេ (នាក់/គម²)</button><button type="button" data-v="area">ផ្ទៃខេត្ត (គម²)</button></span>
+       <span class="sim-hint">ទិន្នន័យដដែល ខេត្តដដែល ប៉ុន្តែសារខុសគ្នា</span>`);
+    const W = 640, H = 330;
+    const draw = () => {
+      fitC(cv, ctx, W, H); const v = el.querySelector(".nm-v .on").dataset.v;
+      const val = (p) => (v === "pop" ? p.pop : v === "dens" ? p.dens : p.pop / p.dens);
+      const vals = D.prov.map(val), k = 5, br = breaksOf(vals, k, "natural");
+      const cls = (x) => { for (let i = k - 1; i >= 0; i--) if (x >= br[i]) return i; return 0; };
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      drawShapes(ctx, D.prov, 10, 15, 1.05, (p) => pick("seq", k, cls(val(p))));
+      ctx.font = `12px ${font()}`; let ly = 60;
+      const unit = v === "pop" ? "នាក់" : v === "dens" ? "នាក់/គម²" : "គម²";
+      ctx.fillStyle = "#333"; ctx.fillText("សញ្ញាសម្គាល់ផែនទី (" + unit + ")", 350, 40);
+      for (let i = k - 1; i >= 0; i--) { ctx.fillStyle = pick("seq", k, i); ctx.fillRect(350, ly, 24, 15); ctx.strokeStyle = "#999"; ctx.strokeRect(350, ly, 24, 15);
+        ctx.fillStyle = "#333"; ctx.fillText(`${fmtN(Math.round(br[i]))} – ${fmtN(Math.round(br[i + 1]))}`, 382, ly + 12); ly += 21; }
+      const top = D.prov.map((p) => [val(p), p.name]).sort((a, b) => b[0] - a[0]).slice(0, 3);
+      const NOTE = { pop: "ចំនួនដុល៖ ខេត្តធំមើលទៅ «ខ្ពស់» ដោយសារវាធំ។ ភ្នំពេញ (ផ្ទៃ ៦៨៥ គម²) និងបាត់ដំបង (១១ ៨៦៨ គម²) មានប្រជាជនប្រហែលគ្នា ប៉ុន្តែក្រាស់មិនដូចគ្នាទេ។",
+        dens: "ដង់ស៊ីតេ៖ ចែកនឹងផ្ទៃ ដូច្នេះប្រៀបធៀបបាន។ ភ្នំពេញលេចធ្លោដោយសារមនុស្សក្រាស់ពិតប្រាកដ។",
+        area: "ផ្ទៃខេត្ត៖ បង្ហាញថាខេត្តណាធំ ដែលជាហេតុផលដែលផែនទីចំនួនដុលបំភាន់។" }[v];
+      out.innerHTML = `បីខេត្តខ្ពស់បំផុត៖ <b>${top.map(([x, n]) => `${n} (${fmtN(Math.round(x))})`).join(" · ")}</b><br>${NOTE}`;
+    };
+    el.querySelectorAll(".nm-v button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".nm-v button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
+    draw(); window.addEventListener("resize", () => el.isConnected && draw());
+  };
+
+  window.EXTRA_SIMS["unit-size"] = async (el) => {
+    const K = await loadKC();
+    const { cv, ctx, out, q } = shellC(el, "ទំហំឯកតា៖ ខេត្ត ឬឃុំ?",
+      `<span class="sim-seg us-v"><button type="button" data-v="prov" class="on">កម្រិតខេត្ត</button><button type="button" data-v="comm">កម្រិតឃុំ</button></span>
+       <span class="sim-hint">ខេត្តកំពង់ឆ្នាំង · ដង់ស៊ីតេប្រជាជន ២០០៨</span>`);
+    const W = 640, H = 340;
+    const draw = () => {
+      fitC(cv, ctx, W, H); const v = el.querySelector(".us-v .on").dataset.v;
+      const vals = K.comm.map((c) => c.dens), k = 5, br = breaksOf(vals, k, "natural");
+      const cls = (x) => { for (let i = k - 1; i >= 0; i--) if (x >= br[i]) return i; return 0; };
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      const sc = Math.min(300 / K.W, 300 / K.H);
+      if (v === "comm") drawShapes(ctx, K.comm, 20, 20, sc, (c) => pick("seq", k, cls(c.dens)));
+      else { ctx.beginPath(); K.comm.forEach((c) => c.r.forEach((ring) => ring.forEach(([x, y], i) => (i ? ctx.lineTo(20 + x * sc, 20 + y * sc) : ctx.moveTo(20 + x * sc, 20 + y * sc)))));
+        ctx.fillStyle = pick("seq", k, cls(K.prov_dens)); ctx.fill("evenodd"); ctx.strokeStyle = "#888"; ctx.lineWidth = 1; ctx.stroke(); }
+      ctx.font = `12px ${font()}`; let ly = 60; ctx.fillStyle = "#333"; ctx.fillText("នាក់/គម²", 350, 40);
+      for (let i = k - 1; i >= 0; i--) { ctx.fillStyle = pick("seq", k, i); ctx.fillRect(350, ly, 24, 15); ctx.strokeStyle = "#999"; ctx.strokeRect(350, ly, 24, 15);
+        ctx.fillStyle = "#333"; ctx.fillText(`${fmtN(Math.round(br[i]))} – ${fmtN(Math.round(br[i + 1]))}`, 382, ly + 12); ly += 21; }
+      const mx = Math.max(...vals), mn = Math.min(...vals);
+      out.innerHTML = v === "prov"
+        ? `កម្រិតខេត្ត៖ តម្លៃតែមួយ <b>${fmtN(K.prov_dens, 1)} នាក់/គម²</b> សម្រាប់ខេត្តទាំងមូល។ ភាពខុសគ្នាខាងក្នុងបាត់ទាំងស្រុង។`
+        : `កម្រិតឃុំ៖ តម្លៃពី <b>${fmtN(mn, 1)}</b> ដល់ <b>${fmtN(mx)}</b> នាក់/គម² ក្នុងខេត្តតែមួយ។ មធ្យមខេត្ត ${fmtN(K.prov_dens, 1)} លាក់ភាពខុសគ្នានេះ (បញ្ហាឯកតាផ្ទៃ · MAUP)។`;
+    };
+    el.querySelectorAll(".us-v button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".us-v button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
+    draw(); window.addEventListener("resize", () => el.isConnected && draw());
+  };
+
+  /* ---------- L10 · Proportional symbols and dot density ---------- */
+  window.EXTRA_SIMS["symbols"] = async (el) => {
+    const D = await load();
+    const { cv, ctx, out, q } = shellC(el, "សញ្ញាសមាមាត្រ សញ្ញាចាត់ថ្នាក់ និងផែនទីចំណុចដង់ស៊ីតេ",
+      `<span class="sim-seg sy-t"><button type="button" data-t="prop" class="on">សញ្ញាសមាមាត្រ (√)</button><button type="button" data-t="lin">មាត្រដ្ឋានកាំ (ខុស)</button><button type="button" data-t="grad">សញ្ញាចាត់ថ្នាក់</button><button type="button" data-t="dot">ចំណុចដង់ស៊ីតេ</button></span>
+       <label class="sy-dl">១ ចំណុច = <select class="sy-d"><option>5000</option><option selected>10000</option><option>25000</option></select> នាក់</label>`);
+    const W = 640, H = 340;
+    let dots = null;
+    const makeDots = (per) => D.prov.map((p) => { const n = Math.round(p.pop / per), pts = [];
+      // rejection sampling inside the province rings
+      const all = p.r[0] || []; let minx = 1e9, miny = 1e9, maxx = -1e9, maxy = -1e9;
+      p.r.forEach((ring) => ring.forEach(([x, y]) => { minx = Math.min(minx, x); miny = Math.min(miny, y); maxx = Math.max(maxx, x); maxy = Math.max(maxy, y); }));
+      const inside = (x, y) => { let c = false; p.r.forEach((ring) => { for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+          const [xi, yi] = ring[i], [xj, yj] = ring[j];
+          if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) c = !c; } }); return c; };
+      let guard = 0;
+      while (pts.length < n && guard < n * 60 + 400) { guard++;
+        const x = minx + Math.random() * (maxx - minx), y = miny + Math.random() * (maxy - miny);
+        if (inside(x, y)) pts.push([x, y]); }
+      return pts; });
+    const draw = () => {
+      fitC(cv, ctx, W, H); const t = el.querySelector(".sy-t .on").dataset.t, per = +q(".sy-d").value;
+      el.querySelector(".sy-dl").style.display = t === "dot" ? "" : "none";
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      const sc = 1.05, ox = 10, oy = 15;
+      drawShapes(ctx, D.prov, ox, oy, sc, () => "#f5f5f0", "#cfcfcf", 0.8);
+      const pops = D.prov.map((p) => p.pop), mx = Math.max(...pops);
+      const centre = (p) => { let sx = 0, sy = 0, n = 0; p.r.forEach((ring) => ring.forEach(([x, y]) => { sx += x; sy += y; n++; })); return [ox + (sx / n) * sc, oy + (sy / n) * sc]; };
+      if (t === "dot") {
+        if (!dots || dots.per !== per) { dots = { per, d: makeDots(per) }; }
+        ctx.fillStyle = "rgba(198,40,40,.75)";
+        dots.d.forEach((pts) => pts.forEach(([x, y]) => { ctx.beginPath(); ctx.arc(ox + x * sc, oy + y * sc, 1.5, 0, 7); ctx.fill(); }));
+      } else {
+        D.prov.forEach((p) => { const [cx, cy] = centre(p);
+          let r;
+          if (t === "prop") r = 26 * Math.sqrt(p.pop / mx);
+          else if (t === "lin") r = 26 * (p.pop / mx);
+          else { const br = breaksOf(pops, 5, "natural"); let i = 0; for (let j = 4; j >= 0; j--) if (p.pop >= br[j]) { i = j; break; } r = 6 + i * 5; }
+          ctx.beginPath(); ctx.arc(cx, cy, Math.max(2, r), 0, 7); ctx.fillStyle = "rgba(25,118,210,.55)"; ctx.fill(); ctx.strokeStyle = "#0d47a1"; ctx.lineWidth = 1; ctx.stroke(); });
+      }
+      ctx.font = `12px ${font()}`; ctx.fillStyle = "#333";
+      if (t === "dot") { ctx.fillText(`១ ចំណុច = ${fmtN(per)} នាក់`, 350, 40); ctx.beginPath(); ctx.arc(356, 56, 1.5, 0, 7); ctx.fillStyle = "rgba(198,40,40,.75)"; ctx.fill(); }
+      else { ctx.fillText("សញ្ញាសម្គាល់ផែនទី", 350, 40);
+        [1400000, 700000, 200000].forEach((v, i) => { const r = t === "lin" ? 26 * (v / mx) : t === "grad" ? 6 + (2 - i) * 5 : 26 * Math.sqrt(v / mx);
+          ctx.beginPath(); ctx.arc(390, 120 - i * 0, 0, 0, 0); ctx.beginPath(); ctx.arc(390, 130 - r + i * 0 + i * 60, Math.max(2, r), 0, 7);
+          ctx.fillStyle = "rgba(25,118,210,.35)"; ctx.fill(); ctx.strokeStyle = "#0d47a1"; ctx.stroke();
+          ctx.fillStyle = "#333"; ctx.fillText(fmtN(v) + " នាក់", 430, 132 - r + i * 60); }); }
+      const NOTE = { prop: "កាំ = k × √(តម្លៃ)៖ ផ្ទៃរង្វង់សមាមាត្រនឹងតម្លៃ ដែលភ្នែកអានបានត្រឹមត្រូវ។",
+        lin: "កាំគុណដោយផ្ទាល់នឹងតម្លៃ៖ ខេត្តធំមើលទៅធំហួសហេតុ (ផ្ទៃកើនតាមការ៉េ)។ ជៀសវាង។",
+        grad: "សញ្ញាចាត់ថ្នាក់៖ ទំហំតែប៉ុន្មានថ្នាក់ ដែលងាយអានពីសញ្ញាសម្គាល់ផែនទី ប៉ុន្តែបាត់លម្អិត។",
+        dot: "ផែនទីចំណុចដង់ស៊ីតេ៖ ចំណុចនីមួយៗតំណាងចំនួនថេរ។ វាបង្ហាញលំនាំបានល្អ ប៉ុន្តែទីតាំងចំណុចមិនមែនជាទីតាំងពិតទេ។" }[t];
+      out.innerHTML = NOTE + (t === "dot" ? `<br><span class="sim-hint">ចំណុចដាក់ចៃដន្យក្នុងខេត្ត ដូច្នេះមិនត្រូវអានវាជាទីតាំងផ្ទះពិត។</span>` : "");
+    };
+    el.querySelectorAll(".sy-t button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".sy-t button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
+    q(".sy-d").onchange = draw; draw(); window.addEventListener("resize", () => el.isConnected && draw());
+  };
 })();

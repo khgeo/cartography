@@ -77,6 +77,8 @@
   };
   const fitC = (cv, ctx, W, H) => { const w = cv.parentElement.clientWidth || W, s = w / W, d = window.devicePixelRatio || 1;
     cv.style.width = w + "px"; cv.style.height = H * s + "px"; cv.width = w * d; cv.height = H * s * d; ctx.setTransform(s * d, 0, 0, s * d, 0, 0); };
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const ramp = (t, stops) => { t = clamp(t, 0, 1); const n = stops.length - 1, i = Math.min(n - 1, Math.floor(t * n)), f = t * n - i; const a = stops[i], b = stops[i + 1]; return `rgb(${a.map((v, k) => Math.round(v + (b[k] - v) * f)).join(",")})`; };
   const fmtN = (n, dec = 0) => kh(Number(n).toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec }).replace(/,/g, " ").replace(".", ","));
   const font = () => getComputedStyle(document.body).fontFamily;
 
@@ -181,5 +183,144 @@
         (z !== 1 ? `<br><span class="sim-warn">ក្រោយពង្រីក ${kh(Math.round(z * 100))}% លេខ «១ : ${fmtN(S)}» ដែលបោះពុម្ពលើផែនទី <b>ខុស</b>៖ ប្រើ ${fmtN(d, 1)} សម នឹងទទួលបាន ${fmtN((d / z) * S / 100)} ម ពិតប្រាកដ។ របារមាត្រដ្ឋាននៅតែត្រឹមត្រូវ។</span>` : "");
     };
     el.querySelectorAll("input,select").forEach((x) => x.addEventListener("input", draw)); draw();
+  };
+
+  /* ---------- L5 · Contours, profile and grid references ---------- */
+  let tcache = null;
+  const loadTerrain = async () => tcache || (tcache = await (await fetch(new URL("../../assets/data/terrain_sample.json", location.href))).json());
+  const bilinear = (T, u, v) => { const n = T.n - 1, x = Math.min(0.999, Math.max(0, u)) * n, y = Math.min(0.999, Math.max(0, v)) * n;
+    const i = Math.floor(y), j = Math.floor(x), fy = y - i, fx = x - j;
+    return T.z[i][j] * (1 - fx) * (1 - fy) + T.z[i][j + 1] * fx * (1 - fy) + T.z[i + 1][j] * (1 - fx) * fy + T.z[i + 1][j + 1] * fx * fy; };
+
+  window.EXTRA_SIMS["contour"] = async (el) => {
+    const T = await loadTerrain();
+    const { cv, ctx, out, q } = shellC(el, "ខ្សែវណ្ឌ ជម្រាល និងផ្នែកកាត់បញ្ឈរ",
+      `<label>ចន្លោះខ្សែវណ្ឌ <select class="ct-i"><option>10</option><option selected>20</option><option>50</option><option>100</option></select> ម</label>
+       <label><input type="checkbox" class="ct-sh" checked> ពណ៌តាមកម្ពស់</label>
+       <label><input type="checkbox" class="ct-v" checked> ភូមិ</label>
+       <span class="sim-hint">ដាក់កណ្ដុរលើផែនទី ដើម្បីអានកម្ពស់ និងកូអរដោនេ · អូសចំណុច A និង B ដើម្បីប្ដូរខ្សែកាត់</span>`);
+    const W = 640, H = 325, M = 300;
+    let A = [0.18, 0.78], B = [0.72, 0.30], drag = null, hover = null;
+    const ramp5 = (t) => ramp(t, [[199, 233, 180], [173, 221, 142], [255, 237, 160], [254, 178, 76], [217, 95, 14]]);
+    const draw = () => {
+      fitC(cv, ctx, W, H); const iv = +q(".ct-i").value, shade = q(".ct-sh").checked;
+      const ox = 10, oy = 10, S = M;
+      ctx.fillStyle = "#fdfaf2"; ctx.fillRect(0, 0, W, H);
+      if (shade) { const step = 4; for (let py = 0; py < S; py += step) for (let px = 0; px < S; px += step) {
+        const z = bilinear(T, px / S, 1 - py / S); ctx.fillStyle = ramp5(z / 360); ctx.fillRect(ox + px, oy + py, step, step); } }
+      // marching squares
+      const n = 120, zmax = 360;
+      for (let lev = iv; lev < zmax; lev += iv) {
+        const index = lev % (iv * 5) === 0 || lev % 100 === 0;
+        ctx.beginPath();
+        for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+          const u0 = j / n, v0 = 1 - i / n, u1 = (j + 1) / n, v1 = 1 - (i + 1) / n;
+          const a = bilinear(T, u0, v0), b = bilinear(T, u1, v0), c = bilinear(T, u1, v1), d = bilinear(T, u0, v1);
+          const P = [[a, b, u0, v0, u1, v0], [b, c, u1, v0, u1, v1], [c, d, u1, v1, u0, v1], [d, a, u0, v1, u0, v0]];
+          const pts = [];
+          P.forEach(([p, qv, ux, uy, vx, vy]) => { if ((p - lev) * (qv - lev) < 0) { const t = (lev - p) / (qv - p);
+            pts.push([ux + (vx - ux) * t, uy + (vy - uy) * t]); } });
+          if (pts.length >= 2) { ctx.moveTo(ox + pts[0][0] * S, oy + (1 - pts[0][1]) * S); ctx.lineTo(ox + pts[1][0] * S, oy + (1 - pts[1][1]) * S); }
+        }
+        ctx.strokeStyle = index ? "#8a5a33" : "rgba(161,114,74,.85)"; ctx.lineWidth = index ? 1.6 : 0.8; ctx.stroke();
+      }
+      // UTM grid every 2 km
+      ctx.strokeStyle = "rgba(58,110,165,.75)"; ctx.lineWidth = 0.8; ctx.font = `10px ${font()}`; ctx.fillStyle = "#3a6ea5";
+      for (let k = 2; k < 12; k += 2) { const p = (k / 12) * S;
+        ctx.beginPath(); ctx.moveTo(ox + p, oy); ctx.lineTo(ox + p, oy + S); ctx.moveTo(ox, oy + S - p); ctx.lineTo(ox + S, oy + S - p); ctx.stroke();
+        ctx.fillText(String(400 + k), ox + p + 2, oy + S - 3); ctx.fillText(String(1250 + k), ox + 2, oy + S - p - 3); }
+      ctx.strokeStyle = "#555"; ctx.lineWidth = 1; ctx.strokeRect(ox, oy, S, S);
+      if (q(".ct-v").checked) T.villages.forEach(([nm, x, y]) => { const px = ox + ((x - T.x0) / T.size) * S, py = oy + (1 - (y - T.y0) / T.size) * S;
+        ctx.beginPath(); ctx.arc(px, py, 4, 0, 7); ctx.fillStyle = "#212121"; ctx.fill(); ctx.fillText(nm, px + 6, py - 5); });
+      // profile line
+      const pA = [ox + A[0] * S, oy + (1 - A[1]) * S], pB = [ox + B[0] * S, oy + (1 - B[1]) * S];
+      ctx.strokeStyle = "#c62828"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(...pA); ctx.lineTo(...pB); ctx.stroke();
+      [["A", pA], ["B", pB]].forEach(([t, p]) => { ctx.beginPath(); ctx.arc(p[0], p[1], 6, 0, 7); ctx.fillStyle = "#c62828"; ctx.fill();
+        ctx.fillStyle = "#fff"; ctx.font = `bold 10px ${font()}`; ctx.fillText(t, p[0] - 3, p[1] + 3.5); ctx.font = `10px ${font()}`; });
+      // profile graph
+      const gx = M + 40, gy = 40, gw = W - gx - 20, gh = 230;
+      ctx.fillStyle = "#fff"; ctx.fillRect(gx, gy, gw, gh); ctx.strokeStyle = "#999"; ctx.strokeRect(gx, gy, gw, gh);
+      const N = 120, zs = []; for (let i = 0; i <= N; i++) zs.push(bilinear(T, A[0] + (B[0] - A[0]) * i / N, A[1] + (B[1] - A[1]) * i / N));
+      ctx.beginPath(); zs.forEach((z, i) => { const x = gx + (gw * i) / N, y = gy + gh - (z / 380) * gh; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+      ctx.lineTo(gx + gw, gy + gh); ctx.lineTo(gx, gy + gh); ctx.closePath(); ctx.fillStyle = "rgba(141,110,99,.35)"; ctx.fill();
+      ctx.strokeStyle = "#6d4c41"; ctx.lineWidth = 1.6; ctx.stroke();
+      ctx.fillStyle = "#555"; ctx.font = `10px ${font()}`;
+      [0, 100, 200, 300].forEach((z) => { const y = gy + gh - (z / 380) * gh; ctx.fillText(kh(z), gx - 26, y + 3);
+        ctx.strokeStyle = "#eee"; ctx.beginPath(); ctx.moveTo(gx, y); ctx.lineTo(gx + gw, y); ctx.stroke(); });
+      ctx.fillStyle = "#c62828"; ctx.fillText("A", gx - 4, gy + gh + 14); ctx.fillText("B", gx + gw - 4, gy + gh + 14);
+      ctx.fillStyle = "#555"; ctx.fillText("កម្ពស់ (ម)", gx - 30, gy - 8);
+      const len = Math.hypot((B[0] - A[0]) * T.size, (B[1] - A[1]) * T.size), zA = zs[0], zB = zs[N];
+      const dz = Math.max(...zs) - Math.min(...zs), slope = (Math.abs(zB - zA) / len) * 100;
+      out.innerHTML = (hover ? `កម្ពស់ក្រោមកណ្ដុរ៖ <b>${fmtN(hover.z)} ម</b> · E ${fmtN(hover.E)} · N ${fmtN(hover.N)} · លេខយោងក្រឡា ៦ ខ្ទង់៖ <b>${hover.gr}</b><br>` : "") +
+        `ខ្សែ A–B៖ ប្រវែង <b>${fmtN(len)} ម</b> · កម្ពស់ A ${fmtN(zA)} ម · B ${fmtN(zB)} ម · ឡើងចុះ ${fmtN(dz)} ម · ជម្រាលមធ្យម A→B <b>${fmtN(slope, 1)}%</b>
+         <br><span class="sim-hint">ខ្សែវណ្ឌជិតគ្នា = ជម្រាលចោត · ខ្សែឆ្ងាយគ្នា = ជម្រាលរាប។ កម្ពស់ក្នុងគំរូនេះជាតម្លៃសំយោគសម្រាប់បង្រៀន។</span>`;
+    };
+    const pos = (e) => { const r = cv.getBoundingClientRect(), s = r.width / W;
+      return [(e.clientX - r.left) / s, (e.clientY - r.top) / s]; };
+    cv.addEventListener("pointerdown", (e) => { const [x, y] = pos(e); const S = 300, ox = 10, oy = 10;
+      const dA = Math.hypot(x - (ox + A[0] * S), y - (oy + (1 - A[1]) * S)), dB = Math.hypot(x - (ox + B[0] * S), y - (oy + (1 - B[1]) * S));
+      if (Math.min(dA, dB) < 14) { drag = dA < dB ? "A" : "B"; cv.setPointerCapture(e.pointerId); } });
+    cv.addEventListener("pointermove", (e) => { const [x, y] = pos(e); const S = 300, ox = 10, oy = 10;
+      const u = (x - ox) / S, v = 1 - (y - oy) / S;
+      if (drag) { const p = [clamp(u, 0, 1), clamp(v, 0, 1)]; drag === "A" ? (A = p) : (B = p); }
+      if (u >= 0 && u <= 1 && v >= 0 && v <= 1) { const E = Math.round(T.x0 + u * T.size), N = Math.round(T.y0 + v * T.size);
+        hover = { z: Math.round(bilinear(T, u, v)), E, N, gr: `${String(Math.floor((E % 100000) / 100)).padStart(3, "0")} ${String(Math.floor((N % 100000) / 100)).padStart(3, "0")}` }; }
+      else hover = null;
+      draw(); });
+    cv.addEventListener("pointerup", () => (drag = null));
+    cv.addEventListener("pointerleave", () => { hover = null; draw(); });
+    el.querySelectorAll("select,input").forEach((x) => x.addEventListener("change", draw));
+    draw(); window.addEventListener("resize", () => el.isConnected && draw());
+  };
+
+  /* ---------- L6 · Visual variables ---------- */
+  window.EXTRA_SIMS["visual-variables"] = (el) => {
+    const VARS = [["size", "ទំហំ"], ["value", "តម្លៃពន្លឺ"], ["hue", "ពណ៌"], ["shape", "រាង"], ["orient", "ទិសដៅ"], ["texture", "វាយនភាព"]];
+    const LEV = [["nominal", "Nominal · ប្រភេទ (ប្រភេទសាលា)"], ["ordinal", "Ordinal · លំដាប់ (ស្ថានភាពផ្លូវ)"], ["ratio", "Quantitative · បរិមាណ (ប្រជាជន)"]];
+    const OK = { size: { nominal: 0, ordinal: 2, ratio: 2 }, value: { nominal: 0, ordinal: 2, ratio: 1 }, hue: { nominal: 2, ordinal: 0, ratio: 0 },
+      shape: { nominal: 2, ordinal: 0, ratio: 0 }, orient: { nominal: 1, ordinal: 0, ratio: 0 }, texture: { nominal: 1, ordinal: 1, ratio: 0 } };
+    const NOTE = { "size-ratio": "ទំហំជាអថេរល្អបំផុតសម្រាប់បរិមាណ ព្រោះភ្នែកអានលំដាប់ និងសមាមាត្របាន។",
+      "size-nominal": "ទំហំបង្កើតលំដាប់ក្លែងក្លាយ៖ អ្នកអានគិតថាសញ្ញាធំសំខាន់ជាង។",
+      "value-ratio": "តម្លៃពន្លឺល្អសម្រាប់ផែនទី choropleth ប៉ុន្តែភ្នែកអានសមាមាត្រមិនច្បាស់ដូចទំហំ។",
+      "value-ordinal": "តម្លៃពន្លឺល្អបំផុតសម្រាប់លំដាប់៖ ស្រាល → ដិត។",
+      "value-nominal": "តម្លៃពន្លឺបង្កើតលំដាប់ក្លែងក្លាយសម្រាប់ប្រភេទ។",
+      "hue-nominal": "ពណ៌ល្អបំផុតសម្រាប់ប្រភេទ ព្រោះវាមិនបង្កើតលំដាប់។",
+      "hue-ordinal": "ពណ៌ផ្សេងៗគ្នាមិនមានលំដាប់ធម្មជាតិទេ។ ប្រើតម្លៃពន្លឺវិញ។",
+      "hue-ratio": "ពណ៌មិនបង្ហាញបរិមាណទេ។ អ្នកអានមិនដឹងថាខៀវធំជាង ឬតូចជាងបៃតង។",
+      "shape-nominal": "រាងសញ្ញាល្អសម្រាប់ប្រភេទ ជាពិសេសសញ្ញារូបភាព (សាលា មន្ទីរពេទ្យ)។",
+      "shape-ordinal": "រាងគ្មានលំដាប់ធម្មជាតិ។", "shape-ratio": "រាងមិនបង្ហាញបរិមាណ។",
+      "orient-nominal": "ទិសដៅប្រើបានសម្រាប់ប្រភេទតិច ប៉ុន្តែពិបាកអានជាងរាង ឬពណ៌។",
+      "orient-ordinal": "ទិសដៅមិនបង្ហាញលំដាប់ច្បាស់។", "orient-ratio": "ទិសដៅមិនបង្ហាញបរិមាណ។",
+      "texture-nominal": "វាយនភាព (ខ្សែ ចំណុច) ប្រើបានពេលបោះពុម្ពសខ្មៅ។",
+      "texture-ordinal": "ដង់ស៊ីតេវាយនភាពអាចបង្ហាញលំដាប់បាន ប៉ុន្តែងាយធ្វើឲ្យភ្នែករំខាន។",
+      "texture-ratio": "វាយនភាពមិនផ្ដល់ការអានបរិមាណច្បាស់ទេ។" };
+    el.innerHTML = `<div class="sim-title">អថេរមើលឃើញ៖ តើអថេរណាសមនឹងទិន្នន័យណា?</div>
+      <div class="sim-controls"><span class="sim-seg vv-v">${VARS.map(([k, n], i) => `<button type="button" data-k="${k}" class="${i ? "" : "on"}">${n}</button>`).join("")}</span>
+      <label>ប្រភេទទិន្នន័យ <select class="vv-l">${LEV.map(([k, n]) => `<option value="${k}">${n}</option>`).join("")}</select></label></div>
+      <div class="sim-body"><div class="sim-canvas-wrap vv-draw"></div></div><div class="sim-out"></div>`;
+    let v = "size";
+    const draw = () => {
+      const lev = el.querySelector(".vv-l").value, score = OK[v][lev];
+      const vals = lev === "nominal" ? ["ក", "ខ", "គ", "ឃ", "ង"] : ["១", "២", "៣", "៤", "៥"];
+      const g = [];
+      for (let i = 0; i < 5; i++) {
+        const t = i / 4, cx = 70 + i * 105, cy = 70;
+        if (v === "size") g.push(`<circle cx="${cx}" cy="${cy}" r="${8 + t * 26}" fill="#3949ab" opacity=".8"/>`);
+        if (v === "value") g.push(`<rect x="${cx - 30}" y="${cy - 30}" width="60" height="60" fill="rgb(${230 - t * 190},${235 - t * 190},${245 - t * 150})" stroke="#999"/>`);
+        if (v === "hue") g.push(`<rect x="${cx - 30}" y="${cy - 30}" width="60" height="60" fill="${["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00"][i]}" opacity=".85" stroke="#999"/>`);
+        if (v === "shape") g.push(["<circle cx='X' cy='Y' r='20' />", "<rect x='X2' y='Y2' width='38' height='38'/>", "<polygon points='X,Y-22 X+20,Y+16 X-20,Y+16'/>", "<polygon points='X,Y-24 X+22,Y X,Y+24 X-22,Y'/>", "<polygon points='X-20,Y-20 X+20,Y-20 X+12,Y+20 X-12,Y+20'/>"][i]
+          .replace(/X2/g, cx - 19).replace(/Y2/g, cy - 19).replace(/X([+-]\d+)?/g, (m, d) => String(cx + (d ? +d : 0))).replace(/Y([+-]\d+)?/g, (m, d) => String(cy + (d ? +d : 0))) + "");
+        if (v === "orient") g.push(`<g transform="rotate(${i * 36} ${cx} ${cy})"><rect x="${cx - 4}" y="${cy - 26}" width="8" height="52" fill="#3949ab"/></g>`);
+        if (v === "texture") g.push(`<rect x="${cx - 30}" y="${cy - 30}" width="60" height="60" fill="url(#p${i})" stroke="#999"/>`);
+        g.push(`<text x="${cx}" y="${cy + 52}" text-anchor="middle" font-size="13" font-family="${font()}">${vals[i]}</text>`);
+      }
+      const defs = `<defs>${[2, 4, 6, 9, 13].map((d, i) => `<pattern id="p${i}" width="${d}" height="${d}" patternUnits="userSpaceOnUse"><rect width="${d}" height="${d}" fill="#fff"/><circle cx="${d / 2}" cy="${d / 2}" r="1.6" fill="#3949ab"/></pattern>`).join("")}</defs>`;
+      el.querySelector(".vv-draw").innerHTML = `<svg viewBox="0 0 600 140" style="width:100%;background:#fafafa;border:1px solid #ddd;border-radius:4px">${defs}<g fill="#3949ab">${g.join("")}</g></svg>`;
+      const verdict = ["✗ មិនសមស្រប", "⚠ ប្រើបានដោយប្រុងប្រយ័ត្ន", "✓ សមស្រប"][score];
+      const cls = ["sim-warn", "", "ft-ok"][score];
+      el.querySelector(".sim-out").innerHTML = `<b class="${cls}">${verdict}</b> · ${NOTE[v + "-" + lev] || ""}`;
+    };
+    el.querySelectorAll(".vv-v button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".vv-v button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); v = b.dataset.k; draw(); }));
+    el.querySelector(".vv-l").onchange = draw; draw();
   };
 })();

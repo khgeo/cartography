@@ -2,9 +2,6 @@ site_name: ផែនទីវិទ្យា
 site_description: សៀវភៅសិក្សាផែនទីវិទ្យាជាភាសាខ្មែរ សម្រាប់វគ្គសិក្សា ១ ឆមាស
 site_author: YAM Sarath (យាំ សារដ្ឋ)
 site_url: https://khgeo.github.io/cartography/
-repo_url: https://github.com/khgeo/cartography
-repo_name: cartography
-edit_uri: edit/main/docs/
 copyright: CC BY-SA 4.0 · អាចប្រើ និងកែសម្រួលបាន ដោយដកស្រង់ប្រភព
 
 theme:
@@ -12,14 +9,13 @@ theme:
   language: en          # Material has no Khmer UI pack; content is Khmer
   font: false           # disable Google Fonts CDN; we load Khmer fonts in CSS
   features:
-    - navigation.instant
     - navigation.tracking
+    - navigation.footer
     - navigation.top
     - navigation.indexes
     - toc.follow
     - search.highlight
     - content.code.copy
-    - content.action.edit
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -37,14 +33,15 @@ theme:
         name: ប្ដូរទៅរបៀបភ្លឺ
 
 extra_css:
-  - https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Siemreap&family=Moul&display=swap
+  - assets/css/local-fonts.css
   - assets/css/khmer.css
-  - https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css
   - assets/css/workbook.css
   - assets/css/lesson-sims.css
+  - assets/css/rich-lessons.css
 
 extra_javascript:
-  - https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js
+  - assets/js/offline-data.js
+  - assets/js/rich-lessons.js
   - assets/js/carto-sims.js
   - assets/js/lesson-sims.js
   - assets/js/workbook.js
@@ -76,9 +73,11 @@ markdown_extensions:
 
 plugins:
   - search
+  - offline
 
 extra:
-  homepage: https://khgeo.github.io/
+  polyfills:
+    - assets/js/iframe-worker-shim.js
   social:
     - icon: material/bookshelf
       link: https://khgeo.github.io/
@@ -128,4 +127,8 @@ nav:
       - ក៖ ដំឡើង QGIS: appendix/a-qgis-install.md
       - ខ៖ ទិន្នន័យកម្ពុជា: appendix/b-cambodia-data.md
       - គ៖ ឯកសារយោង: appendix/c-references.md
+  - កញ្ចប់អនុវត្ត offline: appendix/d-offline-practice.md
   - វាក្យសព្ទបច្ចេកទេស: glossary.md
+
+hooks:
+  - tools/offline_hook.py

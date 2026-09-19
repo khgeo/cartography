@@ -57,7 +57,7 @@
       <span class="ls-toggles">${L.map((l, i) => `<label><input type="checkbox" data-i="${i}" checked> ${l[1]}</label>`).join("")}</span></div>
       <div class="ls-stage"><div class="ls-stack">${L.map((l, i) => `<div class="ls-layer" data-i="${i}"><canvas width="600" height="420"></canvas><span class="ls-name">${l[1]}</span></div>`).join("")}</div></div>
       <div class="sim-out">ស្រទាប់នីមួយៗរក្សាទុកវត្ថុប្រភេទតែមួយ។ ពេលដាក់ត្រួតគ្នា ពួកវាបង្កើតជាផែនទីមួយ ដោយសារប្រើ CRS ដូចគ្នា។</div>`;
-    const data = await Promise.all(L.map((l) => fetch(new URL(base + l[0], location.href)).then((r) => r.json()).catch(() => null)));
+    const data = await Promise.all(L.map((l) => window.cartoData(base + l[0]).catch(() => null)));
     if (!data[0]) { el.querySelector(".sim-out").textContent = "មិនអាចផ្ទុកទិន្នន័យបានទេ"; return; }
     let mnx = 1e9, mny = 1e9, mxx = -1e9, mxy = -1e9;
     const walk = (c, f) => typeof c[0] === "number" ? f(c) : c.forEach((x) => walk(x, f));
@@ -667,7 +667,7 @@
   });
 
   function init() { document.querySelectorAll(".sim[data-sim]").forEach((el) => { if (el.dataset.ready) return; el.dataset.ready = "1";
-    const f = SIMS[el.dataset.sim] || (window.EXTRA_SIMS || {})[el.dataset.sim]; if (f) Promise.resolve(f(el)).catch((e) => { console.error(e); el.textContent = "Simulator error: " + e.message; }); else el.textContent = "Unknown simulator: " + el.dataset.sim; }); }
+    const f = SIMS[el.dataset.sim] || (window.EXTRA_SIMS || {})[el.dataset.sim]; if (f) Promise.resolve().then(() => f(el)).then(() => { el.querySelectorAll("canvas,svg").forEach((graphic) => { if(!graphic.hasAttribute("role")) graphic.setAttribute("role","img"); if(!graphic.hasAttribute("aria-label")) graphic.setAttribute("aria-label",el.querySelector(".sim-title")?.textContent || el.dataset.sim); }); }).catch((e) => { console.error(e); el.textContent = "Simulator error: " + e.message; }); else el.textContent = "Unknown simulator: " + el.dataset.sim; }); }
   if (typeof document$ !== "undefined") document$.subscribe(init);
   else if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

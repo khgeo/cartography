@@ -1,0 +1,487 @@
+{
+  "rows": [
+    {
+      "kind": "lessons",
+      "n": 1,
+      "count": 2,
+      "sims": [
+        {
+          "type": "simplify",
+          "failed": false
+        },
+        {
+          "type": "map-elements",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 2,
+      "count": 1,
+      "sims": [
+        {
+          "type": "datum-shift",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 3,
+      "count": 1,
+      "sims": [
+        {
+          "type": "projection",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 4,
+      "count": 2,
+      "sims": [
+        {
+          "type": "scale",
+          "failed": false
+        },
+        {
+          "type": "zoom-scale",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 5,
+      "count": 1,
+      "sims": [
+        {
+          "type": "contour",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 6,
+      "count": 1,
+      "sims": [
+        {
+          "type": "visual-variables",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 7,
+      "count": 1,
+      "sims": [
+        {
+          "type": "classification",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 8,
+      "count": 2,
+      "sims": [
+        {
+          "type": "colour",
+          "failed": false
+        },
+        {
+          "type": "palette-lab",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 9,
+      "count": 2,
+      "sims": [
+        {
+          "type": "normalise",
+          "failed": false
+        },
+        {
+          "type": "unit-size",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 10,
+      "count": 2,
+      "sims": [
+        {
+          "type": "symbols",
+          "failed": false
+        },
+        {
+          "type": "symbol-editor",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 11,
+      "count": 1,
+      "sims": [
+        {
+          "type": "isoline",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 12,
+      "count": 3,
+      "sims": [
+        {
+          "type": "flow",
+          "failed": false
+        },
+        {
+          "type": "bivariate",
+          "failed": false
+        },
+        {
+          "type": "time-player",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 13,
+      "count": 2,
+      "sims": [
+        {
+          "type": "labels",
+          "failed": false
+        },
+        {
+          "type": "label-studio",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 14,
+      "count": 2,
+      "sims": [
+        {
+          "type": "layout",
+          "failed": false
+        },
+        {
+          "type": "layout-studio",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "lessons",
+      "n": 15,
+      "count": 2,
+      "sims": [
+        {
+          "type": "generalise",
+          "failed": false
+        },
+        {
+          "type": "web-map",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false,
+      "mobileOverflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 1,
+      "count": 1,
+      "sims": [
+        {
+          "type": "map-elements",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 2,
+      "count": 1,
+      "sims": [
+        {
+          "type": "datum-shift",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 3,
+      "count": 1,
+      "sims": [
+        {
+          "type": "projection",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 4,
+      "count": 1,
+      "sims": [
+        {
+          "type": "scale",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 5,
+      "count": 1,
+      "sims": [
+        {
+          "type": "contour",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 6,
+      "count": 1,
+      "sims": [
+        {
+          "type": "visual-variables",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 7,
+      "count": 1,
+      "sims": [
+        {
+          "type": "classification",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 8,
+      "count": 1,
+      "sims": [
+        {
+          "type": "colour",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 9,
+      "count": 2,
+      "sims": [
+        {
+          "type": "normalise",
+          "failed": false
+        },
+        {
+          "type": "unit-size",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 10,
+      "count": 1,
+      "sims": [
+        {
+          "type": "symbols",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 11,
+      "count": 1,
+      "sims": [
+        {
+          "type": "isoline",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 12,
+      "count": 2,
+      "sims": [
+        {
+          "type": "flow",
+          "failed": false
+        },
+        {
+          "type": "bivariate",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 13,
+      "count": 1,
+      "sims": [
+        {
+          "type": "labels",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 14,
+      "count": 1,
+      "sims": [
+        {
+          "type": "layout",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    },
+    {
+      "kind": "workbook",
+      "n": 15,
+      "count": 1,
+      "sims": [
+        {
+          "type": "generalise",
+          "failed": false
+        }
+      ],
+      "badImages": [],
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "external": [],
+  "maths": {
+    "equal": [
+      10,
+      40,
+      70,
+      100
+    ],
+    "natural": [
+      1,
+      51.5,
+      102
+    ]
+  },
+  "searchCount": 5,
+  "fonts": [
+    [
+      "Siemreap",
+      true
+    ],
+    [
+      "Battambang",
+      true
+    ],
+    [
+      "Moul",
+      true
+    ]
+  ]
+}

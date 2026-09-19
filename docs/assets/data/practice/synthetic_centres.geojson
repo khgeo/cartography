@@ -1,0 +1,132 @@
+{
+  "type": "FeatureCollection",
+  "name": "synthetic_centres.geojson",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "ឃុំ ក",
+        "population": 10000,
+        "coverage_2020": 20,
+        "coverage_2022": 30,
+        "coverage_2025": 40,
+        "synthetic": true,
+        "rain_mm": 100,
+        "service": "school"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.57,
+          12.219999999999999
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "ឃុំ ខ",
+        "population": 4000,
+        "coverage_2020": 40,
+        "coverage_2022": 45,
+        "coverage_2025": 60,
+        "synthetic": true,
+        "rain_mm": 200,
+        "service": "health"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.61,
+          12.219999999999999
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "ឃុំ គ",
+        "population": 12000,
+        "coverage_2020": 65,
+        "coverage_2022": 70,
+        "coverage_2025": 75,
+        "synthetic": true,
+        "rain_mm": 140,
+        "service": "market"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.64999999999999,
+          12.219999999999999
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "ឃុំ ឃ",
+        "population": 5000,
+        "coverage_2020": 10,
+        "coverage_2022": 25,
+        "coverage_2025": null,
+        "synthetic": true,
+        "rain_mm": 170,
+        "service": "school"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.57,
+          12.18
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "ឃុំ ង",
+        "population": 2000,
+        "coverage_2020": 80,
+        "coverage_2022": 80,
+        "coverage_2025": 85,
+        "synthetic": true,
+        "rain_mm": 120,
+        "service": "health"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.61,
+          12.18
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "name": "ឃុំ ច",
+        "population": 9000,
+        "coverage_2020": 0,
+        "coverage_2022": 10,
+        "coverage_2025": 15,
+        "synthetic": true,
+        "rain_mm": 180,
+        "service": "market"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.64999999999999,
+          12.18
+        ]
+      }
+    }
+  ]
+}

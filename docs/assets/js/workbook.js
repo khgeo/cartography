@@ -592,7 +592,7 @@
       let ok = false, close = false;
       if (box.dataset.answer !== undefined) ok = box.dataset.answer.split("|").some((a) => normText(a) === normText(raw));
       else {
-        const v = parseFloat(normNumber(raw)), min = parseFloat(box.dataset.min), max = parseFloat(box.dataset.max);
+        const v = Number(normNumber(raw)), min = parseFloat(box.dataset.min), max = parseFloat(box.dataset.max);
         if (isNaN(v)) { out.textContent = "សូមបញ្ចូលជាលេខ"; box.dataset.state = "bad"; return; }
         ok = v >= min && v <= max; const mid = (min + max) / 2; close = !ok && Math.abs(v - mid) <= Math.abs(mid) * 0.1;
       }

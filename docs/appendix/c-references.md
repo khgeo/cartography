@@ -23,3 +23,14 @@
 - សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ (RUPP), ដេប៉ាតឺម៉ង់ភូមិវិទ្យា និងរៀបចំដែនដី
 - OpenStreetMap Cambodia, សហគមន៍ផែនទីបើកចំហ
 - Open Development Cambodia, ទិន្នន័យបើកចំហអំពីការអភិវឌ្ឍ
+
+
+## ឯកសារបច្ចេកទេសសម្រាប់កំណែថ្មី
+
+- [QGIS: Vector Properties — CRS, graduated symbols, labels](https://docs.qgis.org/3.40/en/docs/user_manual/working_with_vector/vector_properties.html). Version-specific reference; menus may differ.
+- [QGIS: Geometry expression functions](https://docs.qgis.org/3.40/en/docs/user_manual/expressions/functions_list.html#geometry-functions). Planar `area($geometry)` versus project-aware `$area`.
+- [PROJ: Transverse Mercator](https://proj.org/en/stable/operations/projections/tmerc.html). UTM parameters.
+- [Machado, Oliveira & Fernandes, 2009](https://doi.org/10.1109/TVCG.2009.113). Colour-vision simulation uses a full-dichromacy approximation for teaching.
+- [Google Fonts source](https://github.com/google/fonts). Bundled Siemreap, Battambang and Moul; SIL OFL licenses in assets/fonts.
+
+New diagrams and synthetic data use the course CC BY-SA 4.0 license. Original datasets retain original provenance and terms. New worked examples are teaching scenarios, not official Cambodian statistics.

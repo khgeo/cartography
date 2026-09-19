@@ -1,0 +1,240 @@
+{
+  "type": "FeatureCollection",
+  "name": "synthetic_communes.geojson",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "ឃុំ ក",
+        "population": 10000,
+        "coverage_2020": 20,
+        "coverage_2022": 30,
+        "coverage_2025": 40,
+        "synthetic": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              104.55,
+              12.2
+            ],
+            [
+              104.59,
+              12.2
+            ],
+            [
+              104.59,
+              12.239999999999998
+            ],
+            [
+              104.55,
+              12.239999999999998
+            ],
+            [
+              104.55,
+              12.2
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "ឃុំ ខ",
+        "population": 4000,
+        "coverage_2020": 40,
+        "coverage_2022": 45,
+        "coverage_2025": 60,
+        "synthetic": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              104.59,
+              12.2
+            ],
+            [
+              104.63000000000001,
+              12.2
+            ],
+            [
+              104.63000000000001,
+              12.239999999999998
+            ],
+            [
+              104.59,
+              12.239999999999998
+            ],
+            [
+              104.59,
+              12.2
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "ឃុំ គ",
+        "population": 12000,
+        "coverage_2020": 65,
+        "coverage_2022": 70,
+        "coverage_2025": 75,
+        "synthetic": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              104.63,
+              12.2
+            ],
+            [
+              104.67,
+              12.2
+            ],
+            [
+              104.67,
+              12.239999999999998
+            ],
+            [
+              104.63,
+              12.239999999999998
+            ],
+            [
+              104.63,
+              12.2
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "ឃុំ ឃ",
+        "population": 5000,
+        "coverage_2020": 10,
+        "coverage_2022": 25,
+        "coverage_2025": null,
+        "synthetic": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              104.55,
+              12.16
+            ],
+            [
+              104.59,
+              12.16
+            ],
+            [
+              104.59,
+              12.2
+            ],
+            [
+              104.55,
+              12.2
+            ],
+            [
+              104.55,
+              12.16
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "ឃុំ ង",
+        "population": 2000,
+        "coverage_2020": 80,
+        "coverage_2022": 80,
+        "coverage_2025": 85,
+        "synthetic": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              104.59,
+              12.16
+            ],
+            [
+              104.63000000000001,
+              12.16
+            ],
+            [
+              104.63000000000001,
+              12.2
+            ],
+            [
+              104.59,
+              12.2
+            ],
+            [
+              104.59,
+              12.16
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "name": "ឃុំ ច",
+        "population": 9000,
+        "coverage_2020": 0,
+        "coverage_2022": 10,
+        "coverage_2025": 15,
+        "synthetic": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              104.63,
+              12.16
+            ],
+            [
+              104.67,
+              12.16
+            ],
+            [
+              104.67,
+              12.2
+            ],
+            [
+              104.63,
+              12.2
+            ],
+            [
+              104.63,
+              12.16
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

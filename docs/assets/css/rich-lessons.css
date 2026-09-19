@@ -1,0 +1,44 @@
+/* Responsive, Khmer-first learning components. */
+.md-typeset {font-size:.82rem;line-height:2}
+.md-typeset h1 {font-size:1.45rem}
+.md-typeset h2 {padding-top:.4rem}
+.rich-comparison {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:.75rem 0 1.5rem}
+.md-typeset .rich-comparison figure {margin:0;padding:.7rem;border:1px solid var(--md-default-fg-color--lightest);border-radius:10px;background:var(--md-code-bg-color)}
+.rich-comparison img {width:100%;display:block;border-radius:6px;background:#f8fafc}
+.md-typeset .rich-comparison figcaption {font-size:.75rem;text-align:left;line-height:1.9}
+.rich-note {font-size:.72rem;color:var(--md-default-fg-color--light)}
+.rich-stage svg {width:100%;height:auto;display:block;background:#f8fafc;border-radius:6px;overflow:hidden}
+.rich-stage svg text {font-family:'Battambang',sans-serif;fill:#0f172a}
+.rich-stage .drag-item {cursor:grab}
+.rich-stage:has(.drag-item) svg {touch-action:none}
+.rich-stage .drag-item:focus rect,.rich-stage .map-feature:focus rect {stroke:#f97316;stroke-width:4}
+.rich-stage .map-feature {cursor:pointer}
+.rich-stage .map-feature:hover {filter:brightness(.95)}
+.rich-sim button,.rich-quiz button,.rich-table-wrap button {font:inherit;padding:.35em .7em;border:1px solid var(--md-default-fg-color--lighter);border-radius:5px;cursor:pointer;background:var(--md-default-bg-color);color:var(--md-default-fg-color);min-height:38px}
+.rich-reset {margin-left:auto}
+.rich-table-wrap {overflow:auto;margin-top:1rem}
+.md-typeset .rich-table-wrap table {width:100%;font-size:.75rem}
+.rich-quiz {padding:1rem;border:1px solid var(--md-default-fg-color--lightest);border-top:4px solid #0891b2;border-radius:8px}
+.rich-quiz fieldset {border:0;border-bottom:1px solid var(--md-default-fg-color--lightest);padding:.75rem 0 1rem;margin:0 0 1rem;min-width:0}
+.rich-quiz legend {font-family:'Battambang',sans-serif;font-weight:700;font-size:.85rem;max-width:100%;white-space:normal}
+.rich-quiz label {display:flex;align-items:baseline;gap:.65rem;cursor:pointer;padding:.35rem;border-radius:5px}
+.rich-quiz label:hover {background:var(--md-code-bg-color)}
+.rich-quiz input {flex-shrink:0;width:18px;height:18px;accent-color:#0891b2}
+.rich-quiz .quiz-feedback {padding:.6rem;border-left:4px solid #d97706;background:var(--md-code-bg-color)}
+.rich-quiz .answered-correctly .quiz-feedback {border-color:#059669}
+.quiz-score {font-weight:700}
+.rich-quiz details {font-size:.76rem}
+button:focus-visible,input:focus-visible,select:focus-visible {outline:3px solid #f59e0b;outline-offset:3px}
+.sim {font-size:.8rem;max-width:100%;overflow-wrap:anywhere}
+.sim-controls {gap:.65rem;line-height:1.8}
+.sim-controls label {max-width:100%}
+.sim-controls select {max-width:100%}
+.sim-out {overflow-wrap:anywhere}
+.sim canvas {max-width:100%;height:auto}
+.sim button {min-height:36px}
+[data-md-color-scheme=slate] .sim-warn {color:#fca5a5}
+[data-md-color-scheme=slate] .me-row.ok {color:#86efac}
+[data-md-color-scheme=slate] .me-row.no {color:#fca5a5}
+@media(max-width:600px){.rich-comparison{grid-template-columns:1fr}.rich-quiz{padding:.65rem}.sim{padding:.7em}.rich-reset{margin-left:0}.md-typeset{font-size:.83rem}.sim-controls{flex-direction:column;align-items:stretch}.sim-seg{gap:3px}.me-q{flex:auto}.rich-stage svg{min-height:150px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media print{.rich-comparison{grid-template-columns:1fr 1fr}.rich-comparison figure,.rich-quiz fieldset{break-inside:avoid}.rich-quiz label{display:block}.sim-controls,.compare-toggle,.rich-quiz button{display:none!important}.rich-quiz details>p{display:block}.rich-quiz details{display:block}.sim{break-inside:avoid}.rich-note{color:#333}}

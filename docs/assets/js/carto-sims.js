@@ -9,9 +9,9 @@
   const kh = (n) => String(n).replace(/[0-9]/g, (d) => KM[d]);
   const DATA = "../../assets/data/cambodia_provinces_svg.json", INSET = "../../assets/data/inset_sea_svg.json";
   let cache = null;
-  const load = async () => cache || (cache = await (await fetch(new URL(DATA, location.href))).json());
+  const load = async () => cache || (cache = await window.cartoData(DATA));
   let icache = null;
-  const loadInset = async () => icache || (icache = await (await fetch(new URL(INSET, location.href))).json());
+  const loadInset = async () => icache || (icache = await window.cartoData(INSET));
   const pd = (rings, ox, oy, k) => rings.map((r) => "M" + r.map(([x, y]) => `${(ox + x * k).toFixed(1)} ${(oy + y * k).toFixed(1)}`).join(" L") + "Z").join(" ");
   const PAL = ["#fef0d9", "#fdcc8a", "#fc8d59", "#e34a33", "#b30000"], BR = [0, 50, 100, 200, 400];
   const LAB = ["តិចជាង ៥០", "៥០–១០០", "១០០–២០០", "២០០–៤០០", "លើស ៤០០"];
@@ -134,7 +134,7 @@
 
   /* ---------- L3 · Projection & Tissot indicatrix ---------- */
   let wcache = null;
-  const loadWorld = async () => wcache || (wcache = await (await fetch(new URL("../../assets/data/world_land.json", location.href))).json());
+  const loadWorld = async () => wcache || (wcache = await window.cartoData("../../assets/data/world_land.json"));
   window.EXTRA_SIMS["projection"] = async (el) => {
     const WLD = await loadWorld();
     const P = {
@@ -163,10 +163,10 @@
       for (let l = -180; l <= 180; l += 30) { ctx.beginPath(); for (let p = -84; p <= 84; p += 2) { const [x, y] = f(l, p); p === -84 ? ctx.moveTo(X(x), Y(y)) : ctx.lineTo(X(x), Y(y)); } ctx.stroke(); }
       for (let p = -75; p <= 75; p += 15) { ctx.beginPath(); for (let l = -180; l <= 180; l += 3) { const [x, y] = f(l, p); l === -180 ? ctx.moveTo(X(x), Y(y)) : ctx.lineTo(X(x), Y(y)); } ctx.stroke(); }
       ctx.strokeStyle = "#1565c0"; ctx.lineWidth = 1.3; ctx.beginPath(); for (let l = -180; l <= 180; l += 3) { const [x, y] = f(l, 0); l === -180 ? ctx.moveTo(X(x), Y(y)) : ctx.lineTo(X(x), Y(y)); } ctx.stroke();
-      const r = 6; // degrees radius on sphere
+      const r = 1.5; // Small angular radius for local distortion indicatrices
       for (let p = -60; p <= 60; p += 30) for (let l = -150; l <= 150; l += 60) {
         ctx.beginPath();
-        for (let a = 0; a <= 360; a += 10) { const t = (a * Math.PI) / 180, pp = p + r * Math.sin(t), ll = l + (r * Math.cos(t)) / Math.cos((pp * Math.PI) / 180); const [x, y] = f(ll, pp); a ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); }
+        for (let a = 0; a <= 360; a += 10) { const t = (a * Math.PI) / 180, pp = p + r * Math.sin(t), ll = l + (r * Math.cos(t)) / Math.cos((p * Math.PI) / 180); const [x, y] = f(ll, pp); a ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); }
         ctx.fillStyle = "rgba(230,81,0,.42)"; ctx.fill(); ctx.strokeStyle = "#bf360c"; ctx.lineWidth = 1; ctx.stroke();
       }
       const [kx, ky] = f(105, 12.5); ctx.beginPath(); ctx.arc(X(kx), Y(ky), 5, 0, 7); ctx.fillStyle = "#c62828"; ctx.fill();
@@ -187,7 +187,7 @@
       <div class="sc-view"></div><div class="sim-out"></div>`;
     const q = (x) => el.querySelector(x);
     const draw = () => {
-      const S = +q(".sc-s").value, d = +q(".sc-d").value || 0, z = +q(".sc-z").value / 100;
+      const S = +q(".sc-s").value, d = Math.max(0,+q(".sc-d").value || 0), z = +q(".sc-z").value / 100;
       const ground = (d * S) / 100, eff = S / z, PXCM = 38;            // ~38 px per printed cm on screen
       const nice = [0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100, 200];      // bar length in km
       const barKm = nice.reduce((a, k) => (Math.abs((k * 1e5 / S) * PXCM * z - 300) < Math.abs((a * 1e5 / S) * PXCM * z - 300) ? k : a));
@@ -197,9 +197,9 @@
         <text x="20" y="30" font-size="16" font-family="${font()}">១ : ${fmtN(S)}${z !== 1 ? `  <tspan fill="#c62828">(ក្រោយពង្រីក៖ ពិតប្រាកដ ១ : ${fmtN(eff)})</tspan>` : ""}</text>
         ${[0, 1, 2, 3].map((i) => `<rect x="${20 + (i * barPx) / 4}" y="60" width="${barPx / 4}" height="10" fill="${i % 2 ? "#fff" : "#212121"}" stroke="#212121"/>`).join("")}
         <text x="20" y="92" font-size="13" font-family="${font()}">០</text><text x="${20 + barPx}" y="92" font-size="13" text-anchor="middle" font-family="${font()}">${fmtN(barKm, barKm < 1 ? 1 : 0)} គម</text>
-        <text x="${30 + barPx + 20}" y="70" font-size="12" fill="#2e7d32" font-family="${font()}">របារមាត្រដ្ឋានពង្រីកជាមួយផែនទី ដូច្នេះនៅតែត្រឹមត្រូវ</text></svg>`;
+        <text x="20" y="112" font-size="12" fill="#2e7d32" font-family="${font()}">របារមាត្រដ្ឋានត្រូវបានកែទំហំតាមការពង្រីក</text></svg>`;
       q(".sim-out").innerHTML = `${fmtN(d, 1)} សម លើផែនទី ១ : ${fmtN(S)} = <b>${fmtN(ground)} ម</b> (${fmtN(ground / 1000, 2)} គម) លើដី` +
-        `<br>១ សម លើផែនទី = ${fmtN(S / 100)} ម លើដី · ១ គម លើដី = ${fmtN(barCm, 2)} សម លើផែនទី` +
+        `<br>១ សម លើផែនទី = ${fmtN(S / 100)} ម លើដី · ១ គម លើដី = ${fmtN(100000 / S, 2)} សម លើផែនទី` +
         (z !== 1 ? `<br><span class="sim-warn">ក្រោយពង្រីក ${kh(Math.round(z * 100))}% លេខ «១ : ${fmtN(S)}» ដែលបោះពុម្ពលើផែនទី <b>ខុស</b>៖ ប្រើ ${fmtN(d, 1)} សម នឹងទទួលបាន ${fmtN((d / z) * S / 100)} ម ពិតប្រាកដ។ របារមាត្រដ្ឋាននៅតែត្រឹមត្រូវ។</span>` : "");
     };
     el.querySelectorAll("input,select").forEach((x) => x.addEventListener("input", draw)); draw();
@@ -207,7 +207,7 @@
 
   /* ---------- L5 · Contours, profile and grid references ---------- */
   let tcache = null;
-  const loadTerrain = async () => tcache || (tcache = await (await fetch(new URL("../../assets/data/terrain_sample.json", location.href))).json());
+  const loadTerrain = async () => tcache || (tcache = await window.cartoData("../../assets/data/terrain_sample.json"));
   const bilinear = (T, u, v) => { const n = T.n - 1, x = Math.min(0.999, Math.max(0, u)) * n, y = Math.min(0.999, Math.max(0, v)) * n;
     const i = Math.floor(y), j = Math.floor(x), fy = y - i, fx = x - j;
     return T.z[i][j] * (1 - fx) * (1 - fy) + T.z[i][j + 1] * fx * (1 - fy) + T.z[i + 1][j] * (1 - fx) * fy + T.z[i + 1][j + 1] * fx * fy; };
@@ -270,11 +270,15 @@
       ctx.fillStyle = "#c62828"; ctx.fillText("A", gx - 4, gy + gh + 14); ctx.fillText("B", gx + gw - 4, gy + gh + 14);
       ctx.fillStyle = "#555"; ctx.fillText("កម្ពស់ (ម)", gx - 30, gy - 8);
       const len = Math.hypot((B[0] - A[0]) * T.size, (B[1] - A[1]) * T.size), zA = zs[0], zB = zs[N];
-      const dz = Math.max(...zs) - Math.min(...zs), slope = (Math.abs(zB - zA) / len) * 100;
+      const dz = Math.max(...zs) - Math.min(...zs), slope = len > 0 ? (Math.abs(zB - zA) / len) * 100 : 0;
       out.innerHTML = (hover ? `កម្ពស់ក្រោមកណ្ដុរ៖ <b>${fmtN(hover.z)} ម</b> · E ${fmtN(hover.E)} · N ${fmtN(hover.N)} · លេខយោងក្រឡា ៦ ខ្ទង់៖ <b>${hover.gr}</b><br>` : "") +
-        `ខ្សែ A–B៖ ប្រវែង <b>${fmtN(len)} ម</b> · កម្ពស់ A ${fmtN(zA)} ម · B ${fmtN(zB)} ម · ឡើងចុះ ${fmtN(dz)} ម · ជម្រាលមធ្យម A→B <b>${fmtN(slope, 1)}%</b>
+        `ខ្សែ A–B៖ ប្រវែង <b>${fmtN(len)} ម</b> · កម្ពស់ A ${fmtN(zA)} ម · B ${fmtN(zB)} ម · ជួរកម្ពស់ ${fmtN(dz)} ម · ជម្រាលមធ្យម A→B <b>${fmtN(slope, 1)}%</b>
          <br><span class="sim-hint">ខ្សែវណ្ឌជិតគ្នា = ជម្រាលចោត · ខ្សែឆ្ងាយគ្នា = ជម្រាលរាប។ កម្ពស់ក្នុងគំរូនេះជាតម្លៃសំយោគសម្រាប់បង្រៀន។</span>`;
     };
+    const endpointControls=document.createElement('div'); endpointControls.className='sim-controls';
+    endpointControls.innerHTML=['A','B'].map(name=>[0,1].map(axis=>`<label>${name} ${axis?'N':'E'} (%) <input type="range" min="0" max="100" value="${Math.round((name==='A'?A:B)[axis]*100)}" data-endpoint="${name}" data-axis="${axis}"></label>`).join('')).join('');
+    el.querySelector('.sim-body').before(endpointControls);
+    endpointControls.querySelectorAll('input').forEach(input=>input.addEventListener('input',()=>{(input.dataset.endpoint==='A'?A:B)[+input.dataset.axis]=+input.value/100;draw();}));
     const pos = (e) => { const r = cv.getBoundingClientRect(), s = r.width / W;
       return [(e.clientX - r.left) / s, (e.clientY - r.top) / s]; };
     cv.addEventListener("pointerdown", (e) => { const [x, y] = pos(e); const S = 300, ox = 10, oy = 10;
@@ -282,12 +286,13 @@
       if (Math.min(dA, dB) < 14) { drag = dA < dB ? "A" : "B"; cv.setPointerCapture(e.pointerId); } });
     cv.addEventListener("pointermove", (e) => { const [x, y] = pos(e); const S = 300, ox = 10, oy = 10;
       const u = (x - ox) / S, v = 1 - (y - oy) / S;
-      if (drag) { const p = [clamp(u, 0, 1), clamp(v, 0, 1)]; drag === "A" ? (A = p) : (B = p); }
+      if (drag) { const p = [clamp(u, 0, 1), clamp(v, 0, 1)]; drag === "A" ? (A = p) : (B = p); endpointControls.querySelectorAll("input").forEach(input=>input.value=Math.round((input.dataset.endpoint==="A"?A:B)[+input.dataset.axis]*100)); }
       if (u >= 0 && u <= 1 && v >= 0 && v <= 1) { const E = Math.round(T.x0 + u * T.size), N = Math.round(T.y0 + v * T.size);
         hover = { z: Math.round(bilinear(T, u, v)), E, N, gr: `${String(Math.floor((E % 100000) / 100)).padStart(3, "0")} ${String(Math.floor((N % 100000) / 100)).padStart(3, "0")}` }; }
       else hover = null;
       draw(); });
     cv.addEventListener("pointerup", () => (drag = null));
+    cv.addEventListener("pointercancel", () => (drag = null));
     cv.addEventListener("pointerleave", () => { hover = null; draw(); });
     el.querySelectorAll("select,input").forEach((x) => x.addEventListener("change", draw));
     draw(); window.addEventListener("resize", () => el.isConnected && draw());
@@ -352,19 +357,19 @@
     if (method === "std") { const m = v.reduce((a, b) => a + b, 0) / n, sd = Math.sqrt(v.reduce((a, b) => a + (b - m) ** 2, 0) / n);
       const inner = []; for (let i = -(k - 2) / 2; i <= (k - 2) / 2; i++) inner.push(m + sd * i);
       return [mn, ...inner.map((x) => clamp(x, mn, mx)), mx].sort((a, b) => a - b); }
-    // natural breaks: 1-D k-means (Jenks-like)
-    let c = Array.from({ length: k }, (_, i) => v[Math.min(n - 1, Math.floor(((i + 0.5) / k) * n))]);
-    let lab = [];
-    for (let it = 0; it < 60; it++) {
-      lab = v.map((x) => c.reduce((bi, cc, j) => (Math.abs(x - cc) < Math.abs(x - c[bi]) ? j : bi), 0));
-      const nc = c.map((cc, j) => { const g = v.filter((_, i) => lab[i] === j); return g.length ? g.reduce((a, b) => a + b, 0) / g.length : cc; });
-      if (nc.every((x, j) => Math.abs(x - c[j]) < 1e-9)) break; c = nc;
+    // Exact 1-D Jenks: dynamic programming minimizes within-class SSE.
+    const sum=[0], sq=[0]; v.forEach(x=>{sum.push(sum.at(-1)+x);sq.push(sq.at(-1)+x*x);});
+    const cost=(a,b)=>Math.max(0,sq[b]-sq[a]-(sum[b]-sum[a])**2/(b-a));
+    const dp=Array.from({length:k+1},()=>Array(n+1).fill(Infinity));
+    const cut=Array.from({length:k+1},()=>Array(n+1).fill(0)); dp[0][0]=0;
+    for(let c=1;c<=k;c++) for(let j=c;j<=n;j++) for(let i=c-1;i<j;i++) {
+      if(i && v[i]===v[i-1]) continue; // Never split tied values.
+      const x=dp[c-1][i]+cost(i,j); if(x<dp[c][j]) {dp[c][j]=x;cut[c][j]=i;}
     }
-    const br = [mn];
-    for (let j = 0; j < k - 1; j++) { const a = v.filter((_, i) => lab[i] === j), b = v.filter((_, i) => lab[i] === j + 1);
-      br.push(a.length && b.length ? (a[a.length - 1] + b[0]) / 2 : br[br.length - 1]); }
-    br.push(mx); return br;
+    let j=n, inner=[]; for(let c=k;c>1;c--) {const i=cut[c][j];inner.unshift((v[i-1]+v[i])/2);j=i;}
+    return [mn,...inner,mx];
   };
+  window.CartoMath = {breaksOf};
   const PALS = { seq: ["#fef0d9", "#fdd49e", "#fdbb84", "#fc8d59", "#e34a33", "#b30000", "#7f0000"],
     div: ["#2166ac", "#67a9cf", "#d1e5f0", "#f7f7f7", "#fddbc7", "#ef8a62", "#b2182b"],
     qual: ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00", "#a65628", "#f781bf"],
@@ -409,8 +414,8 @@
       const top = vals.filter((v) => cls(v) === k - 1).length;
       const note = { equal: "ចន្លោះស្មើ៖ ព្រំថ្នាក់ងាយយល់ ប៉ុន្តែពេលទិន្នន័យលម្អៀង (ភ្នំពេញ ២ ០៤៩) ខេត្តស្ទើរទាំងអស់ធ្លាក់ក្នុងថ្នាក់ទាបតែមួយ។",
         quantile: "ចំនួនស្មើ៖ ថ្នាក់នីមួយៗមានខេត្តប្រហែលស្មើគ្នា ដែលបង្ហាញលំដាប់ច្បាស់ ប៉ុន្តែអាចបំបែកតម្លៃស្រដៀងគ្នា ឬបញ្ចូលតម្លៃខុសគ្នាឆ្ងាយក្នុងថ្នាក់តែមួយ។",
-        natural: "ចន្លោះធម្មជាតិ (k-means/Jenks)៖ ព្រំថ្នាក់ធ្លាក់ត្រង់កន្លែងដែលទិន្នន័យដាច់ពីគ្នា ដែលសមស្របបំផុតសម្រាប់ទិន្នន័យលម្អៀង។",
-        std: "គម្លាតគំរូ៖ សន្មតថាទិន្នន័យចែកចាយធម្មតា។ ទិន្នន័យនេះលម្អៀងខ្លាំង (មធ្យម ១៩៩ · គម្លាតគំរូ ៣៩១) ដូច្នេះវិធីនេះមិនសមស្របទេ។" }[m];
+        natural: "ចន្លោះធម្មជាតិ (Jenks · exact)៖ ព្រំថ្នាក់ធ្លាក់ត្រង់កន្លែងដែលទិន្នន័យដាច់ពីគ្នា ដោយកាត់បន្ថយគម្លាតក្នុងថ្នាក់; ព្រំថ្នាក់អាចខុសគ្នារវាងឆ្នាំ។",
+        std: "គម្លាតគំរូ៖ បង្ហាញគម្លាតពីមធ្យម។ មិនទាមទារការចែកចាយធម្មតាទេ ប៉ុន្តែត្រូវប្រយ័ត្នទិន្នន័យលម្អៀង។ ទិន្នន័យនេះលម្អៀងខ្លាំង (មធ្យម ១៩៩ · គម្លាតគំរូ ៣៩១) ដូច្នេះវិធីនេះមិនសមស្របទេ។" }[m];
       out.innerHTML = `ថ្នាក់ខ្ពស់បំផុតមាន <b>${kh(top)}</b> ខេត្ត · ${note}<br><span class="sim-hint">ទិន្នន័យ៖ ដង់ស៊ីតេប្រជាជន ២០១៧ ពី Kh_Province_Boundary (៦ ដល់ ២ ០៤៩ នាក់/គម²)</span>`;
     };
     el.querySelectorAll(".cls-m button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".cls-m button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
@@ -422,7 +427,8 @@
   const cbSim = (rgb, type) => {
     if (type === "none") return rgb;
     const [r, g, b] = rgb.map((v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
-    const M = { deut: [[0.625, 0.7, 0], [0.375, 0.3, 0.3], [0, 0, 0.7]], prot: [[0.567, 0.558, 0], [0.433, 0.442, 0.242], [0, 0, 0.758]], trit: [[0.95, 0, 0], [0.05, 0.433, 0], [0, 0.567, 1]] }[type];
+    // Machado et al. (2009), full-dichromacy approximation in linear RGB.
+    const M = {deut:[[.367322,.860646,-.227968],[.280085,.672501,.047413],[-.011820,.042940,.968881]],prot:[[.152286,1.052583,-.204868],[.114503,.786281,.099216],[-.003882,-.048116,1.051998]],trit:[[1.255528,-.076749,-.178779],[-.078411,.930809,.147602],[.004733,.691367,.303900]]}[type];
     const o = [M[0][0] * r + M[0][1] * g + M[0][2] * b, M[1][0] * r + M[1][1] * g + M[1][2] * b, M[2][0] * r + M[2][1] * g + M[2][2] * b];
     return o.map((v) => { v = clamp(v, 0, 1); v = v <= 0.0031308 ? v * 12.92 : 1.055 * v ** (1 / 2.4) - 0.055; return Math.round(v * 255); });
   };
@@ -431,7 +437,7 @@
     const { cv, ctx, out, q } = shellC(el, "ពណ៌ផែនទី និងភ្នែកខ្វះពណ៌",
       `<label>ឈុតពណ៌ <select class="co-p"><option value="seq">តគ្នា (Sequential)</option><option value="div">ពីរទិស (Diverging)</option><option value="qual">ប្រភេទ (Qualitative)</option><option value="rainbow">ឥន្ធនូ (Rainbow)</option></select></label>
        <label>ចំនួនថ្នាក់ <b class="co-kv"></b> <input type="range" class="co-k" min="3" max="7" value="5"></label>
-       <label>ភ្នែក <select class="co-b"><option value="none">ធម្មតា</option><option value="deut">Deuteranopia (បៃតង)</option><option value="prot">Protanopia (ក្រហម)</option><option value="trit">Tritanopia (ខៀវ)</option></select></label>`);
+       <label>ភ្នែក (គំរូប៉ាន់ស្មាន) <select class="co-b"><option value="none">ធម្មតា</option><option value="deut">Deuteranopia (បៃតង)</option><option value="prot">Protanopia (ក្រហម)</option><option value="trit">Tritanopia (ខៀវ)</option></select></label>`);
     const vals = D.prov.map((p) => p.dens), W = 640, H = 320;
     const draw = () => {
       fitC(cv, ctx, W, H); const pal = q(".co-p").value, k = +q(".co-k").value, cb = q(".co-b").value;
@@ -461,7 +467,7 @@
 
   /* ---------- L9 · Normalisation and unit size ---------- */
   let kcache = null;
-  const loadKC = async () => kcache || (kcache = await (await fetch(new URL("../../assets/data/kc_communes_svg.json", location.href))).json());
+  const loadKC = async () => kcache || (kcache = await window.cartoData("../../assets/data/kc_communes_svg.json"));
   const drawShapes = (ctx, shapes, ox, oy, sc, colFn, stroke = "#fff", sw = 0.7) => {
     shapes.forEach((sh) => { ctx.beginPath();
       sh.r.forEach((ring) => ring.forEach(([x, y], i) => (i ? ctx.lineTo(ox + x * sc, oy + y * sc) : ctx.moveTo(ox + x * sc, oy + y * sc))));
@@ -582,7 +588,7 @@
   /* ---------- L11 · Isolines from point observations ---------- */
   window.EXTRA_SIMS["isoline"] = (el) => {
     const { cv, ctx, out, q } = shellC(el, "ខ្សែអ៊ីសូលីន៖ ពីស្ថានីយ៍ទៅផែនទី",
-      `<label>ចន្លោះខ្សែ <select class="is-i"><option>25</option><option selected>50</option><option>100</option></select> មម</label>
+      `<label>Power <select class="is-power"><option>1</option><option selected>2</option><option>4</option></select></label><label>ស្ថានីយ៍ <select class="is-count"><option>3</option><option>5</option><option selected>7</option></select></label><label>ចន្លោះខ្សែ <select class="is-i"><option>25</option><option selected>50</option><option>100</option></select> មម</label>
        <label><input type="checkbox" class="is-t" checked> ពណ៌តាមកម្រិត</label>
        <label><input type="checkbox" class="is-p" checked> បង្ហាញស្ថានីយ៍</label>
        <span class="sim-hint">អូសស្ថានីយ៍ · ចុចទ្វេដងលើផែនទី ដើម្បីបន្ថែមស្ថានីយ៍ថ្មី</span>`);
@@ -590,11 +596,11 @@
     const W = 640, H = 340, M = 300, ox = 12, oy = 18;
     let drag = null;
     const idw = (u, v) => { let a = 0, b = 0;
-      for (const [x, y, z] of ST) { const d2 = (u - x) ** 2 + (v - y) ** 2; if (d2 < 1e-9) return z; const w = 1 / d2; a += w * z; b += w; }
+      for (const [x, y, z] of ST.slice(0,+q(".is-count").value)) { const d2 = (u - x) ** 2 + (v - y) ** 2; if (d2 < 1e-9) return z; const w = 1 / Math.pow(d2,+q(".is-power").value/2); a += w * z; b += w; }
       return a / b; };
     const draw = () => {
       fitC(cv, ctx, W, H); const iv = +q(".is-i").value;
-      const zs = ST.map((s2) => s2[2]), zmin = Math.min(...zs), zmax = Math.max(...zs);
+      const zs = ST.slice(0,+q(".is-count").value).map((s2) => s2[2]), zmin = Math.min(...zs), zmax = Math.max(...zs);
       ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
       if (q(".is-t").checked) { const st = 4; for (let py = 0; py < M; py += st) for (let px = 0; px < M; px += st) {
         const z = idw(px / M, 1 - py / M); ctx.fillStyle = ramp((z - zmin) / (zmax - zmin), [[247, 251, 255], [198, 219, 239], [107, 174, 214], [33, 113, 181], [8, 48, 107]]); ctx.fillRect(ox + px, oy + py, st, st); } }
@@ -613,7 +619,7 @@
       }
       ctx.strokeStyle = "#555"; ctx.lineWidth = 1; ctx.strokeRect(ox, oy, M, M);
       ctx.font = `12px ${font()}`;
-      if (q(".is-p").checked) ST.forEach(([x, y, z]) => { const px = ox + x * M, py = oy + (1 - y) * M;
+      if (q(".is-p").checked) ST.slice(0,+q(".is-count").value).forEach(([x, y, z]) => { const px = ox + x * M, py = oy + (1 - y) * M;
         ctx.beginPath(); ctx.arc(px, py, 5, 0, 7); ctx.fillStyle = "#c62828"; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.stroke();
         ctx.fillStyle = "#333"; ctx.fillText(kh(z), px + 8, py + 4); });
       // legend
@@ -622,17 +628,18 @@
       levs.slice(0, 8).forEach((lev, i) => { const y = 62 + i * 20;
         ctx.strokeStyle = lev % (iv * 2) === 0 ? "#0d47a1" : "rgba(13,71,161,.6)"; ctx.lineWidth = lev % (iv * 2) === 0 ? 1.7 : 0.9;
         ctx.beginPath(); ctx.moveTo(340, y); ctx.lineTo(370, y); ctx.stroke(); ctx.fillStyle = "#333"; ctx.fillText(kh(lev) + " មម", 378, y + 4); });
-      out.innerHTML = `ស្ថានីយ៍ <b>${kh(ST.length)}</b> · តម្លៃពី <b>${kh(zmin)}</b> ដល់ <b>${kh(zmax)} មម</b> · ចន្លោះខ្សែ ${kh(iv)} មម` +
+      out.innerHTML = `ស្ថានីយ៍ <b>${kh(+q(".is-count").value)}</b> · Power ${q(".is-power").value} · តម្លៃពី <b>${kh(zmin)}</b> ដល់ <b>${kh(zmax)} មម</b> · ចន្លោះខ្សែ ${kh(iv)} មម` +
         `<br><span class="sim-hint">ខ្សែអ៊ីសូលីនគណនាដោយ IDW ពីស្ថានីយ៍។ តំបន់ដែលឆ្ងាយពីស្ថានីយ៍ មិនច្បាស់ ទោះខ្សែមើលទៅរលោង។</span>`;
     };
     const pos = (e) => { const r = cv.getBoundingClientRect(), s2 = r.width / W; return [(e.clientX - r.left) / s2, (e.clientY - r.top) / s2]; };
     cv.addEventListener("pointerdown", (e) => { const [x, y] = pos(e);
-      ST.forEach((s2, i) => { if (Math.hypot(x - (ox + s2[0] * M), y - (oy + (1 - s2[1]) * M)) < 12) drag = i; }); });
+      ST.forEach((s2, i) => { if (i < +q(".is-count").value && Math.hypot(x - (ox + s2[0] * M), y - (oy + (1 - s2[1]) * M)) < 12) {drag = i;cv.setPointerCapture(e.pointerId);} }); });
     cv.addEventListener("pointermove", (e) => { if (drag === null) return; const [x, y] = pos(e);
       ST[drag][0] = clamp((x - ox) / M, 0, 1); ST[drag][1] = clamp(1 - (y - oy) / M, 0, 1); draw(); });
     cv.addEventListener("pointerup", () => (drag = null));
+    cv.addEventListener("pointercancel", () => (drag = null));
     cv.addEventListener("dblclick", (e) => { const [x, y] = pos(e); const u = (x - ox) / M, v = 1 - (y - oy) / M;
-      if (u > 0 && u < 1 && v > 0 && v < 1) { ST.push([u, v, Math.round(idw(u, v) / 50) * 50]); draw(); } });
+      if (u > 0 && u < 1 && v > 0 && v < 1) { ST.push([u, v, Math.round(idw(u, v) / 50) * 50]); q(".is-count").add(new Option(String(ST.length),String(ST.length))); q(".is-count").value=ST.length; draw(); } });
     el.querySelectorAll("select,input").forEach((x) => x.addEventListener("change", draw));
     draw(); window.addEventListener("resize", () => el.isConnected && draw());
   };
@@ -842,7 +849,7 @@
 
   /* ---------- L15 · Generalisation by scale ---------- */
   let gcache = null;
-  const loadGen = async () => gcache || (gcache = await (await fetch(new URL("../../assets/data/generalise_levels.json", location.href))).json());
+  const loadGen = async () => gcache || (gcache = await window.cartoData("../../assets/data/generalise_levels.json"));
   window.EXTRA_SIMS["generalise"] = async (el) => {
     const G = await loadGen();
     const { cv, ctx, out, q } = shellC(el, "ការធ្វើឲ្យទូទៅ៖ មាត្រដ្ឋានកំណត់អ្វីដែលបង្ហាញ",

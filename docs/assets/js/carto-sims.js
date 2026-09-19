@@ -694,4 +694,144 @@
     el.querySelectorAll(".bv-m button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".bv-m button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
     draw(); window.addEventListener("resize", () => el.isConnected && draw());
   };
+
+  /* ---------- L13 · Label placement ---------- */
+  window.EXTRA_SIMS["labels"] = async (el) => {
+    const D = await load();
+    const { cv, ctx, out, q } = shellC(el, "ស្លាកឈ្មោះ៖ ទីតាំង ទំហំ និងការជាន់គ្នា",
+      `<label>ទំហំអក្សរ <b class="lb-sv"></b> <input type="range" class="lb-s" min="8" max="18" value="11"></label>
+       <label><input type="checkbox" class="lb-h" checked> ស្រទាប់ស (halo)</label>
+       <label><input type="checkbox" class="lb-c" checked> ជៀសវាងការជាន់គ្នា</label>
+       <label><input type="checkbox" class="lb-p"> បង្ហាញតែខេត្តធំ (ត្រងតាមមាត្រដ្ឋាន)</label>`);
+    const W = 640, H = 350;
+    const centre = (p) => { let sx = 0, sy = 0, n = 0; p.r.forEach((ring) => ring.forEach(([x, y]) => { sx += x; sy += y; n++; })); return [sx / n, sy / n]; };
+    const draw = () => {
+      fitC(cv, ctx, W, H);
+      const fs = +q(".lb-s").value, halo = q(".lb-h").checked, avoid = q(".lb-c").checked, filter = q(".lb-p").checked;
+      q(".lb-sv").textContent = kh(fs) + " px";
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      const sc = 1.15, ox = 30, oy = 20;
+      drawShapes(ctx, D.prov, ox, oy, sc, () => "#f3f3ee", "#d8d8d8", 0.7);
+      ctx.font = `${fs}px ${font()}`;
+      const boxes = []; let drawn = 0, skipped = 0, overlaps = 0;
+      const list = D.prov.slice().sort((a, b) => b.pop - a.pop).filter((p) => !filter || p.pop > 400000);
+      list.forEach((p) => {
+        const [cx, cy] = centre(p), X = ox + cx * sc, Y = oy + cy * sc;
+        const w = ctx.measureText(p.name).width, h = fs * 1.2;
+        const cands = [[X + 6, Y - 4], [X - w - 6, Y - 4], [X - w / 2, Y - 8], [X - w / 2, Y + h + 2]];
+        let placed = null;
+        for (const [bx, by] of cands) { const box = [bx, by - h, w, h + 2];
+          const hit = boxes.some((o) => !(box[0] + box[2] < o[0] || o[0] + o[2] < box[0] || box[1] + box[3] < o[1] || o[1] + o[3] < box[1]));
+          if (!hit) { placed = [bx, by, box]; break; }
+          if (!avoid) { placed = [bx, by, box]; overlaps++; break; } }
+        ctx.beginPath(); ctx.arc(X, Y, 2.5, 0, 7); ctx.fillStyle = "#555"; ctx.fill();
+        if (!placed) { skipped++; return; }
+        const [bx, by, box] = placed; boxes.push(box); drawn++;
+        if (halo) { ctx.lineWidth = 3; ctx.strokeStyle = "#fff"; ctx.strokeText(p.name, bx, by); }
+        ctx.fillStyle = "#212121"; ctx.fillText(p.name, bx, by);
+      });
+      out.innerHTML = `បង្ហាញស្លាក <b>${kh(drawn)}</b> · លាក់ដោយសារជាន់គ្នា <b>${kh(skipped)}</b>` +
+        (avoid ? "" : ` · ស្លាកជាន់គ្នា <b class="sim-warn">${kh(overlaps)}</b>`) +
+        `<br><span class="sim-hint">QGIS ដោះស្រាយការជាន់គ្នាដោយស្វ័យប្រវត្តិ ដោយលាក់ស្លាកខ្លះ។ ការបង្កើនទំហំអក្សរ ធ្វើឲ្យស្លាកបាត់ច្រើន។ ស្រទាប់ស (halo) ជួយឲ្យអក្សរអានបានលើផ្ទៃពណ៌។</span>`;
+    };
+    el.querySelectorAll("input").forEach((x) => x.addEventListener("input", draw)); draw();
+    window.addEventListener("resize", () => el.isConnected && draw());
+  };
+
+  /* ---------- L14 · Layout and visual hierarchy ---------- */
+  window.EXTRA_SIMS["layout"] = async (el) => {
+    const D = await load();
+    const { cv, ctx, out, q } = shellC(el, "ប្លង់ផែនទី៖ ការរៀបចំ និងឋានានុក្រម",
+      `<span class="sim-seg ly-p"><button type="button" data-p="good" class="on">ប្លង់ល្អ</button><button type="button" data-p="clutter">ច្រើនពេក</button><button type="button" data-p="unbal">មិនតុល្យភាព</button></span>
+       <label><input type="checkbox" class="ly-g"> បង្ហាញក្រឡាតម្រឹម</label>`);
+    const W = 640, H = 400;
+    const draw = () => {
+      fitC(cv, ctx, W, H); const p = el.querySelector(".ly-p .on").dataset.p, grid = q(".ly-g").checked;
+      ctx.fillStyle = "#fafafa"; ctx.fillRect(0, 0, W, H);
+      const px = 60, py = 16, pw = W - 120, ph = H - 32;             // A4 portrait page
+      ctx.fillStyle = "#fff"; ctx.fillRect(px, py, pw, ph); ctx.strokeStyle = "#bbb"; ctx.strokeRect(px, py, pw, ph);
+      const m = 14, ix = px + m, iy = py + m, iw = pw - 2 * m, ih = ph - 2 * m;
+      if (grid) { ctx.strokeStyle = "#e0e0e0"; ctx.setLineDash([3, 3]);
+        for (let i = 1; i < 3; i++) { ctx.beginPath(); ctx.moveTo(ix + (iw * i) / 3, iy); ctx.lineTo(ix + (iw * i) / 3, iy + ih); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(ix, iy + (ih * i) / 3); ctx.lineTo(ix + iw, iy + (ih * i) / 3); ctx.stroke(); } ctx.setLineDash([]); }
+      const box = (x, y, w, h, fill, label, fs = 11) => { ctx.fillStyle = fill; ctx.fillRect(x, y, w, h); ctx.strokeStyle = "#cfcfcf"; ctx.strokeRect(x, y, w, h);
+        ctx.fillStyle = "#555"; ctx.font = `${fs}px ${font()}`; ctx.fillText(label, x + 5, y + fs + 3); };
+      const mapBox = (x, y, w, h) => { ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+        const sc = Math.min(w / 300, h / 252) * 0.92, offx = x + (w - 300 * sc) / 2, offy = y + (h - 252 * sc) / 2;
+        drawShapes(ctx, D.prov, offx, offy, sc, (pp) => pick("seq", 5, Math.min(4, Math.floor(Math.log10(pp.dens + 1) * 1.7))));
+        ctx.restore(); ctx.strokeStyle = "#bbb"; ctx.strokeRect(x, y, w, h); };
+      let notes = [];
+      if (p === "good") {
+        ctx.fillStyle = "#212121"; ctx.font = `bold 17px ${font()}`; ctx.fillText("ដង់ស៊ីតេប្រជាជនតាមខេត្ត ២០១៧", ix, iy + 18);
+        mapBox(ix, iy + 32, iw, ih - 120);
+        box(ix, iy + ih - 82, iw * 0.42, 52, "#f7f7f7", "សញ្ញាសម្គាល់ផែនទី");
+        box(ix + iw * 0.46, iy + ih - 82, iw * 0.24, 52, "#f7f7f7", "មាត្រដ្ឋាន · ទិស");
+        box(ix + iw * 0.74, iy + ih - 82, iw * 0.26, 52, "#f7f7f7", "ផែនទីទីតាំង");
+        ctx.fillStyle = "#666"; ctx.font = `9px ${font()}`; ctx.fillText("ប្រភព៖ Kh_Province_Boundary · EPSG:32648 · ២០២៦", ix, iy + ih - 6);
+        notes = ["ផែនទីកាន់កាប់ផ្ទៃធំបំផុត (ប្រហែល ៦០%)", "ធាតុតម្រឹមតាមក្រឡា", "ចន្លោះទំនេរស្មើគ្នា", "ឋានានុក្រម៖ ចំណងជើង → ផែនទី → សញ្ញាសម្គាល់ → ប្រភព"];
+      } else if (p === "clutter") {
+        ctx.fillStyle = "#212121"; ctx.font = `bold 22px ${font()}`; ctx.fillText("ដង់ស៊ីតេប្រជាជន", ix, iy + 22);
+        ctx.font = `13px ${font()}`; ctx.fillText("អត្ថបទពន្យល់វែងៗដែលអ្នកអានមិនអាន ...", ix, iy + 40);
+        mapBox(ix, iy + 48, iw * 0.62, ih - 150);
+        box(ix + iw * 0.64, iy + 48, iw * 0.36, 90, "#f1f1f1", "សញ្ញាសម្គាល់ ១");
+        box(ix + iw * 0.64, iy + 144, iw * 0.36, 70, "#f1f1f1", "សញ្ញាសម្គាល់ ២");
+        box(ix + iw * 0.64, iy + 220, iw * 0.36, 60, "#f1f1f1", "តារាងលេខ");
+        box(ix, iy + ih - 96, iw * 0.3, 40, "#f1f1f1", "ក្រាបសសរ");
+        box(ix + iw * 0.32, iy + ih - 96, iw * 0.3, 40, "#f1f1f1", "ក្រាបចំណិត");
+        box(ix + iw * 0.64, iy + ih - 96, iw * 0.36, 40, "#f1f1f1", "រូបភាព");
+        box(ix, iy + ih - 50, iw, 40, "#f1f1f1", "អត្ថបទបន្ថែម + ស្លាកស្មុគស្មាញ");
+        notes = ["ផែនទីតូចជាងធាតុផ្សេង", "ធាតុច្រើនពេក ភ្នែកមិនដឹងមើលណាមុន", "គ្មានឋានានុក្រមច្បាស់"];
+      } else {
+        ctx.fillStyle = "#212121"; ctx.font = `bold 17px ${font()}`; ctx.fillText("ដង់ស៊ីតេប្រជាជនតាមខេត្ត ២០១៧", ix, iy + 18);
+        mapBox(ix, iy + 30, iw * 0.58, ih * 0.55);
+        box(ix, iy + ih - 60, iw * 0.3, 44, "#f7f7f7", "សញ្ញាសម្គាល់ផែនទី");
+        notes = ["ធាតុប្រមូលផ្ដុំខាងឆ្វេងខាងលើ", "ចន្លោះទំនេរធំនៅខាងស្ដាំ និងខាងក្រោម", "ទំហំផែនទីមិនប្រើផ្ទៃក្រដាសឲ្យអស់"];
+      }
+      out.innerHTML = notes.map((n) => `• ${n}`).join("<br>") +
+        (p === "good" ? `<br><span class="sim-hint">សាកល្បងបើក «ក្រឡាតម្រឹម» ដើម្បីមើលការតម្រឹមធាតុ។</span>` : `<br><span class="sim-warn">សូមប្ដូរទៅ «ប្លង់ល្អ» ដើម្បីប្រៀបធៀប។</span>`);
+    };
+    el.querySelectorAll(".ly-p button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".ly-p button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
+    q(".ly-g").addEventListener("change", draw); draw(); window.addEventListener("resize", () => el.isConnected && draw());
+  };
+
+  /* ---------- L15 · Generalisation by scale ---------- */
+  window.EXTRA_SIMS["generalise"] = async (el) => {
+    const D = await load();
+    const { cv, ctx, out, q } = shellC(el, "ការធ្វើឲ្យទូទៅ៖ មាត្រដ្ឋានកំណត់អ្វីដែលបង្ហាញ",
+      `<label>មាត្រដ្ឋាន ១ : <select class="gn-s"><option value="50000">៥០ ០០០</option><option value="250000">២៥០ ០០០</option><option value="1000000" selected>១ ០០០ ០០០</option><option value="5000000">៥ ០០០ ០០០</option></select></label>
+       <label><input type="checkbox" class="gn-o" checked> បង្ហាញខ្សែដើម (ស្រាល)</label>`);
+    const W = 640, H = 340;
+    const simplify = (pts, tol) => { // Douglas-Peucker
+      if (pts.length < 3 || tol <= 0) return pts;
+      const d = (p, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy);
+        return L === 0 ? Math.hypot(p[0] - a[0], p[1] - a[1]) : Math.abs(dy * p[0] - dx * p[1] + b[0] * a[1] - b[1] * a[0]) / L; };
+      const rec = (s2, e) => { let idx = -1, mx = 0;
+        for (let i = s2 + 1; i < e; i++) { const dd = d(pts[i], pts[s2], pts[e]); if (dd > mx) { mx = dd; idx = i; } }
+        return mx > tol ? [...rec(s2, idx), ...rec(idx, e).slice(1)] : [pts[s2], pts[e]]; };
+      return rec(0, pts.length - 1);
+    };
+    const draw = () => {
+      fitC(cv, ctx, W, H); const S = +q(".gn-s").value, showOrig = q(".gn-o").checked;
+      const tol = { 50000: 0, 250000: 0.6, 1000000: 2.2, 5000000: 6 }[S];
+      const show = { 50000: ["ខេត្ត", "ស្រុក", "ឃុំ", "ភូមិ", "ផ្លូវគ្រប់ថ្នាក់", "ស្ទឹងតូច", "ស្លាកភូមិ"],
+        250000: ["ខេត្ត", "ស្រុក", "ទីរួមស្រុក", "ផ្លូវជាតិ និងខេត្ត", "ស្ទឹងធំ", "ស្លាកស្រុក"],
+        1000000: ["ខេត្ត", "ទីរួមខេត្ត", "ផ្លូវជាតិ", "ទន្លេធំ", "ស្លាកខេត្ត"],
+        5000000: ["ព្រំប្រទេស", "រាជធានី", "ទន្លេមេគង្គ និងទន្លេសាប"] }[S];
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      const sc = 1.05, ox = 15, oy = 25;
+      let orig = 0, kept = 0;
+      D.prov.forEach((p) => { p.r.forEach((ring) => { orig += ring.length;
+        if (showOrig && tol > 0) { ctx.beginPath(); ring.forEach(([x, y], i) => (i ? ctx.lineTo(ox + x * sc, oy + y * sc) : ctx.moveTo(ox + x * sc, oy + y * sc)));
+          ctx.closePath(); ctx.strokeStyle = "#e0e0e0"; ctx.lineWidth = 1; ctx.stroke(); }
+        const sp = simplify(ring, tol); kept += sp.length;
+        ctx.beginPath(); sp.forEach(([x, y], i) => (i ? ctx.lineTo(ox + x * sc, oy + y * sc) : ctx.moveTo(ox + x * sc, oy + y * sc)));
+        ctx.closePath(); ctx.fillStyle = "rgba(38,166,154,.18)"; ctx.fill(); ctx.strokeStyle = "#00695c"; ctx.lineWidth = 1.1; ctx.stroke(); }); });
+      ctx.font = `12px ${font()}`; ctx.fillStyle = "#333"; ctx.fillText("អ្វីដែលបង្ហាញនៅមាត្រដ្ឋាននេះ៖", 350, 40);
+      show.forEach((t, i) => { ctx.fillStyle = "#2e7d32"; ctx.fillText("✓", 352, 66 + i * 21); ctx.fillStyle = "#333"; ctx.fillText(t, 372, 66 + i * 21); });
+      out.innerHTML = `ចំណុចកំពូល៖ <b>${fmtN(orig)}</b> → <b>${fmtN(kept)}</b> (${fmtN((100 * kept) / orig, 0)}%) · មាត្រដ្ឋាន ១ : ${fmtN(S)}<br>` +
+        `<span class="sim-hint">មាត្រដ្ឋានតូច ត្រូវការទាំងការធ្វើឲ្យខ្សែសាមញ្ញ ទាំងការជ្រើសរើសស្រទាប់ និងស្លាក។ ការធ្វើឲ្យទូទៅមិនមែនជាការបាត់បង់គុណភាពទេ បើធ្វើដោយមានក្បួន។</span>`;
+    };
+    el.querySelectorAll("select,input").forEach((x) => x.addEventListener("change", draw)); draw();
+    window.addEventListener("resize", () => el.isConnected && draw());
+  };
 })();

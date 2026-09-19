@@ -558,4 +558,140 @@
     el.querySelectorAll(".sy-t button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".sy-t button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
     q(".sy-d").onchange = draw; draw(); window.addEventListener("resize", () => el.isConnected && draw());
   };
+
+  /* ---------- L11 · Isolines from point observations ---------- */
+  window.EXTRA_SIMS["isoline"] = (el) => {
+    const { cv, ctx, out, q } = shellC(el, "ខ្សែអ៊ីសូលីន៖ ពីស្ថានីយ៍ទៅផែនទី",
+      `<label>ចន្លោះខ្សែ <select class="is-i"><option>25</option><option selected>50</option><option>100</option></select> មម</label>
+       <label><input type="checkbox" class="is-t" checked> ពណ៌តាមកម្រិត</label>
+       <label><input type="checkbox" class="is-p" checked> បង្ហាញស្ថានីយ៍</label>
+       <span class="sim-hint">អូសស្ថានីយ៍ · ចុចទ្វេដងលើផែនទី ដើម្បីបន្ថែមស្ថានីយ៍ថ្មី</span>`);
+    let ST = [[0.18, 0.75, 1750], [0.45, 0.85, 1400], [0.72, 0.72, 1250], [0.30, 0.45, 1600], [0.62, 0.40, 1150], [0.85, 0.25, 2100], [0.14, 0.20, 1900]];
+    const W = 640, H = 340, M = 300, ox = 12, oy = 18;
+    let drag = null;
+    const idw = (u, v) => { let a = 0, b = 0;
+      for (const [x, y, z] of ST) { const d2 = (u - x) ** 2 + (v - y) ** 2; if (d2 < 1e-9) return z; const w = 1 / d2; a += w * z; b += w; }
+      return a / b; };
+    const draw = () => {
+      fitC(cv, ctx, W, H); const iv = +q(".is-i").value;
+      const zs = ST.map((s2) => s2[2]), zmin = Math.min(...zs), zmax = Math.max(...zs);
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      if (q(".is-t").checked) { const st = 4; for (let py = 0; py < M; py += st) for (let px = 0; px < M; px += st) {
+        const z = idw(px / M, 1 - py / M); ctx.fillStyle = ramp((z - zmin) / (zmax - zmin), [[247, 251, 255], [198, 219, 239], [107, 174, 214], [33, 113, 181], [8, 48, 107]]); ctx.fillRect(ox + px, oy + py, st, st); } }
+      const n = 90, lo = Math.ceil(zmin / iv) * iv;
+      for (let lev = lo; lev <= zmax; lev += iv) {
+        ctx.beginPath();
+        for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+          const u0 = j / n, v0 = 1 - i / n, u1 = (j + 1) / n, v1 = 1 - (i + 1) / n;
+          const a = idw(u0, v0), b = idw(u1, v0), c = idw(u1, v1), d = idw(u0, v1);
+          const P = [[a, b, u0, v0, u1, v0], [b, c, u1, v0, u1, v1], [c, d, u1, v1, u0, v1], [d, a, u0, v1, u0, v0]], pts = [];
+          P.forEach(([p1, p2, ux, uy, vx, vy]) => { if ((p1 - lev) * (p2 - lev) < 0) { const t = (lev - p1) / (p2 - p1); pts.push([ux + (vx - ux) * t, uy + (vy - uy) * t]); } });
+          if (pts.length >= 2) { ctx.moveTo(ox + pts[0][0] * M, oy + (1 - pts[0][1]) * M); ctx.lineTo(ox + pts[1][0] * M, oy + (1 - pts[1][1]) * M); }
+        }
+        ctx.strokeStyle = lev % (iv * 2) === 0 ? "#0d47a1" : "rgba(13,71,161,.6)"; ctx.lineWidth = lev % (iv * 2) === 0 ? 1.7 : 0.9; ctx.stroke();
+        const uu = 0.5, vv = (lev - zmin) / (zmax - zmin);
+      }
+      ctx.strokeStyle = "#555"; ctx.lineWidth = 1; ctx.strokeRect(ox, oy, M, M);
+      ctx.font = `12px ${font()}`;
+      if (q(".is-p").checked) ST.forEach(([x, y, z]) => { const px = ox + x * M, py = oy + (1 - y) * M;
+        ctx.beginPath(); ctx.arc(px, py, 5, 0, 7); ctx.fillStyle = "#c62828"; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.fillStyle = "#333"; ctx.fillText(kh(z), px + 8, py + 4); });
+      // legend
+      ctx.fillStyle = "#333"; ctx.fillText("ទឹកភ្លៀងឆ្នាំ (មម · ទិន្នន័យគំរូ)", 340, 40);
+      const levs = []; for (let lev = lo; lev <= zmax; lev += iv) levs.push(lev);
+      levs.slice(0, 8).forEach((lev, i) => { const y = 62 + i * 20;
+        ctx.strokeStyle = lev % (iv * 2) === 0 ? "#0d47a1" : "rgba(13,71,161,.6)"; ctx.lineWidth = lev % (iv * 2) === 0 ? 1.7 : 0.9;
+        ctx.beginPath(); ctx.moveTo(340, y); ctx.lineTo(370, y); ctx.stroke(); ctx.fillStyle = "#333"; ctx.fillText(kh(lev) + " មម", 378, y + 4); });
+      out.innerHTML = `ស្ថានីយ៍ <b>${kh(ST.length)}</b> · តម្លៃពី <b>${kh(zmin)}</b> ដល់ <b>${kh(zmax)} មម</b> · ចន្លោះខ្សែ ${kh(iv)} មម` +
+        `<br><span class="sim-hint">ខ្សែអ៊ីសូលីនគណនាដោយ IDW ពីស្ថានីយ៍។ តំបន់ដែលឆ្ងាយពីស្ថានីយ៍ មិនច្បាស់ ទោះខ្សែមើលទៅរលោង។</span>`;
+    };
+    const pos = (e) => { const r = cv.getBoundingClientRect(), s2 = r.width / W; return [(e.clientX - r.left) / s2, (e.clientY - r.top) / s2]; };
+    cv.addEventListener("pointerdown", (e) => { const [x, y] = pos(e);
+      ST.forEach((s2, i) => { if (Math.hypot(x - (ox + s2[0] * M), y - (oy + (1 - s2[1]) * M)) < 12) drag = i; }); });
+    cv.addEventListener("pointermove", (e) => { if (drag === null) return; const [x, y] = pos(e);
+      ST[drag][0] = clamp((x - ox) / M, 0, 1); ST[drag][1] = clamp(1 - (y - oy) / M, 0, 1); draw(); });
+    cv.addEventListener("pointerup", () => (drag = null));
+    cv.addEventListener("dblclick", (e) => { const [x, y] = pos(e); const u = (x - ox) / M, v = 1 - (y - oy) / M;
+      if (u > 0 && u < 1 && v > 0 && v < 1) { ST.push([u, v, Math.round(idw(u, v) / 50) * 50]); draw(); } });
+    el.querySelectorAll("select,input").forEach((x) => x.addEventListener("change", draw));
+    draw(); window.addEventListener("resize", () => el.isConnected && draw());
+  };
+
+  /* ---------- L12 · Flow maps ---------- */
+  window.EXTRA_SIMS["flow"] = async (el) => {
+    const D = await load();
+    const { cv, ctx, out, q } = shellC(el, "ផែនទីលំហូរ៖ ទទឹងបន្ទាត់ និងភាពអានបាន",
+      `<span class="sim-seg fl-s"><button type="button" data-s="sqrt" class="on">ទទឹង ∝ √តម្លៃ</button><button type="button" data-s="lin">ទទឹង ∝ តម្លៃ</button></span>
+       <label><input type="checkbox" class="fl-c" checked> បន្ទាត់កោង</label>
+       <label>បង្ហាញលំហូរធំជាង <b class="fl-tv"></b> <input type="range" class="fl-t" min="0" max="80" value="0" step="5"></label>`);
+    const W = 640, H = 340;
+    const centre = (p) => { let sx = 0, sy = 0, n = 0; p.r.forEach((ring) => ring.forEach(([x, y]) => { sx += x; sy += y; n++; })); return [sx / n, sy / n]; };
+    const dest = D.prov.find((p) => p.en === "Phnom Penh") || D.prov[0];
+    const flows = D.prov.filter((p) => p !== dest).map((p, i) => ({ p, v: Math.round(((p.pop / 1000) * (0.4 + ((i * 37) % 60) / 100)) / 10) }));
+    const draw = () => {
+      fitC(cv, ctx, W, H); const mode = el.querySelector(".fl-s .on").dataset.s, curved = q(".fl-c").checked, th = +q(".fl-t").value;
+      q(".fl-tv").textContent = kh(th) + "";
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      const sc = 1.05, ox = 10, oy = 18;
+      drawShapes(ctx, D.prov, ox, oy, sc, () => "#f5f5f0", "#dcdcdc", 0.7);
+      const [dx, dy] = centre(dest), DX = ox + dx * sc, DY = oy + dy * sc;
+      const mx = Math.max(...flows.map((f) => f.v));
+      flows.filter((f) => f.v >= th).forEach((f) => { const [cx, cy] = centre(f.p), X = ox + cx * sc, Y = oy + cy * sc;
+        const w = mode === "sqrt" ? 9 * Math.sqrt(f.v / mx) : 9 * (f.v / mx);
+        ctx.beginPath(); ctx.moveTo(X, Y);
+        if (curved) { const mxp = (X + DX) / 2 + (DY - Y) * 0.16, myp = (Y + DY) / 2 + (X - DX) * 0.16; ctx.quadraticCurveTo(mxp, myp, DX, DY); }
+        else ctx.lineTo(DX, DY);
+        ctx.strokeStyle = "rgba(230,81,0,.6)"; ctx.lineWidth = Math.max(0.4, w); ctx.lineCap = "round"; ctx.stroke(); });
+      ctx.beginPath(); ctx.arc(DX, DY, 6, 0, 7); ctx.fillStyle = "#1565c0"; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
+      ctx.font = `12px ${font()}`; ctx.fillStyle = "#333"; ctx.fillText("ភ្នំពេញ", DX + 10, DY - 8);
+      ctx.fillText("ទទឹងបន្ទាត់ = ចំនួនលំហូរ", 350, 44);
+      [mx, Math.round(mx / 2), Math.round(mx / 6)].forEach((v, i) => { const y = 70 + i * 34, w = mode === "sqrt" ? 9 * Math.sqrt(v / mx) : 9 * (v / mx);
+        ctx.strokeStyle = "rgba(230,81,0,.6)"; ctx.lineWidth = Math.max(0.4, w); ctx.beginPath(); ctx.moveTo(350, y); ctx.lineTo(392, y); ctx.stroke();
+        ctx.fillStyle = "#333"; ctx.fillText(fmtN(v * 100) + " នាក់", 402, y + 4); });
+      const shown = flows.filter((f) => f.v >= th).length;
+      out.innerHTML = `បង្ហាញលំហូរ <b>${kh(shown)}</b> ក្នុងចំណោម ${kh(flows.length)} · ` +
+        (mode === "sqrt" ? "ទទឹង ∝ √តម្លៃ៖ លំហូរតូចនៅតែមើលឃើញ ហើយលំហូរធំមិនលេបផែនទី។" : "ទទឹង ∝ តម្លៃ៖ លំហូរធំក្រាស់ពេក ហើយលំហូរតូចស្ទើរបាត់។") +
+        `<br><span class="sim-hint">ទិន្នន័យលំហូរនេះជាតម្លៃគំរូសម្រាប់បង្រៀន មិនមែនស្ថិតិចំណាកស្រុកពិតទេ។ ការត្រងលំហូរតូច ធ្វើឲ្យផែនទីអានបាន ប៉ុន្តែលាក់ព័ត៌មាន។</span>`;
+    };
+    el.querySelectorAll(".fl-s button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".fl-s button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
+    el.querySelectorAll("input").forEach((x) => x.addEventListener("input", draw));
+    draw(); window.addEventListener("resize", () => el.isConnected && draw());
+  };
+
+  /* ---------- L12 · Bivariate choropleth ---------- */
+  window.EXTRA_SIMS["bivariate"] = async (el) => {
+    const K = await loadKC();
+    const { cv, ctx, out, q } = shellC(el, "ផែនទីពីរអថេរ៖ ដង់ស៊ីតេ × អក្ខរកម្ម (កំពង់ឆ្នាំង ២០០៨)",
+      `<span class="sim-seg bv-m"><button type="button" data-m="bi" class="on">ពីរអថេរ</button><button type="button" data-m="dens">ដង់ស៊ីតេតែម្នាក់ឯង</button><button type="button" data-m="lit">អក្ខរកម្មតែម្នាក់ឯង</button></span>`);
+    const W = 640, H = 350;
+    const BI = [["#e8e8e8", "#b8d6be", "#73ae80"], ["#e4acac", "#ad9ea5", "#6c83b5"], ["#c85a5a", "#985356", "#2a5a5b"]];
+    const ter = (vals) => { const v = vals.slice().sort((a, b) => a - b); return [v[Math.floor(v.length / 3)], v[Math.floor((2 * v.length) / 3)]]; };
+    const draw = () => {
+      fitC(cv, ctx, W, H); const m = el.querySelector(".bv-m .on").dataset.m;
+      const dens = K.comm.map((c) => c.dens), lit = K.comm.map((c) => c.lit);
+      const [d1, d2] = ter(dens), [l1, l2] = ter(lit);
+      const idx = (v, a, b) => (v < a ? 0 : v < b ? 1 : 2);
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      const sc = Math.min(300 / K.W, 300 / K.H);
+      drawShapes(ctx, K.comm, 15, 20, sc, (c) => m === "bi" ? BI[idx(c.dens, d1, d2)][idx(c.lit, l1, l2)]
+        : m === "dens" ? pick("seq", 3, idx(c.dens, d1, d2)) : pick("seq", 3, idx(c.lit, l1, l2)));
+      ctx.font = `12px ${font()}`; ctx.fillStyle = "#333";
+      if (m === "bi") {
+        const gx = 380, gy = 80, cs = 34;
+        for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) { ctx.fillStyle = BI[i][j]; ctx.fillRect(gx + j * cs, gy + (2 - i) * cs, cs, cs); ctx.strokeStyle = "#fff"; ctx.strokeRect(gx + j * cs, gy + (2 - i) * cs, cs, cs); }
+        ctx.fillStyle = "#333"; ctx.fillText("អក្ខរកម្ម →", gx, gy + 3 * cs + 18); ctx.save(); ctx.translate(gx - 12, gy + 3 * cs); ctx.rotate(-Math.PI / 2); ctx.fillText("ដង់ស៊ីតេ →", 0, 0); ctx.restore();
+        ctx.fillText("ក្រឡា ៩ = ការផ្សំនៃថ្នាក់បី × បី", gx - 10, gy - 16);
+      } else {
+        const lab = m === "dens" ? ["ទាប", "មធ្យម", "ខ្ពស់"] : ["ទាប", "មធ្យម", "ខ្ពស់"];
+        lab.forEach((t, i) => { ctx.fillStyle = pick("seq", 3, i); ctx.fillRect(380, 90 + i * 26, 24, 18); ctx.strokeStyle = "#999"; ctx.strokeRect(380, 90 + i * 26, 24, 18); ctx.fillStyle = "#333"; ctx.fillText(t, 412, 104 + i * 26); });
+        ctx.fillText(m === "dens" ? "ដង់ស៊ីតេ (នាក់/គម²)" : "អក្ខរកម្ម (%)", 380, 72);
+      }
+      const both = K.comm.filter((c) => idx(c.dens, d1, d2) === 0 && idx(c.lit, l1, l2) === 0).length;
+      out.innerHTML = m === "bi"
+        ? `ឃុំ <b>${kh(both)}</b> មានទាំងដង់ស៊ីតេទាប ទាំងអក្ខរកម្មទាប។ ផែនទីពីរអថេរបង្ហាញការផ្សំ ប៉ុន្តែត្រូវការសញ្ញាសម្គាល់ផែនទី ៩ ក្រឡា ដែលអ្នកអានត្រូវរៀនអាន។`
+        : `ផែនទីអថេរតែមួយងាយអានជាង ប៉ុន្តែត្រូវការផែនទីពីរ ដើម្បីមើលការផ្សំ។ សាកល្បងប្ដូរទៅ «ពីរអថេរ»។`;
+    };
+    el.querySelectorAll(".bv-m button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".bv-m button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
+    draw(); window.addEventListener("resize", () => el.isConnected && draw());
+  };
 })();

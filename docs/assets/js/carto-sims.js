@@ -21,7 +21,7 @@
 
   /* ---------- Map elements: what can a reader answer? ---------- */
   window.EXTRA_SIMS["map-elements"] = async (el) => {
-    const EL = [["title", "ចំណងជើង"], ["legend", "សញ្ញាសម្គាល់ផែនទី"], ["scale", "របារមាត្រដ្ឋាន"], ["north", "សញ្ញាព្រួញទិស"], ["source", "ប្រភព និងឆ្នាំ"], ["inset", "ផែនទីទីតាំង"]];
+    const EL = [["title", "ចំណងជើង"], ["legend", "សញ្ញាសម្គាល់ផែនទី"], ["scale", "របារមាត្រដ្ឋាន"], ["north", "សញ្ញាព្រួញទិស"], ["source", "ប្រភព និងឆ្នាំ"], ["inset", "ផែនទីទីតាំង"], ["grid", "ក្រឡាចត្រង្គ UTM"]];
     const Q = [
       ["ផែនទីនេះនិយាយអំពីអ្វី?", ["title"]],
       ["ពណ៌ក្រហមដិតមានន័យអ្វី?", ["legend"]],
@@ -29,6 +29,7 @@
       ["ខេត្តរតនគិរីនៅទិសណានៃខេត្តកំពង់ចាម?", ["north"]],
       ["តួលេខនេះជាឆ្នាំណា ហើយទុកចិត្តបានទេ?", ["source"]],
       ["តំបន់នេះនៅកន្លែងណាក្នុងអាស៊ីអាគ្នេយ៍?", ["inset"]],
+      ["ខេត្តកំពង់ធំមានកូអរដោនេ UTM ប្រហែលប៉ុន្មាន?", ["grid"]],
     ];
     el.innerHTML = `<div class="sim-title">ធាតុផែនទី៖ អ្នកអានអាចឆ្លើយសំណួរអ្វីខ្លះ?</div>
       <div class="sim-controls">${EL.map(([k, n]) => `<label><input type="checkbox" data-k="${k}"> ${n}</label>`).join("")}
@@ -36,19 +37,29 @@
       <div class="sim-body"><div class="sim-canvas-wrap me-map"></div><div class="me-q"></div></div>
       <div class="sim-out"></div>`;
     const D = await load(), I = await loadInset();
-    const W = 640, H = 470, k = 1.35, ox = 40, oy = 70;
+    const W = 640, H = 500, k = 1.35, ox = 40, oy = 70;
     const on = {};
     const draw = () => {
       el.querySelectorAll(".sim-controls input").forEach((c) => (on[c.dataset.k] = c.checked));
       const provs = D.prov.map((p) => `<path d="${pd(p.r, ox, oy, k)}" fill="${col(p.dens)}" stroke="#fff" stroke-width=".7"><title>${p.name} · ${kh(p.dens)} នាក់/គម²</title></path>`).join("");
+      const B = D.bounds || [211418, 1144592, 784615, 1625605], MW = D.W * k, MH = D.H * k;
+      let gridSvg = "";
+      if (on.grid) {
+        const ex = (E) => ox + ((E - B[0]) / (B[2] - B[0])) * MW, ny = (N) => oy + ((B[3] - N) / (B[3] - B[1])) * MH;
+        for (let E = Math.ceil(B[0] / 1e5) * 1e5; E < B[2]; E += 1e5) { const x = ex(E);
+          gridSvg += `<line x1="${x}" y1="${oy}" x2="${x}" y2="${oy + MH}" stroke="#90a4ae" stroke-width=".7" stroke-dasharray="4 4"/><text x="${x}" y="${oy + MH + 14}" font-size="11" text-anchor="middle" fill="#546e7a">${kh(Math.round(E / 1000))}</text>`; }
+        for (let N = Math.ceil(B[1] / 1e5) * 1e5; N < B[3]; N += 1e5) { const y = ny(N);
+          gridSvg += `<line x1="${ox}" y1="${y}" x2="${ox + MW}" y2="${y}" stroke="#90a4ae" stroke-width=".7" stroke-dasharray="4 4"/><text x="${ox - 4}" y="${y + 4}" font-size="11" text-anchor="end" fill="#546e7a">${kh(Math.round(N / 1000))}</text>`; }
+        gridSvg += `<rect x="${ox}" y="${oy}" width="${MW}" height="${MH}" fill="none" stroke="#607d8b"/><text x="${ox}" y="${oy + MH + 30}" font-size="11" fill="#546e7a">គីឡូម៉ែត្រ E និង N · UTM 48N</text>`;
+      }
       const seg = (360 / 573.2) * 50 * (k / 1.2);
       let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;background:#fff;border:1px solid #bbb;border-radius:4px">
-        <style>text{font-family:var(--md-text-font-family,'Battambang');fill:#212121}</style>${provs}`;
+        <style>text{font-family:var(--md-text-font-family,'Battambang');fill:#212121}</style>${provs}${gridSvg}`;
       if (on.title) svg += `<rect x="20" y="14" width="${W - 40}" height="40" fill="#e8eaf6"/><text x="${W / 2}" y="41" text-anchor="middle" font-size="17" font-weight="700">ដង់ស៊ីតេប្រជាជនតាមខេត្ត ឆ្នាំ ២០១៧</text>`;
       if (on.legend) svg += `<text x="512" y="222" font-size="12" font-weight="700">នាក់/គម²</text>` + LAB.map((l, i) => `<rect x="512" y="${230 + i * 18}" width="14" height="13" fill="${PAL[i]}" stroke="#999"/><text x="532" y="${241 + i * 18}" font-size="12">${l}</text>`).join("");
-      if (on.scale) svg += [0, 1, 2, 3].map((i) => `<rect x="${50 + i * seg}" y="${H - 58}" width="${seg}" height="6" fill="${i % 2 ? "#fff" : "#212121"}" stroke="#212121"/>`).join("") + ["០", "៥០", "១០០", "១៥០", "២០០ គម"].map((t, i) => `<text x="${50 + i * seg}" y="${H - 38}" font-size="11" text-anchor="${i < 4 ? "middle" : "start"}">${t}</text>`).join("");
+      if (on.scale) svg += [0, 1, 2, 3].map((i) => `<rect x="${50 + i * seg}" y="${H - 42}" width="${seg}" height="6" fill="${i % 2 ? "#fff" : "#212121"}" stroke="#212121"/>`).join("") + ["០", "៥០", "១០០", "១៥០", "២០០ គម"].map((t, i) => `<text x="${50 + i * seg}" y="${H - 22}" font-size="11" text-anchor="${i < 4 ? "middle" : "start"}">${t}</text>`).join("");
       if (on.north) svg += `<g transform="translate(${W - 50} ${H - 90})"><path d="M0 -24 L8 6 L0 0 L-8 6Z" fill="#212121"/><text x="0" y="22" text-anchor="middle" font-size="13">ជ</text></g>`;
-      if (on.source) svg += `<text x="24" y="${H - 12}" font-size="11">ប្រភព៖ Kh_Province_Boundary (POP2017) · EPSG:32648 · រៀបចំ ២០២៦</text>`;
+      if (on.source) svg += `<text x="50" y="${H - 4}" font-size="11">ប្រភព៖ Kh_Province_Boundary (POP2017) · EPSG:32648 · រៀបចំ ២០២៦</text>`;
       if (on.inset) { const ix = 512, iy = 70, ik = 1.15;
         svg += `<g><rect x="${ix}" y="${iy}" width="${100 * ik}" height="${100 * ik}" fill="#f2f2f2" stroke="#757575"/>` +
           `<path d="${pd(I.sea, ix, iy, ik)}" fill="#a6cee3"/><path d="${pd(I.land, ix, iy, ik)}" fill="#d9d9d9" stroke="#9e9e9e" stroke-width=".4"/>` +

@@ -133,7 +133,10 @@
   };
 
   /* ---------- L3 · Projection & Tissot indicatrix ---------- */
-  window.EXTRA_SIMS["projection"] = (el) => {
+  let wcache = null;
+  const loadWorld = async () => wcache || (wcache = await (await fetch(new URL("../../assets/data/world_land.json", location.href))).json());
+  window.EXTRA_SIMS["projection"] = async (el) => {
+    const WLD = await loadWorld();
     const P = {
       plate: ["Plate Carrée (EPSG:4326 ជាប្លង់)", (l, p) => [l, p], "រក្សាចម្ងាយតាមខ្សែមេរីឌាន ប៉ុន្តែផ្ទៃ និងរាងខូច កាន់តែខ្លាំងទៅប៉ូល។"],
       merc: ["Mercator (Web Mercator)", (l, p) => [l, (180 / Math.PI) * Math.log(Math.tan(Math.PI / 4 + (Math.min(Math.abs(p), 84) * Math.sign(p) * Math.PI) / 360))], "រក្សារាង (conformal) ប៉ុន្តែផ្ទៃរីកធំខ្លាំងទៅប៉ូល។ កម្ពុជាធំជាងពិតប្រហែល ៦%។"],
@@ -149,7 +152,13 @@
       const ymax = key === "merc" ? f(0, 84)[1] : key === "equal" ? f(0, 90)[1] : 90;
       const sc = Math.min((W / 2 - 16) / 180, (H / 2 - 16) / ymax);   // same scale on both axes: shapes stay honest
       const X = (l) => W / 2 + l * sc, Y = (y) => H / 2 - y * sc;
-      ctx.fillStyle = "#e3f2fd"; ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = "#dbeafe"; ctx.fillRect(0, 0, W, H);
+      // land (real coastlines, projected the same way as the graticule)
+      ctx.fillStyle = "#cfd8c8"; ctx.strokeStyle = "#9aa88f"; ctx.lineWidth = 0.6;
+      WLD.land.forEach((ring) => { ctx.beginPath();
+        ring.forEach(([lo, la], i) => { const [x, y] = f(lo, Math.max(-84, Math.min(84, la)));
+          i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); });
+        ctx.closePath(); ctx.fill(); ctx.stroke(); });
       ctx.strokeStyle = "#90a4ae"; ctx.lineWidth = 0.7;
       for (let l = -180; l <= 180; l += 30) { ctx.beginPath(); for (let p = -84; p <= 84; p += 2) { const [x, y] = f(l, p); p === -84 ? ctx.moveTo(X(x), Y(y)) : ctx.lineTo(X(x), Y(y)); } ctx.stroke(); }
       for (let p = -75; p <= 75; p += 15) { ctx.beginPath(); for (let l = -180; l <= 180; l += 3) { const [x, y] = f(l, p); l === -180 ? ctx.moveTo(X(x), Y(y)) : ctx.lineTo(X(x), Y(y)); } ctx.stroke(); }
@@ -158,7 +167,7 @@
       for (let p = -60; p <= 60; p += 30) for (let l = -150; l <= 150; l += 60) {
         ctx.beginPath();
         for (let a = 0; a <= 360; a += 10) { const t = (a * Math.PI) / 180, pp = p + r * Math.sin(t), ll = l + (r * Math.cos(t)) / Math.cos((pp * Math.PI) / 180); const [x, y] = f(ll, pp); a ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); }
-        ctx.fillStyle = "rgba(230,81,0,.35)"; ctx.fill(); ctx.strokeStyle = "#e65100"; ctx.lineWidth = 1; ctx.stroke();
+        ctx.fillStyle = "rgba(230,81,0,.42)"; ctx.fill(); ctx.strokeStyle = "#bf360c"; ctx.lineWidth = 1; ctx.stroke();
       }
       const [kx, ky] = f(105, 12.5); ctx.beginPath(); ctx.arc(X(kx), Y(ky), 5, 0, 7); ctx.fillStyle = "#c62828"; ctx.fill();
       ctx.font = `12px ${font()}`; ctx.fillStyle = "#b71c1c"; ctx.fillText("កម្ពុជា", X(kx) + 8, Y(ky) - 6);
@@ -767,6 +776,27 @@
           ctx.beginPath(); ctx.moveTo(ix, iy + (ih * i) / 3); ctx.lineTo(ix + iw, iy + (ih * i) / 3); ctx.stroke(); } ctx.setLineDash([]); }
       const box = (x, y, w, h, fill, label, fs = 11) => { ctx.fillStyle = fill; ctx.fillRect(x, y, w, h); ctx.strokeStyle = "#cfcfcf"; ctx.strokeRect(x, y, w, h);
         ctx.fillStyle = "#555"; ctx.font = `${fs}px ${font()}`; ctx.fillText(label, x + 5, y + fs + 3); };
+      const top5 = D.prov.slice().sort((a, b) => b.dens - a.dens).slice(0, 5);
+      const legendBox = (x, y, w, h) => { box(x, y, w, h, "#fbfbfb", "សញ្ញាសម្គាល់ផែនទី (នាក់/គម²)", 10);
+        ["តិចជាង ៥០", "៥០–១០០", "១០០–២០០", "២០០–៤០០", "លើស ៤០០"].forEach((t, i) => {
+          ctx.fillStyle = pick("seq", 5, i); ctx.fillRect(x + 8, y + 20 + i * 13, 14, 10); ctx.strokeStyle = "#bbb"; ctx.strokeRect(x + 8, y + 20 + i * 13, 14, 10);
+          ctx.fillStyle = "#444"; ctx.font = `9px ${font()}`; ctx.fillText(t, x + 28, y + 29 + i * 13); }); };
+      const barChart = (x, y, w, h) => { box(x, y, w, h, "#fbfbfb", "ក្រាបសសរ៖ ដង់ស៊ីតេ ៥ ខេត្តខ្ពស់", 9);
+        const mx = top5[0].dens, bw = (w - 16) / 5;
+        top5.forEach((p, i) => { const bh = ((h - 34) * p.dens) / mx;
+          ctx.fillStyle = pick("seq", 5, 4 - i); ctx.fillRect(x + 8 + i * bw, y + h - 12 - bh, bw - 5, bh);
+          ctx.fillStyle = "#555"; ctx.font = `8px ${font()}`; ctx.fillText(kh(p.dens), x + 8 + i * bw, y + h - 15 - bh); }); };
+      const pieChart = (x, y, w, h) => { box(x, y, w, h, "#fbfbfb", "ក្រាបចំណិត៖ ខេត្តតាមតំបន់", 9);
+        const zones = {}; D.prov.forEach((p) => (zones[p.zone] = (zones[p.zone] || 0) + 1));
+        const tot = Object.values(zones).reduce((a, b) => a + b, 0); let ang = -Math.PI / 2;
+        const cx2 = x + w / 2, cy2 = y + h / 2 + 6, r = Math.min(w, h) / 2 - 16;
+        Object.entries(zones).forEach(([z, n], i) => { const a2 = (n / tot) * Math.PI * 2;
+          ctx.beginPath(); ctx.moveTo(cx2, cy2); ctx.arc(cx2, cy2, r, ang, ang + a2); ctx.closePath();
+          ctx.fillStyle = PALS.qual[i % PALS.qual.length]; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.stroke(); ang += a2; }); };
+      const tableBox = (x, y, w, h) => { box(x, y, w, h, "#fbfbfb", "តារាងលេខ", 9);
+        ctx.font = `8.5px ${font()}`;
+        top5.slice(0, 4).forEach((p, i) => { ctx.fillStyle = "#444"; ctx.fillText(p.name, x + 8, y + 26 + i * 12);
+          ctx.fillText(kh(p.dens), x + w - 34, y + 26 + i * 12); }); };
       const mapBox = (x, y, w, h) => { ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
         const sc = Math.min(w / 300, h / 252) * 0.92, offx = x + (w - 300 * sc) / 2, offy = y + (h - 252 * sc) / 2;
         drawShapes(ctx, D.prov, offx, offy, sc, (pp) => pick("seq", 5, Math.min(4, Math.floor(Math.log10(pp.dens + 1) * 1.7))));
@@ -774,28 +804,33 @@
       let notes = [];
       if (p === "good") {
         ctx.fillStyle = "#212121"; ctx.font = `bold 17px ${font()}`; ctx.fillText("ដង់ស៊ីតេប្រជាជនតាមខេត្ត ២០១៧", ix, iy + 18);
-        mapBox(ix, iy + 32, iw, ih - 120);
-        box(ix, iy + ih - 82, iw * 0.42, 52, "#f7f7f7", "សញ្ញាសម្គាល់ផែនទី");
-        box(ix + iw * 0.46, iy + ih - 82, iw * 0.24, 52, "#f7f7f7", "មាត្រដ្ឋាន · ទិស");
-        box(ix + iw * 0.74, iy + ih - 82, iw * 0.26, 52, "#f7f7f7", "ផែនទីទីតាំង");
-        ctx.fillStyle = "#666"; ctx.font = `9px ${font()}`; ctx.fillText("ប្រភព៖ Kh_Province_Boundary · EPSG:32648 · ២០២៦", ix, iy + ih - 6);
+        mapBox(ix, iy + 32, iw, ih - 146);
+        legendBox(ix, iy + ih - 106, iw * 0.42, 84);
+        box(ix + iw * 0.46, iy + ih - 106, iw * 0.24, 84, "#fbfbfb", "មាត្រដ្ឋាន · ទិស", 10);
+        [0, 1, 2, 3].forEach((i) => { ctx.fillStyle = i % 2 ? "#fff" : "#212121"; ctx.fillRect(ix + iw * 0.48 + i * 14, iy + ih - 76, 14, 6); ctx.strokeStyle = "#212121"; ctx.strokeRect(ix + iw * 0.48 + i * 14, iy + ih - 76, 14, 6); });
+        ctx.fillStyle = "#444"; ctx.font = `9px ${font()}`; ctx.fillText("០", ix + iw * 0.48, iy + ih - 60); ctx.fillText("២០០ គម", ix + iw * 0.48 + 34, iy + ih - 60);
+        ctx.fillStyle = "#212121"; ctx.beginPath(); ctx.moveTo(ix + iw * 0.62, iy + ih - 52); ctx.lineTo(ix + iw * 0.625, iy + ih - 34); ctx.lineTo(ix + iw * 0.615, iy + ih - 34); ctx.closePath(); ctx.fill();
+        box(ix + iw * 0.74, iy + ih - 106, iw * 0.26, 84, "#fbfbfb", "ផែនទីទីតាំង", 10);
+        ctx.save(); ctx.translate(ix + iw * 0.76, iy + ih - 88); ctx.scale(0.13, 0.13);
+        drawShapes(ctx, D.prov, 0, 0, 1, () => "#c9d6e8", "#9fb0c9", 2); ctx.restore();
+        ctx.fillStyle = "#666"; ctx.font = `9px ${font()}`; ctx.fillText("ប្រភព៖ Kh_Province_Boundary · EPSG:32648 · ២០២៦", ix, iy + ih - 8);
         notes = ["ផែនទីកាន់កាប់ផ្ទៃធំបំផុត (ប្រហែល ៦០%)", "ធាតុតម្រឹមតាមក្រឡា", "ចន្លោះទំនេរស្មើគ្នា", "ឋានានុក្រម៖ ចំណងជើង → ផែនទី → សញ្ញាសម្គាល់ → ប្រភព"];
       } else if (p === "clutter") {
         ctx.fillStyle = "#212121"; ctx.font = `bold 22px ${font()}`; ctx.fillText("ដង់ស៊ីតេប្រជាជន", ix, iy + 22);
         ctx.font = `13px ${font()}`; ctx.fillText("អត្ថបទពន្យល់វែងៗដែលអ្នកអានមិនអាន ...", ix, iy + 40);
         mapBox(ix, iy + 48, iw * 0.62, ih - 150);
-        box(ix + iw * 0.64, iy + 48, iw * 0.36, 90, "#f1f1f1", "សញ្ញាសម្គាល់ ១");
-        box(ix + iw * 0.64, iy + 144, iw * 0.36, 70, "#f1f1f1", "សញ្ញាសម្គាល់ ២");
-        box(ix + iw * 0.64, iy + 220, iw * 0.36, 60, "#f1f1f1", "តារាងលេខ");
-        box(ix, iy + ih - 96, iw * 0.3, 40, "#f1f1f1", "ក្រាបសសរ");
-        box(ix + iw * 0.32, iy + ih - 96, iw * 0.3, 40, "#f1f1f1", "ក្រាបចំណិត");
-        box(ix + iw * 0.64, iy + ih - 96, iw * 0.36, 40, "#f1f1f1", "រូបភាព");
-        box(ix, iy + ih - 50, iw, 40, "#f1f1f1", "អត្ថបទបន្ថែម + ស្លាកស្មុគស្មាញ");
+        legendBox(ix + iw * 0.64, iy + 48, iw * 0.36, 90);
+        legendBox(ix + iw * 0.64, iy + 144, iw * 0.36, 70);
+        tableBox(ix + iw * 0.64, iy + 220, iw * 0.36, 62);
+        barChart(ix, iy + ih - 100, iw * 0.3, 60);
+        pieChart(ix + iw * 0.32, iy + ih - 100, iw * 0.3, 60);
+        box(ix + iw * 0.64, iy + ih - 100, iw * 0.36, 60, "#eeeeee", "រូបភាព", 9);
+        box(ix, iy + ih - 52, iw, 30, "#f1f1f1", "អត្ថបទបន្ថែម + ស្លាកស្មុគស្មាញ", 10);
         notes = ["ផែនទីតូចជាងធាតុផ្សេង", "ធាតុច្រើនពេក ភ្នែកមិនដឹងមើលណាមុន", "គ្មានឋានានុក្រមច្បាស់"];
       } else {
         ctx.fillStyle = "#212121"; ctx.font = `bold 17px ${font()}`; ctx.fillText("ដង់ស៊ីតេប្រជាជនតាមខេត្ត ២០១៧", ix, iy + 18);
         mapBox(ix, iy + 30, iw * 0.58, ih * 0.55);
-        box(ix, iy + ih - 60, iw * 0.3, 44, "#f7f7f7", "សញ្ញាសម្គាល់ផែនទី");
+        legendBox(ix, iy + ih - 96, iw * 0.34, 86);
         notes = ["ធាតុប្រមូលផ្ដុំខាងឆ្វេងខាងលើ", "ចន្លោះទំនេរធំនៅខាងស្ដាំ និងខាងក្រោម", "ទំហំផែនទីមិនប្រើផ្ទៃក្រដាសឲ្យអស់"];
       }
       out.innerHTML = notes.map((n) => `• ${n}`).join("<br>") +
@@ -806,41 +841,32 @@
   };
 
   /* ---------- L15 · Generalisation by scale ---------- */
+  let gcache = null;
+  const loadGen = async () => gcache || (gcache = await (await fetch(new URL("../../assets/data/generalise_levels.json", location.href))).json());
   window.EXTRA_SIMS["generalise"] = async (el) => {
-    const D = await load();
+    const G = await loadGen();
     const { cv, ctx, out, q } = shellC(el, "ការធ្វើឲ្យទូទៅ៖ មាត្រដ្ឋានកំណត់អ្វីដែលបង្ហាញ",
       `<label>មាត្រដ្ឋាន ១ : <select class="gn-s"><option value="50000">៥០ ០០០</option><option value="250000">២៥០ ០០០</option><option value="1000000" selected>១ ០០០ ០០០</option><option value="5000000">៥ ០០០ ០០០</option></select></label>
-       <label><input type="checkbox" class="gn-o" checked> បង្ហាញខ្សែដើម (ស្រាល)</label>`);
+       <label><input type="checkbox" class="gn-o" checked> បង្ហាញខ្សែលម្អិត ១ : ៥០ ០០០ (ស្រាល)</label>`);
     const W = 640, H = 340;
-    const simplify = (pts, tol) => { // Douglas-Peucker
-      if (pts.length < 3 || tol <= 0) return pts;
-      const d = (p, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy);
-        return L === 0 ? Math.hypot(p[0] - a[0], p[1] - a[1]) : Math.abs(dy * p[0] - dx * p[1] + b[0] * a[1] - b[1] * a[0]) / L; };
-      const rec = (s2, e) => { let idx = -1, mx = 0;
-        for (let i = s2 + 1; i < e; i++) { const dd = d(pts[i], pts[s2], pts[e]); if (dd > mx) { mx = dd; idx = i; } }
-        return mx > tol ? [...rec(s2, idx), ...rec(idx, e).slice(1)] : [pts[s2], pts[e]]; };
-      return rec(0, pts.length - 1);
-    };
+    const show = { 50000: ["ខេត្ត", "ស្រុក", "ឃុំ", "ភូមិ", "ផ្លូវគ្រប់ថ្នាក់", "ស្ទឹងតូច", "ស្លាកភូមិ"],
+      250000: ["ខេត្ត", "ស្រុក", "ទីរួមស្រុក", "ផ្លូវជាតិ និងខេត្ត", "ស្ទឹងធំ", "ស្លាកស្រុក"],
+      1000000: ["ខេត្ត", "ទីរួមខេត្ត", "ផ្លូវជាតិ", "ទន្លេធំ", "ស្លាកខេត្ត"],
+      5000000: ["ព្រំប្រទេស", "រាជធានី", "ទន្លេមេគង្គ និងទន្លេសាប"] };
+    const drawRings = (rings, ox, oy, sc, stroke, fill, lw) => rings.forEach((r) => { ctx.beginPath();
+      r.forEach(([x, y], i) => (i ? ctx.lineTo(ox + x * sc, oy + y * sc) : ctx.moveTo(ox + x * sc, oy + y * sc)));
+      ctx.closePath(); if (fill) { ctx.fillStyle = fill; ctx.fill(); } ctx.strokeStyle = stroke; ctx.lineWidth = lw; ctx.stroke(); });
     const draw = () => {
-      fitC(cv, ctx, W, H); const S = +q(".gn-s").value, showOrig = q(".gn-o").checked;
-      const tol = { 50000: 0, 250000: 0.6, 1000000: 2.2, 5000000: 6 }[S];
-      const show = { 50000: ["ខេត្ត", "ស្រុក", "ឃុំ", "ភូមិ", "ផ្លូវគ្រប់ថ្នាក់", "ស្ទឹងតូច", "ស្លាកភូមិ"],
-        250000: ["ខេត្ត", "ស្រុក", "ទីរួមស្រុក", "ផ្លូវជាតិ និងខេត្ត", "ស្ទឹងធំ", "ស្លាកស្រុក"],
-        1000000: ["ខេត្ត", "ទីរួមខេត្ត", "ផ្លូវជាតិ", "ទន្លេធំ", "ស្លាកខេត្ត"],
-        5000000: ["ព្រំប្រទេស", "រាជធានី", "ទន្លេមេគង្គ និងទន្លេសាប"] }[S];
+      fitC(cv, ctx, W, H); const S = q(".gn-s").value, showOrig = q(".gn-o").checked;
+      const lev = G.levels[S], base = G.levels["50000"];
       ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
-      const sc = 1.05, ox = 15, oy = 25;
-      let orig = 0, kept = 0;
-      D.prov.forEach((p) => { p.r.forEach((ring) => { orig += ring.length;
-        if (showOrig && tol > 0) { ctx.beginPath(); ring.forEach(([x, y], i) => (i ? ctx.lineTo(ox + x * sc, oy + y * sc) : ctx.moveTo(ox + x * sc, oy + y * sc)));
-          ctx.closePath(); ctx.strokeStyle = "#e0e0e0"; ctx.lineWidth = 1; ctx.stroke(); }
-        const sp = simplify(ring, tol); kept += sp.length;
-        ctx.beginPath(); sp.forEach(([x, y], i) => (i ? ctx.lineTo(ox + x * sc, oy + y * sc) : ctx.moveTo(ox + x * sc, oy + y * sc)));
-        ctx.closePath(); ctx.fillStyle = "rgba(38,166,154,.18)"; ctx.fill(); ctx.strokeStyle = "#00695c"; ctx.lineWidth = 1.1; ctx.stroke(); }); });
+      const sc = Math.min(300 / G.W, 300 / G.H) * 0.98, ox = 20, oy = 25;
+      if (showOrig && S !== "50000") drawRings(base.rings, ox, oy, sc, "#dcdcdc", null, 1);
+      drawRings(lev.rings, ox, oy, sc, "#00695c", "rgba(38,166,154,.18)", 1.1);
       ctx.font = `12px ${font()}`; ctx.fillStyle = "#333"; ctx.fillText("អ្វីដែលបង្ហាញនៅមាត្រដ្ឋាននេះ៖", 350, 40);
-      show.forEach((t, i) => { ctx.fillStyle = "#2e7d32"; ctx.fillText("✓", 352, 66 + i * 21); ctx.fillStyle = "#333"; ctx.fillText(t, 372, 66 + i * 21); });
-      out.innerHTML = `ចំណុចកំពូល៖ <b>${fmtN(orig)}</b> → <b>${fmtN(kept)}</b> (${fmtN((100 * kept) / orig, 0)}%) · មាត្រដ្ឋាន ១ : ${fmtN(S)}<br>` +
-        `<span class="sim-hint">មាត្រដ្ឋានតូច ត្រូវការទាំងការធ្វើឲ្យខ្សែសាមញ្ញ ទាំងការជ្រើសរើសស្រទាប់ និងស្លាក។ ការធ្វើឲ្យទូទៅមិនមែនជាការបាត់បង់គុណភាពទេ បើធ្វើដោយមានក្បួន។</span>`;
+      show[+S].forEach((t, i) => { ctx.fillStyle = "#2e7d32"; ctx.fillText("✓", 352, 66 + i * 21); ctx.fillStyle = "#333"; ctx.fillText(t, 372, 66 + i * 21); });
+      out.innerHTML = `ចំណុចកំពូល៖ <b>${fmtN(base.n)}</b> → <b>${fmtN(lev.n)}</b> (${fmtN((100 * lev.n) / base.n, 0)}%) · មាត្រដ្ឋាន ១ : ${fmtN(+S)}<br>` +
+        `<span class="sim-hint">ខ្សែត្រូវបានធ្វើឲ្យសាមញ្ញដោយរក្សា <b>ឋានលេខា</b>៖ ព្រំរួមរវាងខេត្តពីរនៅតែជាប់គ្នា គ្មានចន្លោះ ឬការត្រួតគ្នា។ មាត្រដ្ឋានតូចក៏ត្រូវការការជ្រើសរើសស្រទាប់ និងស្លាកផងដែរ។</span>`;
     };
     el.querySelectorAll("select,input").forEach((x) => x.addEventListener("change", draw)); draw();
     window.addEventListener("resize", () => el.isConnected && draw());

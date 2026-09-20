@@ -7,8 +7,8 @@
     {
       "lesson": 1,
       "original_chars": 13569,
-      "upgraded_chars": 18574,
-      "growth_percent": 37,
+      "upgraded_chars": 18338,
+      "growth_percent": 35,
       "simulators": [
         "simplify",
         "map-elements"
@@ -19,8 +19,8 @@
     {
       "lesson": 2,
       "original_chars": 12037,
-      "upgraded_chars": 16759,
-      "growth_percent": 39,
+      "upgraded_chars": 16570,
+      "growth_percent": 38,
       "simulators": [
         "datum-shift"
       ],
@@ -30,8 +30,8 @@
     {
       "lesson": 3,
       "original_chars": 11132,
-      "upgraded_chars": 16066,
-      "growth_percent": 44,
+      "upgraded_chars": 15900,
+      "growth_percent": 43,
       "simulators": [
         "projection"
       ],
@@ -41,8 +41,8 @@
     {
       "lesson": 4,
       "original_chars": 9898,
-      "upgraded_chars": 14274,
-      "growth_percent": 44,
+      "upgraded_chars": 14128,
+      "growth_percent": 43,
       "simulators": [
         "scale",
         "zoom-scale"
@@ -53,8 +53,8 @@
     {
       "lesson": 5,
       "original_chars": 9949,
-      "upgraded_chars": 14573,
-      "growth_percent": 46,
+      "upgraded_chars": 14400,
+      "growth_percent": 45,
       "simulators": [
         "contour"
       ],
@@ -64,8 +64,8 @@
     {
       "lesson": 6,
       "original_chars": 9940,
-      "upgraded_chars": 14521,
-      "growth_percent": 46,
+      "upgraded_chars": 14385,
+      "growth_percent": 45,
       "simulators": [
         "visual-variables"
       ],
@@ -75,8 +75,8 @@
     {
       "lesson": 7,
       "original_chars": 10640,
-      "upgraded_chars": 15358,
-      "growth_percent": 44,
+      "upgraded_chars": 15185,
+      "growth_percent": 43,
       "simulators": [
         "classification"
       ],
@@ -86,8 +86,8 @@
     {
       "lesson": 8,
       "original_chars": 10028,
-      "upgraded_chars": 14613,
-      "growth_percent": 46,
+      "upgraded_chars": 14451,
+      "growth_percent": 44,
       "simulators": [
         "colour",
         "palette-lab"
@@ -98,8 +98,8 @@
     {
       "lesson": 9,
       "original_chars": 10213,
-      "upgraded_chars": 14668,
-      "growth_percent": 44,
+      "upgraded_chars": 14506,
+      "growth_percent": 42,
       "simulators": [
         "normalise",
         "unit-size"
@@ -110,8 +110,8 @@
     {
       "lesson": 10,
       "original_chars": 9797,
-      "upgraded_chars": 14255,
-      "growth_percent": 46,
+      "upgraded_chars": 14122,
+      "growth_percent": 44,
       "simulators": [
         "symbols",
         "symbol-editor"
@@ -122,8 +122,8 @@
     {
       "lesson": 11,
       "original_chars": 9599,
-      "upgraded_chars": 14105,
-      "growth_percent": 47,
+      "upgraded_chars": 13933,
+      "growth_percent": 45,
       "simulators": [
         "isoline"
       ],
@@ -133,8 +133,8 @@
     {
       "lesson": 12,
       "original_chars": 9226,
-      "upgraded_chars": 13844,
-      "growth_percent": 50,
+      "upgraded_chars": 13679,
+      "growth_percent": 48,
       "simulators": [
         "flow",
         "bivariate",
@@ -146,8 +146,8 @@
     {
       "lesson": 13,
       "original_chars": 9306,
-      "upgraded_chars": 13912,
-      "growth_percent": 49,
+      "upgraded_chars": 13773,
+      "growth_percent": 48,
       "simulators": [
         "labels",
         "label-studio"
@@ -158,8 +158,8 @@
     {
       "lesson": 14,
       "original_chars": 8930,
-      "upgraded_chars": 13469,
-      "growth_percent": 51,
+      "upgraded_chars": 13324,
+      "growth_percent": 49,
       "simulators": [
         "layout",
         "layout-studio"
@@ -170,8 +170,8 @@
     {
       "lesson": 15,
       "original_chars": 10377,
-      "upgraded_chars": 15145,
-      "growth_percent": 46,
+      "upgraded_chars": 14973,
+      "growth_percent": 44,
       "simulators": [
         "generalise",
         "web-map"

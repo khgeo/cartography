@@ -175,8 +175,14 @@
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="5">
-<figure><img src="../assets/svg/rich/05-bad.svg" alt="profile ពង្រីកបញ្ឈរដោយគ្មានអ័ក្ស ធ្វើឲ្យអ្នកអានយល់ថាភ្នំចោតខ្លាំង។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — profile ពង្រីកបញ្ឈរដោយគ្មានអ័ក្ស ធ្វើឲ្យអ្នកអានយល់ថាភ្នំចោតខ្លាំង។</figcaption></figure>
-<figure><img src="../assets/svg/rich/05-good.svg" alt="បង្ហាញអ័ក្ស ឯកតា និងអានជម្រាលពីកម្ពស់ឡើងចែកចម្ងាយផ្ដេក។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — បង្ហាញអ័ក្ស ឯកតា និងអានជម្រាលពីកម្ពស់ឡើងចែកចម្ងាយផ្ដេក។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/05-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — profile ពង្រីកបញ្ឈរដោយគ្មានអ័ក្ស ធ្វើឲ្យអ្នកអានយល់ថាភ្នំចោតខ្លាំង។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/05-good.svg"
+<figcaption><b>កែលម្អ / After</b> — បង្ហាញអ័ក្ស ឯកតា និងអានជម្រាលពីកម្ពស់ឡើងចែកចម្ងាយផ្ដេក។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

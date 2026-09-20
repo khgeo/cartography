@@ -164,8 +164,14 @@ RF គឺជាអនុបាតចម្ងាយដែលប្រើឯក�
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="4">
-<figure><img src="../assets/svg/rich/04-bad.svg" alt="រូបភាពត្រូវបានពង្រីក ប៉ុន្តែ RF ដែលសរសេរនៅតែដដែល។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — រូបភាពត្រូវបានពង្រីក ប៉ុន្តែ RF ដែលសរសេរនៅតែដដែល។</figcaption></figure>
-<figure><img src="../assets/svg/rich/04-good.svg" alt="កែ RF ឬប្រើរបារមាត្រដ្ឋានដែលពង្រីកជាមួយផែនទី។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — កែ RF ឬប្រើរបារមាត្រដ្ឋានដែលពង្រីកជាមួយផែនទី។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/04-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — រូបភាពត្រូវបានពង្រីក ប៉ុន្តែ RF ដែលសរសេរនៅតែដដែល។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/04-good.svg"
+<figcaption><b>កែលម្អ / After</b> — កែ RF ឬប្រើរបារមាត្រដ្ឋានដែលពង្រីកជាមួយផែនទី។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

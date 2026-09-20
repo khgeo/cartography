@@ -26,3 +26,9 @@ The original full Cambodia.zip dataset was not present in the supplied archive. 
 The course's browser behavior and build were tested. The complete sequence of desktop QGIS labs was not executed in QGIS, and the original PDF export pipeline was not run. Menus may vary across QGIS versions. This release includes the original source and a tested browser build, not a newly generated PDF.
 
 Synthetic comparison drawings are schematic. The colour-vision view is an approximation. Automatic overlap feedback in the design tools supplements human judgment. Self-study answers are available in source and should not be treated as secure assessment items.
+
+## Original styling restored
+
+The original Siemreap/Battambang/Moul font definitions, body and heading sizes, line spacing, simulator typography, and figure/caption rules were restored. A browser comparison on all 15 lessons confirmed original elements have the same computed styles with and without the new-component stylesheet. All 32 original lesson SVG figures are present and their original asset files are byte-for-byte unchanged. All 30 added comparisons render as inline SVG in the original full-width figure style. Desktop/mobile rendering and all local links were rechecked after restoration.
+
+The build now resolves figure snippets from the project directory and fails on missing snippet files, preventing silently omitted figures.

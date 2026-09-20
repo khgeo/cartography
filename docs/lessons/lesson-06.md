@@ -172,8 +172,14 @@ Visual hierarchy គឺការកំណត់អ្វីឲ្យអ្នក
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="6">
-<figure><img src="../assets/svg/rich/06-bad.svg" alt="ផ្លូវ ព្រំ និងសេវាមានទម្ងន់មើលឃើញស្មើគ្នា។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — ផ្លូវ ព្រំ និងសេវាមានទម្ងន់មើលឃើញស្មើគ្នា។</figcaption></figure>
-<figure><img src="../assets/svg/rich/06-good.svg" alt="សេវាដែលជាប្រធានបទលេចធ្លោ ខណៈបរិបទនៅអានបាន។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — សេវាដែលជាប្រធានបទលេចធ្លោ ខណៈបរិបទនៅអានបាន។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/06-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — ផ្លូវ ព្រំ និងសេវាមានទម្ងន់មើលឃើញស្មើគ្នា។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/06-good.svg"
+<figcaption><b>កែលម្អ / After</b> — សេវាដែលជាប្រធានបទលេចធ្លោ ខណៈបរិបទនៅអានបាន។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

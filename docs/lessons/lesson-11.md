@@ -164,8 +164,14 @@ Hillshade បង្ហាញរូបរាងដីតាមទិសពន្�
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="11">
-<figure><img src="../assets/svg/rich/11-bad.svg" alt="ផ្ទៃរលោងគ្មានស្ថានីយ៍ ធ្វើឲ្យអ្នកអានយល់ថាទិន្នន័យស្មើគ្នាគ្រប់ទី។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — ផ្ទៃរលោងគ្មានស្ថានីយ៍ ធ្វើឲ្យអ្នកអានយល់ថាទិន្នន័យស្មើគ្នាគ្រប់ទី។</figcaption></figure>
-<figure><img src="../assets/svg/rich/11-good.svg" alt="បង្ហាញទីតាំងស្ថានីយ៍ វិធីប៉ាន់ស្មាន និងតំបន់ព័ត៌មានតិច។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — បង្ហាញទីតាំងស្ថានីយ៍ វិធីប៉ាន់ស្មាន និងតំបន់ព័ត៌មានតិច។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/11-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — ផ្ទៃរលោងគ្មានស្ថានីយ៍ ធ្វើឲ្យអ្នកអានយល់ថាទិន្នន័យស្មើគ្នាគ្រប់ទី។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/11-good.svg"
+<figcaption><b>កែលម្អ / After</b> — បង្ហាញទីតាំងស្ថានីយ៍ វិធីប៉ាន់ស្មាន និងតំបន់ព័ត៌មានតិច។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

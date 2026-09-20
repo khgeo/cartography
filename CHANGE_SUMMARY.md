@@ -31,7 +31,7 @@ The original Khmer-first MkDocs architecture, 15 lessons, 15 QGIS labs, syllabus
 - Updated colour-vision simulation matrices and labeled the result as an approximation.
 - Corrected the coordinate-order explanation, contour interval counting, and an unsupported geographic comparison.
 - Added a note distinguishing original illustrative area measurements from measurements reproducible with the supplied data.
-- Improved responsive typography, focus states, labels, feedback, reset controls and reduced-motion handling.
+- Preserved the original Siemreap/Battambang/Moul typography, original text sizes and figure styling; added focus states, feedback, reset controls and reduced-motion handling.
 
 ## Offline delivery
 
@@ -43,3 +43,7 @@ The original Khmer-first MkDocs architecture, 15 lessons, 15 QGIS labs, syllabus
 - A MkDocs hook regenerates the local data bundle on future builds.
 
 New comparisons, scenarios and practice data are teaching examples, not official Cambodian statistics. The original full external Cambodia dataset is not bundled. See `VALIDATION.md` for the tested scope.
+
+## Styling restoration
+
+Restored the original font definitions, sizes, line spacing, heading styles, simulator text sizing and figure presentation. Corrected a malformed stylesheet import removal that had prevented the font variables from taking effect. Added comparison illustrations now use the same inline SVG and full-width figure treatment as the original diagrams. Local font files retain offline operation.

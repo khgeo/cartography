@@ -2,6 +2,14 @@
 from pathlib import Path
 import json
 
+def on_config(config):
+    # Resolve snippets from the project, regardless of the build command's cwd.
+    # Missing figures must fail the build instead of silently disappearing.
+    snippets=config.mdx_configs.setdefault('pymdownx.snippets', {})
+    snippets['base_path']=[config.docs_dir]
+    snippets['check_paths']=True
+    return config
+
 def on_pre_build(config):
     docs=Path(config.docs_dir)
     data=docs/'assets/data'

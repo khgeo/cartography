@@ -180,8 +180,14 @@ Choropleth ផ្តល់ពណ៌ឲ្យឯកតាផ្ទៃទាំង
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="9">
-<figure><img src="../assets/svg/rich/09-bad.svg" alt="ពណ៌ counts លើឯកតាផ្ទៃខុសគ្នា ត្រូវបានបកស្រាយថាជាដង់ស៊ីតេ។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — ពណ៌ counts លើឯកតាផ្ទៃខុសគ្នា ត្រូវបានបកស្រាយថាជាដង់ស៊ីតេ។</figcaption></figure>
-<figure><img src="../assets/svg/rich/09-good.svg" alt="បែងចែក counts ដោយផ្ទៃ ឬភាគបែងត្រឹមត្រូវ និងសរសេរឯកតា។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — បែងចែក counts ដោយផ្ទៃ ឬភាគបែងត្រឹមត្រូវ និងសរសេរឯកតា។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/09-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — ពណ៌ counts លើឯកតាផ្ទៃខុសគ្នា ត្រូវបានបកស្រាយថាជាដង់ស៊ីតេ។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/09-good.svg"
+<figcaption><b>កែលម្អ / After</b> — បែងចែក counts ដោយផ្ទៃ ឬភាគបែងត្រឹមត្រូវ និងសរសេរឯកតា។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

@@ -169,8 +169,14 @@ Flow map អាចតំណាងទំហំ និងទិសនៃលំហ�
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="12">
-<figure><img src="../assets/svg/rich/12-bad.svg" alt="រាល់ឆ្នាំប្តូរ Legend ហើយ animation លឿនគ្មាន Pause។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — រាល់ឆ្នាំប្តូរ Legend ហើយ animation លឿនគ្មាន Pause។</figcaption></figure>
-<figure><img src="../assets/svg/rich/12-good.svg" alt="ប្រើព្រំថ្នាក់ថេរ ស្លាកឆ្នាំ និងការគ្រប់គ្រងពេលវេលាដោយអ្នកអាន។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — ប្រើព្រំថ្នាក់ថេរ ស្លាកឆ្នាំ និងការគ្រប់គ្រងពេលវេលាដោយអ្នកអាន។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/12-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — រាល់ឆ្នាំប្តូរ Legend ហើយ animation លឿនគ្មាន Pause។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/12-good.svg"
+<figcaption><b>កែលម្អ / After</b> — ប្រើព្រំថ្នាក់ថេរ ស្លាកឆ្នាំ និងការគ្រប់គ្រងពេលវេលាដោយអ្នកអាន។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

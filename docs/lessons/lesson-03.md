@@ -174,8 +174,14 @@ Conformal រក្សាមុំក្នុងតំបន់តូច មិ
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="3">
-<figure><img src="../assets/svg/rich/03-bad.svg" alt="បកស្រាយតំបន់ជិតប៉ូលថាធំជាង ដោយផ្អែកលើទំហំ Mercator។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — បកស្រាយតំបន់ជិតប៉ូលថាធំជាង ដោយផ្អែកលើទំហំ Mercator។</figcaption></figure>
-<figure><img src="../assets/svg/rich/03-good.svg" alt="ប្រើចំណោលផ្ទៃស្មើសម្រាប់ប្រៀបធៀបផ្ទៃ និងប្រាប់លក្ខណៈដែលបាត់បង់។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — ប្រើចំណោលផ្ទៃស្មើសម្រាប់ប្រៀបធៀបផ្ទៃ និងប្រាប់លក្ខណៈដែលបាត់បង់។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/03-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — បកស្រាយតំបន់ជិតប៉ូលថាធំជាង ដោយផ្អែកលើទំហំ Mercator។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/03-good.svg"
+<figcaption><b>កែលម្អ / After</b> — ប្រើចំណោលផ្ទៃស្មើសម្រាប់ប្រៀបធៀបផ្ទៃ និងប្រាប់លក្ខណៈដែលបាត់បង់។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

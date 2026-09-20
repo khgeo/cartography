@@ -175,8 +175,14 @@ Assign CRS ប្រាប់កម្មវិធីថាលេខដែលម
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="2">
-<figure><img src="../assets/svg/rich/02-bad.svg" alt="ប្តូរឈ្មោះ CRS ពីដឺក្រេទៅម៉ែត្រដោយរក្សាលេខដដែល។ ទីតាំងមានន័យខុស។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — ប្តូរឈ្មោះ CRS ពីដឺក្រេទៅម៉ែត្រដោយរក្សាលេខដដែល។ ទីតាំងមានន័យខុស។</figcaption></figure>
-<figure><img src="../assets/svg/rich/02-good.svg" alt="បញ្ជាក់ CRS ដើម រួចគណនាបម្លែង។ រក្សាទីតាំងលើដី ខណៈលេខកូអរដោនេផ្លាស់ប្តូរ។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — បញ្ជាក់ CRS ដើម រួចគណនាបម្លែង។ រក្សាទីតាំងលើដី ខណៈលេខកូអរដោនេផ្លាស់ប្តូរ។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/02-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — ប្តូរឈ្មោះ CRS ពីដឺក្រេទៅម៉ែត្រដោយរក្សាលេខដដែល។ ទីតាំងមានន័យខុស។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/02-good.svg"
+<figcaption><b>កែលម្អ / After</b> — បញ្ជាក់ CRS ដើម រួចគណនាបម្លែង។ រក្សាទីតាំងលើដី ខណៈលេខកូអរដោនេផ្លាស់ប្តូរ។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

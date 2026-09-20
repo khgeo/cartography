@@ -168,8 +168,14 @@ Dot density ខុសពី proportional symbols៖ ចំណុចនីមួ�
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="10">
-<figure><img src="../assets/svg/rich/10-bad.svg" alt="កាំកើនតាមតម្លៃ ធ្វើឲ្យផ្ទៃបំផ្លើសបរិមាណ។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — កាំកើនតាមតម្លៃ ធ្វើឲ្យផ្ទៃបំផ្លើសបរិមាណ។</figcaption></figure>
-<figure><img src="../assets/svg/rich/10-good.svg" alt="កាំកើនតាមឫសការ៉េ ហើយ Legend មានរង្វង់យោង។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — កាំកើនតាមឫសការ៉េ ហើយ Legend មានរង្វង់យោង។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/10-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — កាំកើនតាមតម្លៃ ធ្វើឲ្យផ្ទៃបំផ្លើសបរិមាណ។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/10-good.svg"
+<figcaption><b>កែលម្អ / After</b> — កាំកើនតាមឫសការ៉េ ហើយ Legend មានរង្វង់យោង។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

@@ -170,8 +170,14 @@ Equal interval បែងចែកជួរលេខជាចន្លោះស�
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="7">
-<figure><img src="../assets/svg/rich/07-bad.svg" alt="ពណ៌ដូចគ្នាមានព្រំលេខខុសគ្នារវាងឆ្នាំ តែអ្នកអានមិនត្រូវបានប្រាប់។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — ពណ៌ដូចគ្នាមានព្រំលេខខុសគ្នារវាងឆ្នាំ តែអ្នកអានមិនត្រូវបានប្រាប់។</figcaption></figure>
-<figure><img src="../assets/svg/rich/07-good.svg" alt="រក្សា Legend និងព្រំថ្នាក់ថេរ ដើម្បីប្រៀបធៀបការប្រែប្រួល។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — រក្សា Legend និងព្រំថ្នាក់ថេរ ដើម្បីប្រៀបធៀបការប្រែប្រួល។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/07-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — ពណ៌ដូចគ្នាមានព្រំលេខខុសគ្នារវាងឆ្នាំ តែអ្នកអានមិនត្រូវបានប្រាប់។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/07-good.svg"
+<figcaption><b>កែលម្អ / After</b> — រក្សា Legend និងព្រំថ្នាក់ថេរ ដើម្បីប្រៀបធៀបការប្រែប្រួល។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

@@ -189,8 +189,14 @@ Generalization ត្រូវរក្សាលក្ខណៈសំខាន�
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="15">
-<figure><img src="../assets/svg/rich/15-bad.svg" alt="ទិន្នន័យខ្វះត្រូវបានលាបដូចសូន្យ ហើយគ្មានឆ្នាំ ឬប្រភព។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — ទិន្នន័យខ្វះត្រូវបានលាបដូចសូន្យ ហើយគ្មានឆ្នាំ ឬប្រភព។</figcaption></figure>
-<figure><img src="../assets/svg/rich/15-good.svg" alt="បែងចែក missing ពីសូន្យ បង្ហាញ metadata និងរក្សាតារាងសម្រាប់ពិនិត្យ។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — បែងចែក missing ពីសូន្យ បង្ហាញ metadata និងរក្សាតារាងសម្រាប់ពិនិត្យ។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/15-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — ទិន្នន័យខ្វះត្រូវបានលាបដូចសូន្យ ហើយគ្មានឆ្នាំ ឬប្រភព។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/15-good.svg"
+<figcaption><b>កែលម្អ / After</b> — បែងចែក missing ពីសូន្យ បង្ហាញ metadata និងរក្សាតារាងសម្រាប់ពិនិត្យ។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

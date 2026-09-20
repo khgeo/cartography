@@ -181,8 +181,14 @@ Sequential ប្រើលំដាប់ពន្លឺសម្រាប់ត
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="8">
-<figure><img src="../assets/svg/rich/08-bad.svg" alt="ប្រើពណ៌ឥន្ធនូជាលំដាប់ និងមិនបំបែក missing ពីសូន្យ។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — ប្រើពណ៌ឥន្ធនូជាលំដាប់ និងមិនបំបែក missing ពីសូន្យ។</figcaption></figure>
-<figure><img src="../assets/svg/rich/08-good.svg" alt="ប្រើលំដាប់ពន្លឺមានន័យ និងសញ្ញាដាច់ដោយឡែកសម្រាប់ទិន្នន័យខ្វះ។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — ប្រើលំដាប់ពន្លឺមានន័យ និងសញ្ញាដាច់ដោយឡែកសម្រាប់ទិន្នន័យខ្វះ។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/08-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — ប្រើពណ៌ឥន្ធនូជាលំដាប់ និងមិនបំបែក missing ពីសូន្យ។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/08-good.svg"
+<figcaption><b>កែលម្អ / After</b> — ប្រើលំដាប់ពន្លឺមានន័យ និងសញ្ញាដាច់ដោយឡែកសម្រាប់ទិន្នន័យខ្វះ។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

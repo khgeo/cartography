@@ -1,0 +1,275 @@
+{
+  "errors": [],
+  "rows": [
+    {
+      "lesson": 1,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 2,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 3,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 4,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 5,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 6,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 7,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 8,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 9,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 10,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 11,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 12,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 13,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 14,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "lesson": 15,
+      "originalStylesMatch": true,
+      "comparisons": 2,
+      "mobileOverflow": false,
+      "body": {
+        "fontFamily": "Siemreap, Battambang, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "fontStyle": "normal",
+        "lineHeight": "29.25px",
+        "marginTop": "0px",
+        "marginBottom": "24px",
+        "paddingTop": "12px",
+        "borderRadius": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      }
+    }
+  ]
+}

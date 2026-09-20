@@ -165,8 +165,14 @@ Label placement ជាការសម្រេចចិត្តរវាងភ�
 ### មើល → ប្រៀបធៀប → ពន្យល់
 
 <div class="rich-comparison" data-comparison="13">
-<figure><img src="../assets/svg/rich/13-bad.svg" alt="ស្លាកជាន់គ្នា និងគ្របសញ្ញាទីតាំង។" width="320" height="310"><figcaption><b>បញ្ហា / Before</b> — ស្លាកជាន់គ្នា និងគ្របសញ្ញាទីតាំង។</figcaption></figure>
-<figure><img src="../assets/svg/rich/13-good.svg" alt="ផ្លាស់ទីស្លាក រក្សាការភ្ជាប់ទៅទីតាំង និងបង្កើតអាទិភាព។" width="320" height="310"><figcaption><b>កែលម្អ / After</b> — ផ្លាស់ទីស្លាក រក្សាការភ្ជាប់ទៅទីតាំង និងបង្កើតអាទិភាព។</figcaption></figure>
+<figure markdown>
+--8<-- "assets/svg/rich/13-bad.svg"
+<figcaption><b>បញ្ហា / Before</b> — ស្លាកជាន់គ្នា និងគ្របសញ្ញាទីតាំង។</figcaption>
+</figure>
+<figure markdown>
+--8<-- "assets/svg/rich/13-good.svg"
+<figcaption><b>កែលម្អ / After</b> — ផ្លាស់ទីស្លាក រក្សាការភ្ជាប់ទៅទីតាំង និងបង្កើតអាទិភាព។</figcaption>
+</figure>
 </div>
 
 រូបថ្មីទាំងនេះជាគំនូរបង្ហាញគោលគំនិត។ ស្លាកបច្ចេកទេសខ្លីជាភាសាអង់គ្លេសមានការពន្យល់ជាភាសាខ្មែរខាងក្រោមរូបនីមួយៗ។ មុនអានចម្លើយ សរសេរភាពខុសគ្នាដែលប៉ះពាល់ដល់ការបកស្រាយពីរចំណុច។

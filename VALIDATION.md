@@ -9,6 +9,7 @@
 - New modules use local assets and the existing responsive course components. Original course typography and figure rules remain unchanged.
 - Source screenshots and third-party illustrations were not copied into the course.
 - Figure refinement was checked on lessons 1, 8, 12, 13, 14 and 15 at desktop width and lesson 14 at phone width. Comparison pairs rendered in two columns on desktop, one column on mobile, and produced no horizontal overflow. Palette and layout studios were visually inspected after resizing.
+- The Lesson 3 moving-distortion simulation was tested offline at its original position, at 60°N, and through pointer dragging. Sliders, output calculations, the original-location ghost, reset structure, and responsive width initialized without JavaScript errors or page overflow.
 
 Validated on 20 September 2026 in headless desktop Chrome on Windows, with network access disabled in the browser context and direct `file://` page access.
 

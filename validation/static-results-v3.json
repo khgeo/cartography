@@ -30,10 +30,11 @@
     {
       "lesson": 3,
       "original_chars": 11132,
-      "upgraded_chars": 15900,
-      "growth_percent": 43,
+      "upgraded_chars": 16696,
+      "growth_percent": 50,
       "simulators": [
-        "projection"
+        "projection",
+        "true-size-drag"
       ],
       "quiz_questions": 3,
       "new_comparison_images": 2

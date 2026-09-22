@@ -17,6 +17,7 @@
 - EPSG.io (ស្វែងរក CRS): https://epsg.io
 - QGIS Documentation: https://docs.qgis.org
 - International Cartographic Association (ICA): https://icaci.org
+- The True Size Of… (interactive inspiration for comparing Mercator distortion): https://thetruesize.com/
 
 ## ស្ថាប័ន និងសហគមន៍ក្នុងស្រុក
 

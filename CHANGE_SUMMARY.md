@@ -18,6 +18,7 @@
 - Reduced the footprint of the added interactive studios while preserving their controls, keyboard behavior, and responsive layout.
 - Kept the original course fonts and the global figure rules unchanged; the new sizing applies only to the added comparison figures and studios.
 - Enlarged the Tissot indicatrices in the projection simulator from a 1.5° to a 4° display radius so their deformation is legible; the simulator explicitly identifies this as a visibility enlargement.
+- Added an original offline “Move Cambodia” simulation in Lesson 3, inspired by the teaching concept of The True Size Of. Learners can drag Cambodia across Web Mercator, retain a ghost at its original location, and compare linear and area distortion numerically.
 
 The original Khmer-first MkDocs architecture, 15 lessons, 15 QGIS labs, syllabus, glossary, existing graphics, and original datasets are preserved.
 

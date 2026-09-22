@@ -177,6 +177,60 @@
     draw(); window.addEventListener("resize", () => el.isConnected && draw());
   };
 
+  /* ---------- L3 · Drag Cambodia across Web Mercator ---------- */
+  window.EXTRA_SIMS["true-size-drag"] = async (el) => {
+    const [WLD, KH] = await Promise.all([loadWorld(), load()]);
+    const { cv, ctx, out, q } = shellC(el, "អូសកម្ពុជាលើ Mercator / Move Cambodia",
+      `<label>រយៈទទឹង <input class="ts-lat" type="range" min="-70" max="70" step="0.5" value="12.5"> <b class="ts-lat-v">12.5°N</b></label>
+       <label>រយៈបណ្ដោយ <input class="ts-lon" type="range" min="-165" max="165" step="1" value="105"> <b class="ts-lon-v">105°E</b></label>
+       <label><input class="ts-ghost" type="checkbox" checked> បង្ហាញទីតាំងដើម</label>
+       <button type="button" class="sim-btn ts-reset">ត្រឡប់ទៅកម្ពុជា / Reset</button>
+       <span class="sim-hint">អូសរូបកម្ពុជាលើផែនទី ឬប្រើ slider។</span>`);
+    const W = 640, H = 400, srcLat = 12.5, srcLon = 105;
+    let lat = srcLat, lon = srcLon, dragging = false;
+    const maxM = Math.log(Math.tan(Math.PI / 4 + 80 * Math.PI / 360));
+    const mercY = p => Math.log(Math.tan(Math.PI / 4 + clamp(p, -80, 80) * Math.PI / 360));
+    const X = l => 20 + (l + 180) / 360 * (W - 40);
+    const Y = p => H / 2 - mercY(p) / maxM * (H / 2 - 24);
+    const labelLat = v => `${Math.abs(v).toFixed(1)}°${v < 0 ? "S" : "N"}`;
+    const labelLon = v => `${Math.abs(Math.round(v))}°${v < 0 ? "W" : "E"}`;
+    const shape = (atLon, atLat, ghost = false) => {
+      const factor = Math.cos(srcLat * Math.PI / 180) / Math.cos(atLat * Math.PI / 180);
+      ctx.save(); ctx.fillStyle = ghost ? "rgba(15,118,110,.08)" : "rgba(234,88,12,.60)";
+      ctx.strokeStyle = ghost ? "rgba(15,118,110,.85)" : "#9a3412"; ctx.lineWidth = ghost ? 1.4 : 1.1;
+      if (ghost) ctx.setLineDash([5, 4]);
+      KH.prov.forEach(prov => prov.r.forEach(ring => { ctx.beginPath(); ring.forEach(([px, py], i) => {
+        const dx = ((px - KH.W / 2) / KH.W) * 5.5 * factor;
+        const dy = -((py - KH.H / 2) / KH.H) * 5.0;
+        const x = X(atLon + dx), y = Y(atLat + dy); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }); ctx.closePath(); ctx.fill(); ctx.stroke(); })); ctx.restore();
+    };
+    const draw = () => {
+      fitC(cv, ctx, W, H); ctx.fillStyle = "#dbeafe"; ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = "#d5ddce"; ctx.strokeStyle = "#9aa88f"; ctx.lineWidth = .55;
+      WLD.land.forEach(ring => { ctx.beginPath(); ring.forEach(([lo, la], i) => { const x = X(lo), y = Y(la); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.closePath(); ctx.fill(); ctx.stroke(); });
+      ctx.strokeStyle = "rgba(100,116,139,.45)"; ctx.lineWidth = .6;
+      for (let l = -150; l <= 150; l += 30) { ctx.beginPath(); ctx.moveTo(X(l), Y(-80)); ctx.lineTo(X(l), Y(80)); ctx.stroke(); }
+      for (let p = -60; p <= 60; p += 30) { ctx.beginPath(); ctx.moveTo(X(-180), Y(p)); ctx.lineTo(X(180), Y(p)); ctx.stroke(); }
+      ctx.strokeStyle = "#2563eb"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(X(-180), Y(0)); ctx.lineTo(X(180), Y(0)); ctx.stroke();
+      if (q(".ts-ghost").checked && (Math.abs(lat-srcLat) > .2 || Math.abs(lon-srcLon) > 1)) shape(srcLon, srcLat, true);
+      shape(lon, lat, false);
+      const linear = Math.cos(srcLat * Math.PI / 180) / Math.cos(lat * Math.PI / 180), area = linear * linear;
+      q(".ts-lat-v").textContent = labelLat(lat); q(".ts-lon-v").textContent = labelLon(lon);
+      out.innerHTML = `<b>${labelLat(lat)} · ${labelLon(lon)}</b>៖ ទំហំលើ Web Mercator ប្រហែល <b>${linear.toFixed(2)}×</b> តាមប្រវែង និង <b>${area.toFixed(2)}×</b> តាមផ្ទៃ ប្រៀបនឹងទីតាំងដើម។ ផ្ទៃពិតលើដីមិនផ្លាស់ប្តូរ។<br><span class="sim-hint">គំរូនេះរក្សាទំហំមូលដ្ឋានរបស់កម្ពុជា ហើយបង្ហាញ scale distortion តាមរយៈទទឹង។ វាជាគំរូបង្រៀន មិនមែនឧបករណ៍វាស់ផ្ទៃផ្លូវការ។</span>`;
+    };
+    const sync = () => { lat = +q(".ts-lat").value; lon = +q(".ts-lon").value; draw(); };
+    q(".ts-lat").addEventListener("input", sync); q(".ts-lon").addEventListener("input", sync); q(".ts-ghost").addEventListener("change", draw);
+    q(".ts-reset").onclick = () => { lat = srcLat; lon = srcLon; q(".ts-lat").value = lat; q(".ts-lon").value = lon; draw(); };
+    const move = e => { const r = cv.getBoundingClientRect(), x = (e.clientX-r.left)*W/r.width, y = (e.clientY-r.top)*H/r.height;
+      lon = clamp((x-20)/(W-40)*360-180,-165,165); const my=(H/2-y)/(H/2-24)*maxM; lat=clamp(Math.atan(Math.sinh(my))*180/Math.PI,-70,70);
+      q(".ts-lat").value=lat; q(".ts-lon").value=lon; draw(); };
+    cv.addEventListener("pointerdown",e=>{dragging=true;cv.setPointerCapture(e.pointerId);move(e);});
+    cv.addEventListener("pointermove",e=>{if(dragging)move(e);});
+    cv.addEventListener("pointerup",()=>dragging=false);cv.addEventListener("pointercancel",()=>dragging=false);
+    cv.style.cursor="grab"; draw(); window.addEventListener("resize",()=>el.isConnected&&draw());
+  };
+
   /* ---------- L4 · Scale converter & enlargement ---------- */
   window.EXTRA_SIMS["scale"] = (el) => {
     el.innerHTML = `<div class="sim-title">មាត្រដ្ឋាន៖ គណនាចម្ងាយ និងការពង្រីកផែនទី</div>

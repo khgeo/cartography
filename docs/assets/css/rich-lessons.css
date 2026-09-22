@@ -81,12 +81,12 @@
 button:focus-visible,input:focus-visible,select:focus-visible {outline:3px solid #f59e0b;outline-offset:3px}
 .rich-sim {max-width:100%;overflow-wrap:anywhere}
 /* The added studios are tools inside the lesson, not full-page posters. */
-.sim:is([data-sim="palette-lab"],[data-sim="time-player"],[data-sim="label-studio"],[data-sim="layout-studio"],[data-sim="web-map"],[data-sim="zoom-scale"],[data-sim="symbol-editor"],[data-sim="gps-quality"],[data-sim="total-station"]) {
+.sim:is([data-sim="palette-lab"],[data-sim="time-player"],[data-sim="label-studio"],[data-sim="layout-studio"],[data-sim="web-map"],[data-sim="zoom-scale"],[data-sim="symbol-editor"],[data-sim="gps-quality"],[data-sim="total-station"],[data-sim="true-size-drag"]) {
   max-width:640px;
   margin:1.35rem auto;
   box-shadow:0 2px 12px rgba(15,23,42,.05);
 }
-.sim:is([data-sim="palette-lab"],[data-sim="time-player"],[data-sim="label-studio"],[data-sim="layout-studio"],[data-sim="web-map"],[data-sim="zoom-scale"],[data-sim="symbol-editor"],[data-sim="gps-quality"],[data-sim="total-station"]) .rich-stage {
+.sim:is([data-sim="palette-lab"],[data-sim="time-player"],[data-sim="label-studio"],[data-sim="layout-studio"],[data-sim="web-map"],[data-sim="zoom-scale"],[data-sim="symbol-editor"],[data-sim="gps-quality"],[data-sim="total-station"],[data-sim="true-size-drag"]) .rich-stage {
   overflow:hidden;
   border:1px solid var(--md-default-fg-color--lightest);
   border-radius:7px;

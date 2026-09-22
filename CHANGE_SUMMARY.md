@@ -11,6 +11,13 @@
 - Preserved the restored original fonts, sizes, heading styles, and figure/caption treatment. No source-slide screenshots were copied.
 - Strict build now contains 43 HTML pages and remains self-contained for offline use.
 
+### Figure refinement
+
+- Reworked all 15 good-versus-bad comparison pairs into compact two-column teaching cards on desktop and a single-column layout on phones.
+- Added restrained problem/improvement cues, consistent card borders, balanced spacing, and clearer caption separation.
+- Reduced the footprint of the added interactive studios while preserving their controls, keyboard behavior, and responsive layout.
+- Kept the original course fonts and the global figure rules unchanged; the new sizing applies only to the added comparison figures and studios.
+
 The original Khmer-first MkDocs architecture, 15 lessons, 15 QGIS labs, syllabus, glossary, existing graphics, and original datasets are preserved.
 
 ## Added across every lesson

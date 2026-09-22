@@ -1,6 +1,61 @@
 /* Responsive, Khmer-first learning components. */
-.rich-comparison {display:block}
-.rich-comparison .rich-figure {width:100%;height:auto;display:block}
+/* Comparison figures form a compact teaching pair. The global figure rules stay
+   unchanged so the original course diagrams retain their established style. */
+.rich-comparison {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1rem;
+  align-items:start;
+  max-width:640px;
+  margin:1rem auto 2rem;
+}
+.md-typeset .rich-comparison figure {
+  position:relative;
+  width:100%;
+  margin:0;
+  padding:.55rem;
+  overflow:hidden;
+  border:1px solid var(--md-default-fg-color--lightest);
+  border-top:3px solid #b91c1c;
+  border-radius:8px;
+  background:var(--md-default-bg-color);
+  box-shadow:0 2px 10px rgba(15,23,42,.06);
+}
+.md-typeset .rich-comparison figure:nth-child(2) {border-top-color:#047857}
+.md-typeset .rich-comparison figure::before {
+  display:inline-block;
+  margin:0 0 .35rem;
+  padding:.12rem .48rem;
+  border-radius:999px;
+  background:rgba(185,28,28,.09);
+  color:#991b1b;
+  font-family:var(--km-emph-stack);
+  font-size:.58rem;
+  font-weight:700;
+  letter-spacing:.02em;
+  content:"បញ្ហា · BEFORE";
+}
+.md-typeset .rich-comparison figure:nth-child(2)::before {
+  background:rgba(4,120,87,.09);
+  color:#065f46;
+  content:"កែលម្អ · AFTER";
+}
+.rich-comparison .rich-figure {
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:5px;
+  background:#fff;
+}
+.md-typeset .rich-comparison figcaption {
+  width:auto;
+  max-width:none;
+  margin:.45rem .15rem .05rem;
+  padding-top:.4rem;
+  border-top:1px solid var(--md-default-fg-color--lightest);
+  text-align:left;
+}
+.compare-toggle {display:block;margin:.4rem auto .7rem}
 .rich-note {font-size:.72rem;color:var(--md-default-fg-color--light)}
 .rich-stage svg {width:100%;height:auto;display:block;background:#f8fafc;border-radius:6px;overflow:hidden}
 .rich-stage svg text {font-family:var(--md-text-font-family);fill:#0f172a}
@@ -25,6 +80,17 @@
 .rich-quiz details {font-size:inherit}
 button:focus-visible,input:focus-visible,select:focus-visible {outline:3px solid #f59e0b;outline-offset:3px}
 .rich-sim {max-width:100%;overflow-wrap:anywhere}
+/* The added studios are tools inside the lesson, not full-page posters. */
+.sim:is([data-sim="palette-lab"],[data-sim="time-player"],[data-sim="label-studio"],[data-sim="layout-studio"],[data-sim="web-map"],[data-sim="zoom-scale"],[data-sim="symbol-editor"],[data-sim="gps-quality"],[data-sim="total-station"]) {
+  max-width:640px;
+  margin:1.35rem auto;
+  box-shadow:0 2px 12px rgba(15,23,42,.05);
+}
+.sim:is([data-sim="palette-lab"],[data-sim="time-player"],[data-sim="label-studio"],[data-sim="layout-studio"],[data-sim="web-map"],[data-sim="zoom-scale"],[data-sim="symbol-editor"],[data-sim="gps-quality"],[data-sim="total-station"]) .rich-stage {
+  overflow:hidden;
+  border:1px solid var(--md-default-fg-color--lightest);
+  border-radius:7px;
+}
 .sim-controls label {max-width:100%}
 .sim-controls select {max-width:100%}
 .sim-out {overflow-wrap:anywhere}
@@ -32,6 +98,6 @@ button:focus-visible,input:focus-visible,select:focus-visible {outline:3px solid
 [data-md-color-scheme=slate] .sim-warn {color:#fca5a5}
 [data-md-color-scheme=slate] .me-row.ok {color:#86efac}
 [data-md-color-scheme=slate] .me-row.no {color:#fca5a5}
-@media(max-width:600px){.rich-comparison{grid-template-columns:1fr}.rich-quiz{padding:.65rem}.rich-reset{margin-left:0}.rich-sim .sim-controls{flex-direction:column;align-items:stretch}.me-q{flex:auto}.rich-stage svg{min-height:150px}}
+@media(max-width:700px){.rich-comparison{grid-template-columns:1fr;max-width:430px;gap:.8rem}.rich-quiz{padding:.65rem}.rich-reset{margin-left:0}.rich-sim .sim-controls{flex-direction:column;align-items:stretch}.me-q{flex:auto}.rich-stage svg{min-height:150px}.md-typeset .rich-comparison figure{padding:.42rem}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 @media print{.rich-comparison figure,.rich-quiz fieldset{break-inside:avoid}.rich-quiz label{display:block}.sim-controls,.compare-toggle,.rich-quiz button{display:none!important}.rich-quiz details>p{display:block}.rich-quiz details{display:block}.sim{break-inside:avoid}.rich-note{color:#333}}

@@ -17,6 +17,7 @@
 - Added restrained problem/improvement cues, consistent card borders, balanced spacing, and clearer caption separation.
 - Reduced the footprint of the added interactive studios while preserving their controls, keyboard behavior, and responsive layout.
 - Kept the original course fonts and the global figure rules unchanged; the new sizing applies only to the added comparison figures and studios.
+- Enlarged the Tissot indicatrices in the projection simulator from a 1.5° to a 4° display radius so their deformation is legible; the simulator explicitly identifies this as a visibility enlargement.
 
 The original Khmer-first MkDocs architecture, 15 lessons, 15 QGIS labs, syllabus, glossary, existing graphics, and original datasets are preserved.
 

@@ -145,7 +145,7 @@
     };
     const { cv, ctx, out, q } = shellC(el, "ចំណោលផែនទី និងរង្វង់ Tissot",
       `<span class="sim-seg">${Object.entries(P).map(([k, v], i) => `<button type="button" data-p="${k}" class="${i ? "" : "on"}">${v[0].split(" (")[0]}</button>`).join("")}</span>
-       <span class="sim-hint">រង្វង់ទាំងអស់មានទំហំស្មើគ្នាលើផែនដី។ មើលថាវាប្ដូររាង និងទំហំយ៉ាងណាលើផែនទី។</span>`);
+       <span class="sim-hint">រង្វង់ទាំងអស់មានទំហំស្មើគ្នាលើផែនដី។ មើលថាវាប្ដូររាង និងទំហំយ៉ាងណាលើផែនទី។ ទំហំបង្ហាញត្រូវបានពង្រីកឱ្យងាយមើល។</span>`);
     let key = "plate"; const W = 640, H = 400;
     const draw = () => {
       fitC(cv, ctx, W, H); const f = P[key][1];
@@ -163,11 +163,11 @@
       for (let l = -180; l <= 180; l += 30) { ctx.beginPath(); for (let p = -84; p <= 84; p += 2) { const [x, y] = f(l, p); p === -84 ? ctx.moveTo(X(x), Y(y)) : ctx.lineTo(X(x), Y(y)); } ctx.stroke(); }
       for (let p = -75; p <= 75; p += 15) { ctx.beginPath(); for (let l = -180; l <= 180; l += 3) { const [x, y] = f(l, p); l === -180 ? ctx.moveTo(X(x), Y(y)) : ctx.lineTo(X(x), Y(y)); } ctx.stroke(); }
       ctx.strokeStyle = "#1565c0"; ctx.lineWidth = 1.3; ctx.beginPath(); for (let l = -180; l <= 180; l += 3) { const [x, y] = f(l, 0); l === -180 ? ctx.moveTo(X(x), Y(y)) : ctx.lineTo(X(x), Y(y)); } ctx.stroke();
-      const r = 1.5; // Small angular radius for local distortion indicatrices
+      const r = 4; // Enlarged display radius; still local relative to the 30°/60° grid spacing
       for (let p = -60; p <= 60; p += 30) for (let l = -150; l <= 150; l += 60) {
         ctx.beginPath();
         for (let a = 0; a <= 360; a += 10) { const t = (a * Math.PI) / 180, pp = p + r * Math.sin(t), ll = l + (r * Math.cos(t)) / Math.cos((p * Math.PI) / 180); const [x, y] = f(ll, pp); a ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); }
-        ctx.fillStyle = "rgba(230,81,0,.42)"; ctx.fill(); ctx.strokeStyle = "#bf360c"; ctx.lineWidth = 1; ctx.stroke();
+        ctx.fillStyle = "rgba(230,81,0,.38)"; ctx.fill(); ctx.strokeStyle = "#bf360c"; ctx.lineWidth = 1.25; ctx.stroke();
       }
       const [kx, ky] = f(105, 12.5); ctx.beginPath(); ctx.arc(X(kx), Y(ky), 5, 0, 7); ctx.fillStyle = "#c62828"; ctx.fill();
       ctx.font = `12px ${font()}`; ctx.fillStyle = "#b71c1c"; ctx.fillText("កម្ពុជា", X(kx) + 8, Y(ky) - 6);

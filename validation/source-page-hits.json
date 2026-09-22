@@ -1,0 +1,493 @@
+{
+  "Chap_1_General": [
+    {
+      "term": "Mercator",
+      "matches": [
+        {
+          "page": 34,
+          "snippet": "The Mercator Projection, 1569 (កា គូសដែន េីមកជ្ជនែៃរាបដសមីេំបូងបំែុត) 34"
+        }
+      ]
+    },
+    {
+      "term": "Google Map",
+      "matches": [
+        {
+          "page": 81,
+          "snippet": "Map plus Map Me GPS Essentials Avenza Maps Google Map Google Earth 81"
+        },
+        {
+          "page": 88,
+          "snippet": "1. កា ដប្បីប្ប ស់ Google map • ចូ ដប្បីប្ប ស់ Google Map ដេីមបី កចមាាយែ្ូវពីវងវង់មូលប្ពឹះអងគដចកប្ពឹះអងគចម ដៅប្បសាទ្យបយ័នមានចមា ា យប៉ាុនា ម នដម៉ាប្ត? លំហាត្់អ្នុវត្តទី១ 88"
+        }
+      ]
+    },
+    {
+      "term": "distance",
+      "matches": []
+    },
+    {
+      "term": "history",
+      "matches": []
+    }
+  ],
+  "Chap_2_Shape_of_the_Earth": [
+    {
+      "term": "Datum",
+      "matches": [
+        {
+          "page": 25,
+          "snippet": "01 02 03 04ត្បេ័នធតត្មុយ(Reference system) ត្បេ័នធត្បថេី(Datum System) ត្បេ័នធ ង្ហែវ់ (measurement system) ចំដណាល (Projection) 05 វិលបៈអនកែលិតដែនទ្យី (Map Maker’s Art) ធាត្ុ្ំខាន់ៗប្ត្ូវយកចិត្រទុកដាក់គពលែលិត្ផែនទី 25"
+        },
+        {
+          "page": 26,
+          "snippet": "ត្បេ័នធត្បថេី (datum) គឺជាត្បេ័នធែតល់ឱ្យកា កំេ ត់ទ្យីោំងផ្ន យៈទ្យទ្យឹង និង យៈ បដណា ត យ (និងកមពវ់) ដៅដលីផ្ែទដែនេី (ដលីផ្ែទផ្នវតថុដវែ៊ែ) ។ 26"
+        }
+      ]
+    },
+    {
+      "term": "WGS 84",
+      "matches": []
+    },
+    {
+      "term": "UTM",
+      "matches": [
+        {
+          "page": 31,
+          "snippet": "Projected Coordinate System WGS_1984_UTM_Zone_48N 1080E 1020E ត្បេ័នធតត្មុងកូអ័ ដោដេ ភូមិសាស្រវត (Geographic Coordinate System) ត្បេ័នធតចំដណា លកូអ័ ដោដេ ភូមិវស្រវត (Projected Coordinate System) Geographic Coordinate Syst"
+        },
+        {
+          "page": 37,
+          "snippet": "ង្វ វ ្់(ខា ន ត្)ននប្បព័នធកូអ្័គដាយគណ –Decimal degrees (DD) បង្ហាញទ្យីោំងភូមិសាស្រវតជាលកខេ ៈទ្យវេន៍ភាគដេល ត្តូវបនដត្បីកនុងកមមវិធី(GIS), web mapping េូចជា OpenStreetMap ដៃីយ GPS –Decimal degrees ោចជា degrees, minutes, and"
+        },
+        {
+          "page": 54,
+          "snippet": "លំហាត់ទ្យី ៤ ដគមានចំេុច A ដេលមានទ្យីោំងវថិតដៅ(651242E/1054543N)ដៃីយដគចង់ វង់កដនែងត្គប់ត្គងទ្យឹកដេលមានទ្យំៃំ 500m x 500m ។ដតីដគត្តូវកា ចំេុច B,C,D មានUTM ប៉ាុ មន? ដបីដគេឹងថា B វថិតដៅ្ ងលិចចំេុច A និង D ្ង ដ ីងចំេុច A ដៃីយ"
+        }
+      ]
+    },
+    {
+      "term": "Projected Coordinate",
+      "matches": [
+        {
+          "page": 31,
+          "snippet": "Projected Coordinate System WGS_1984_UTM_Zone_48N 1080E 1020E ត្បេ័នធតត្មុងកូអ័ ដោដេ ភូមិសាស្រវត (Geographic Coordinate System) ត្បេ័នធតចំដណា លកូអ័ ដោដេ ភូមិវស្រវត (Projected Coordinate System) Geographic Coordinate Syst"
+        }
+      ]
+    }
+  ],
+  "Chap_3_Geography_Map": [
+    {
+      "term": "Layout Checklist",
+      "matches": [
+        {
+          "page": 42,
+          "snippet": "Layout Checklist 43"
+        }
+      ]
+    },
+    {
+      "term": "Legend",
+      "matches": [
+        {
+          "page": 45,
+          "snippet": "គ. ន ិមិតែសញ្ញា (Legend) • ន ិមិតែសញ្ញា បង្ហា ី ័ត៌ម្ពន បស់ដែន េទ្យីេូចជា ណ ៌ ន ិមិតែសញ្ញា ... ីចំណ ុ ច(point), ដខេបិទ្យជិត(polygon ) ន ិងបនាទត់ (line) 46 ន ិមិតេសញ្ញ ា"
+        }
+      ]
+    },
+    {
+      "term": "North Arrow",
+      "matches": [
+        {
+          "page": 48,
+          "snippet": "សញ្ញាប្ ួ បង្ហា ីទ្យិសខាងដជីង (North Arrow) 49"
+        }
+      ]
+    },
+    {
+      "term": "Scale Bars",
+      "matches": [
+        {
+          "page": 51,
+          "snippet": "ម្ពប្តោឋ ន ជាបនាទត់ប្កិត (Scale Bars) • A scale bar គឺជាប្កា វិចដេលបង្ហា អពកដមីលដែន ទ្យីឱ្យយល់ ី ទ្យំនាក់ទ្យំនង វាងឯកតា ែ ដៅដលីដែន ទ្យី ន ិងឯកតាែ ិតប្ប កេដៅដលី ដែន េី 52"
+        }
+      ]
+    }
+  ],
+  "Chap_4_Type_of_Mapbook": [
+    {
+      "term": "Mapbook",
+      "matches": []
+    },
+    {
+      "term": "classification",
+      "matches": []
+    },
+    {
+      "term": "index",
+      "matches": []
+    }
+  ],
+  "Chap_5_Using_Map": [
+    {
+      "term": "bearing",
+      "matches": []
+    },
+    {
+      "term": "distance",
+      "matches": []
+    },
+    {
+      "term": "coordinate",
+      "matches": []
+    },
+    {
+      "term": "compass",
+      "matches": []
+    }
+  ],
+  "Chap_5a_Assig_Download_data_for_map": [
+    {
+      "term": "Download",
+      "matches": [
+        {
+          "page": 1,
+          "snippet": "របបៀប Download ទិន្នន្័យ សម្រា ប ់ផ លិតផផ ន្ទី"
+        },
+        {
+          "page": 3,
+          "snippet": "• របប ៀប បោនឡូត (Download) ទិននន័យសម្រាប់ផ លិតផផ នទី • Open Development Cambodia (ODC) • (https://opendevelopmentcambodia.net/)"
+        },
+        {
+          "page": 10,
+          "snippet": "បៅបរល Download រួច្ប ីយម្រតូវរកាទ ក ទិន្នន្័យ ទ ាំងប ះសម្រា ប ប្វីផផ ន្ទី"
+        }
+      ]
+    },
+    {
+      "term": "save",
+      "matches": []
+    },
+    {
+      "term": "data",
+      "matches": []
+    }
+  ],
+  "Chap_6_What_is_GPS": [
+    {
+      "term": "segments",
+      "matches": []
+    },
+    {
+      "term": "satellite",
+      "matches": [
+        {
+          "page": 5,
+          "snippet": "ដសចកតីដ្តើម GPS ដចកជ្ជ០៣ ដែែកគឺ – ផ្ក ា យរណប (Satellite) – អ្ែកទ្យទ្យួ (Receivers) – Software 5 យ ៉ា វ ដនត, ០៩២ ៦៦ ៤០ ៩៧ ដដ្ប៉ាតឺម៉ាង់ភូមិវ ិទ្យា ន ិងដរៀបចាំដដ្ន ដ្ី មុខវ ិជ្ជាដែន ទ្យីវ ិទ្យា"
+        },
+        {
+          "page": 18,
+          "snippet": "18 ការដប្បីប្ប ្់GPS ប្តូវអ្នុវតតដ្ូចខាងដប្កាម៖ មុន ចុុះ្ិកា ▪ ប្តូវដរៀបម្ងនថមប្កោ្់កត់ប្ត ទ្យិន ែន ័័យ ប ិចឬដមមនដ្ដែន ទ្យី .. ▪ ពិន ិតយGPS ឱ្យប ន ប្តឹមប្តូវដ្ូចជ្ជGPS ដបីក កាំណត់ប្បដភទ្យទ្យិន ែន ័យ UTM, datum, ន ិងកាំណត"
+        }
+      ]
+    },
+    {
+      "term": "position format",
+      "matches": []
+    },
+    {
+      "term": "track",
+      "matches": [
+        {
+          "page": 18,
+          "snippet": "18 ការដប្បីប្ប ្់GPS ប្តូវអ្នុវតតដ្ូចខាងដប្កាម៖ មុន ចុុះ្ិកា ▪ ប្តូវដរៀបម្ងនថមប្កោ្់កត់ប្ត ទ្យិន ែន ័័យ ប ិចឬដមមនដ្ដែន ទ្យី .. ▪ ពិន ិតយGPS ឱ្យប ន ប្តឹមប្តូវដ្ូចជ្ជGPS ដបីក កាំណត់ប្បដភទ្យទ្យិន ែន ័យ UTM, datum, ន ិងកាំណត"
+        }
+      ]
+    }
+  ],
+  "Chap_6a_Using_AVENZA_Maps": [
+    {
+      "term": "Avenza",
+      "matches": [
+        {
+          "page": 3,
+          "snippet": "Adroid IOS 1. Waze 1. Waze Free 2. GPS Essentials None Free online 3. Maps.me 3. Maps.me Updated often, available offline 4. Avenza maps 4. Avenza maps available offline 5. Google Earth 5. Google Earth Online none 6. Map"
+        },
+        {
+          "page": 4,
+          "snippet": "How to use GPS 1. Download Avenza maps using Playstore or App store 2. Download Topo map (topo_wgs1984.tif) 3. Open topo_wgs1984.tif and share to 4. Wait a minute to finish 4/3/2024 4"
+        },
+        {
+          "page": 15,
+          "snippet": "ប្រតិរតតិ ១ 4/3/2024 15 ចូរបញ្ចូ លចំណុ ចន្ិយាមកាទន្េះក្នុងទ ូរសពទដៃ ទោយទ្បីក្មមវ ិធី AVENZA MAP"
+        },
+        {
+          "page": 16,
+          "snippet": "ប្រតិរតតិ ២ 4/3/2024 16 ចូរបញ្ចូ លចំណុ ចន្ិយាមកាទន្េះក្នុងទ ូរសពទដៃ ទោយទ្បីក្មមវ ិធី AVENZA MAP ្ពមទ ំង្ាប់ទ្មេះទ ីត ំង រយៈក្មពស់ដន្ទ ីត ំងខាងទ្កាម ន្ិងបញ្ចចក្់ចម្ងាយទ ីត ំងរបស់អ្នក្ក្ំពង់សថិតទៅ៖ ក្. ៣០៣៥៦៦, ១៣១១៤៧៦ ខ. ៣"
+        }
+      ]
+    },
+    {
+      "term": "mark",
+      "matches": [
+        {
+          "page": 5,
+          "snippet": "Let’s practice 1. Find your current location 2. Set up coordination 3. Mark a location by GPS 4. Tracking 5. Measure the distance 6. Fin your location 4/3/2024 5"
+        },
+        {
+          "page": 8,
+          "snippet": "Mark a location 1 2 3 45 4/3/2024 8"
+        },
+        {
+          "page": 9,
+          "snippet": "Mark a location 4/3/2024 9"
+        },
+        {
+          "page": 11,
+          "snippet": "Mark a location 1 2 3 45 4/3/2024 11"
+        }
+      ]
+    },
+    {
+      "term": "tracking",
+      "matches": [
+        {
+          "page": 5,
+          "snippet": "Let’s practice 1. Find your current location 2. Set up coordination 3. Mark a location by GPS 4. Tracking 5. Measure the distance 6. Fin your location 4/3/2024 5"
+        },
+        {
+          "page": 12,
+          "snippet": "Tracking 4/3/2024 12"
+        }
+      ]
+    },
+    {
+      "term": "export",
+      "matches": []
+    }
+  ],
+  "Chap_6b_Practice_GPS": [
+    {
+      "term": "battery",
+      "matches": []
+    },
+    {
+      "term": "UTM/UPS",
+      "matches": []
+    },
+    {
+      "term": "datum",
+      "matches": [
+        {
+          "page": 5,
+          "snippet": "ការអនុវត្តន៍ប្រ ើ្ា ស ់​GPS ្ត្ូវពិនិត្យបៅបលើែំណុ ែសំងមន ូែជា៖ – ថ្ម GPS – Projection Coordination Systems • Position format (UTM UPS ) • Datum (India-Thailand ឬ WGS 84) – សមា ា រកត្ ្ត់​(Datasheet , រ ិត្់​ឬបមមថ្ថ្ៃ) – "
+        }
+      ]
+    },
+    {
+      "term": "track",
+      "matches": [
+        {
+          "page": 5,
+          "snippet": "ការអនុវត្តន៍ប្រ ើ្ា ស ់​GPS ្ត្ូវពិនិត្យបៅបលើែំណុ ែសំងមន ូែជា៖ – ថ្ម GPS – Projection Coordination Systems • Position format (UTM UPS ) • Datum (India-Thailand ឬ WGS 84) – សមា ា រកត្ ្ត់​(Datasheet , រ ិត្់​ឬបមមថ្ថ្ៃ) – "
+        }
+      ]
+    }
+  ],
+  "Chap_6c_How_to_GPS": [
+    {
+      "term": "waypoint",
+      "matches": [
+        {
+          "page": 8,
+          "snippet": "ប ៊ូតុងេំខាន់របេ់GPS • In(ព្ងើក) • Out(រ ្ងួម) • Find(ស្សែករក) • Mark(កំណត់) • Quit(ចកទចញ /្តឡរ់ទ្កាយ) • Enter(យក/ ទ្រ ើសទរ ើស) • Menu(រ ញ្ចើ) • page • Main Menu(រ ញ្ចើទោ ) • Area Calculate (គណនាផ្ផ្្) • Waypoint manager"
+        },
+        {
+          "page": 30,
+          "snippet": "ស្សែងរកចំណ ុ ច/ទ ើត ំងទោយទ្រ ើឧបករ ករណ GPS តមរយៈ្រ ព័នធកូរអ័រទោ ទនរភូមិសាស្រសត រ នា្រ ់ពើអនកទរ ើកGPS មួយសន្ុេះស្ វាអាច ំទណើ រការា ន អទ ើយ អនក្តូវអនុវតត ូចខ្នងទ្កាម៖ ១. ចុចរ ូតុង Find រួចទ្រ ើសទរ ើសចំណ ុ ច(Waypoints) ស្ អ"
+        },
+        {
+          "page": 51,
+          "snippet": "រទរ ៀរ ុរ ទ ិននន័យទចញពើ GPS ទ ើមបើ ុរ ទ ិននន័យទចញពើ GPS អនក្តូវអនុតត ូចខ្នងទ្កាម៖ ក. ចុច Page ទ ើមបើស្សែងរក Main Menu រួចទ្រ ើសទរ ើសយក Waypoint Manager ខ. រ នា្រ ់អនកទ ើញចំនុចស្ អនកា នរកាទ ុកកនុង GPS ទ ើយទ្រ ើសទរ ើសចំ នុ"
+        }
+      ]
+    },
+    {
+      "term": "tracks",
+      "matches": [
+        {
+          "page": 1,
+          "snippet": "មាតិកា 1. ការពិនិតយទៅទ ើGPS មុនទព ទ្រ ើ្ា ស់ 2. កំណត់្រ ព័នធកូរអ័រទោទនភូមិសាស្រសតទោយទ្រ ើឧបករករណ GPS 3. រ ញ្ចូ ្រ ព័នធកូរអ័រទោទនភូមិសាស្រសត(UTM) ទៅឧបករករណ GPS 4. ស្សែងរកចំណ ុ ច/ទ ើត ំងទោយទ្រ ើឧបករ ករណ GPS តម រយៈ្រព័នធកូរ"
+        },
+        {
+          "page": 46,
+          "snippet": "4. ការទ្រ ើ្ា ស់Tracks ទ ើមបើកត់្តគនលងផ្លូវ/ោនទ្ែើ ំទណើ រ 46យ ៉ា វ ទនត, ០៩២ ៦៦ ៤០ ៩៧"
+        },
+        {
+          "page": 47,
+          "snippet": "C. ទ ើមបើទរ ើក ឬរ ិទ Tracks រ នា្រ ់ពើអនកទរ ើកGPS មួយសន្ុេះស្ វាអាច ំទណើ រការា ន អ ទ ើយ អនក្តូវអនុវតត ូចខ្នងទ្កាម៖ ១. ចុចរ ូតុង page ទ ើមបើស្សែងរកពាកយ main menu ទ ើយ ទ្រ ើសពាកយ Setup រួចចុចរ ូតុង Enter 47 យ ៉ា វ ទនត, ០៩២"
+        },
+        {
+          "page": 48,
+          "snippet": "C. ទ ើមបើទរ ើក ឬរ ិទ Tracks ២. រ នា្រ ់មកអនក្តូវទ្រ ើសទរ ើសពាកយ Tracks អនកនឹងទ ើញ ្រអរ់ Track log អនក្តូវ ចុចរ ូតុង Enter ។ • ទរ ើអនកទ្រ ើសទរ ើសពាកយ Record, show on map មានន័យ ថាអនកទរ ើក tracks ទ ើយវារ ង្ហាញទៅទ ើស្ផ្នទ ើ"
+        }
+      ]
+    },
+    {
+      "term": "DNRGPS",
+      "matches": [
+        {
+          "page": 53,
+          "snippet": "ការតប្បើប្ាស់ទាញទិននន័ តចញពី GPS 1. រ ញ្ចូ ទ ិននន័យស្ ្រ មូ ពើការសិកាទៅកនុង Ms. Excel 2. ទោនឡូតទ ិននន័យស្ ា នរកាទ ុកកនុង GPS ទោយផ្ក្ ់ ទោទ្រ ើ ្ា ស់កមមវ ិ្ើ DNR GPS https://gisdata.mn.gov/dataset/dnrgps យ ៉ា វ នេត 53"
+        }
+      ]
+    },
+    {
+      "term": "delete",
+      "matches": [
+        {
+          "page": 51,
+          "snippet": "រទរ ៀរ ុរ ទ ិននន័យទចញពើ GPS ទ ើមបើ ុរ ទ ិននន័យទចញពើ GPS អនក្តូវអនុតត ូចខ្នងទ្កាម៖ ក. ចុច Page ទ ើមបើស្សែងរក Main Menu រួចទ្រ ើសទរ ើសយក Waypoint Manager ខ. រ នា្រ ់អនកទ ើញចំនុចស្ អនកា នរកាទ ុកកនុង GPS ទ ើយទ្រ ើសទរ ើសចំ នុ"
+        }
+      ]
+    }
+  ],
+  "Chap_7_Google_Earth": [
+    {
+      "term": "polygon",
+      "matches": [
+        {
+          "page": 22,
+          "snippet": "៤. ការ Digitize ពហុដកាេ េដៅដលើ Google Earth 22 1. ច ចដ ៉ៅ សា ោ ាំ> Add> polygon"
+        },
+        {
+          "page": 33,
+          "snippet": "្រ សិនដរ ើអ្នកចង់តកស្ម្ួ/តកែ្ម្ូវ ចាំណ ច (points) ព្យួ ដកាណ (polygons) និង តខេរ ន្ទាែ់ (lines) ដៅដលើ Google Earth អ្នក ្ែូវអ្ន វែោដ្ូចខ្នងដ្កាម្៖ ក. ច ចដ ៉ៅសាោាំដលើដ្មុះរ ិនននហ រ័ចដ្រ ើសដរ ើស ក Properties 33 ៦. ន្កសប្មួល"
+        },
+        {
+          "page": 34,
+          "snippet": "ខ. រ ន្ទារ ់ម្ក កអ្នកនឹងផ្ាាំង Properties ររស់វា ដ ើអ្នកអា ច កដ ៉ៅដៅោក់្ែង់ចាំណ ច (dot) ដៅដលើ ចាំណ ច (points) ព្យួ ដកាណ (polygons) និង តខេរ ន្ទាែ់ (lines) រ័ចដធវើការ ទាញោក់្ែង់រ ើា ាំងតដ្លអ្នកចង់ា ន 34 ៦. ន្កសប្មួលចំេ ុ "
+        },
+        {
+          "page": 40,
+          "snippet": "្រ សិនដរ ើអ្នកចង់រ ោូរព្យួណ៌ ដៅដលើរ ិនននហ អ្នក ្ែូវច ចដ ៉ៅសាោាំដៅដលើរ ិនននហ តម្័ តដ្លអ្នក ចង់រ ោូរព្យួណ៌ រ័ចដ្រ ើសដរ ើស កProperties > Style, Color 40 ៨. ការរ តូរពេ៌ ដៅដលើ Points, Lines និ្ Polygon ដៅដលើ Google Earth ព្យួ"
+        }
+      ]
+    },
+    {
+      "term": "elevation",
+      "matches": [
+        {
+          "page": 37,
+          "snippet": "37 ៧. ពិនិត្យរយៈកមពស់ដ ីដលើ Google Earth ១. ច ចដលើសញ្ចារ ន្ទាែ់ ២. ដ្រ ើស ក path 3. កាំណែ់ខ្ន នែ ៤. ដ្រ ើសដរ ើស ក Show Elevation Profile"
+        }
+      ]
+    },
+    {
+      "term": "georeferencing",
+      "matches": [
+        {
+          "page": 68,
+          "snippet": "ការដធវើGeoreferencing 68"
+        },
+        {
+          "page": 74,
+          "snippet": "អ្នកអា ចចូលរ សេន្ទព្យួើរដម្ដរៀនអ្ាំព្យួើរ Google Earth ដនុះ ដៅ Youtube ខ្នងដ្កាម្៖ 1. រដរ ៀរ ដ្ាំដឡើង Google Earth (How to install Google Earth Pro and pre setting_part) 1: https://www.youtube.com/watch?v=F533PByYpPQ&t=2"
+        },
+        {
+          "page": 75,
+          "snippet": "លាំហាែ់អ្ន វែោន៍ ចូររ អូនដធវើច ច្ែង់ដនុះដដ្ើម្បើ Download រ ិនននហ ស្មារ់អ្ន វែោន៍ 1. ចូរដធវើ Georeferencing តែនរ ើែាំរ ន់រ ិរ ខារ ់សងាកែ់សាឹងមានរ ហ សងាកែ់ដោម្ដៅរ ើ១ និងសងាកែ់រ ឹងសាឡាង 2. រ័ចដធវើការផ្ោន (Digitize) ែាំរ ន់"
+        }
+      ]
+    },
+    {
+      "term": "layout",
+      "matches": []
+    }
+  ],
+  "Chap_8_Google_Map": [
+    {
+      "term": "offline",
+      "matches": []
+    },
+    {
+      "term": "list",
+      "matches": []
+    },
+    {
+      "term": "place",
+      "matches": []
+    },
+    {
+      "term": "download",
+      "matches": [
+        {
+          "page": 24,
+          "snippet": "លំហារ់អនុវរតន៍ ង ូៈង្ែើបង ចុបបននភ្លពអ្ាំពើារែនភ្លពកច ូវើែ១៩នផែនទើងៅតាមទងននន័យផែលអា ជាា្ៈែតល់ អ្តតរញ្ញាណអ្នកច ងកច ើតជាំ្ឺកច ូវើែ១៩ស្បចាាំផ្ថ្ៃៈបរ់រាជៈ ាភងានលនង យង ុង ស្ត្់ងនោះន ងែើមបើង្ែើកា ៈនdownload។ 24"
+        }
+      ]
+    }
+  ],
+  "Chap_9_Total_Station_KH": [
+    {
+      "term": "reflectorless",
+      "matches": [
+        {
+          "page": 13,
+          "snippet": "❖ ការស្ថកថ្ម • ថ្មអាចស្ថកបានខៃង្្ ៣០០ ទៅ ៥០០ ង្ • ទបើទព្បើថ្មអស្ថាររលរលីង្ទរក អាចន្ទុំឱ្យ ីវិតកាន្ន្តខែី • ទ ើរ្បីរក្ា ីវិតថ្មឱ្យបានអតិបរមា គួរស្ថកថ្មយា៉ាង្តិច១ន្ខររង្។ 1.6. ប្ព ស • ទៅទរលទធវើការវាស្ចមាាយកនុង្ Prism mode "
+        },
+        {
+          "page": 25,
+          "snippet": "2.3. Star-key Mode 25 ❖ The Total station (non-reflectorless) • ច ចប៊ែូត ង្ ផ្លាយ នឹង្បងាហញទលើទអព្កង្្ ូចរូប 1. ផ្លលស្បរសរតលរែរនែឺទោយច ច 2. ច ច F1 (TILT) រួចទព្ ើស ON (F1) ឬ OFF (F3) រួចច ច F4 (ENT) 3. ច ច F3 (S/A) ទ ើរ្"
+        },
+        {
+          "page": 26,
+          "snippet": "26 • ច ចប៊ែូត ង្ ផ្លាយ នឹង្បងាហញទលើទអព្កង្្ ូចរូប • ច ច F1:MODE ទ ើរ្បីបងាហញ ទព្រើស • F1: PRISM • F2: REFLECTOR • F3: NO REFLECTOR 2.3. Star-key Mode ❖ The Total station (reflectorless)"
+        },
+        {
+          "page": 33,
+          "snippet": "3.3. ការកាំណត់តម្មៃដថ្ររបស់ប្ព ស 33 • តលរែទថ្ររបស្ព្រីសសព្មាប្ Total Station ព្តូវបានកុំណត្ទៅ -30mm ។ ទបើរិនន្រន -30mm ទទ អនកព្តូវន្តផ្លលស្ បរសរការកុំណត្ទនះ។ • ទៅទរលតលរែទនះព្តូវបានកុំណត្ វានឹង្ កាលយជាតលរែលុំន្ទុំទ ើររ ូ "
+        }
+      ]
+    },
+    {
+      "term": "prism constant",
+      "matches": []
+    },
+    {
+      "term": "occupied point",
+      "matches": [
+        {
+          "page": 48,
+          "snippet": "48 6.1. អនុវតតការវាស់និយមកា ❖ ព្តូវកុំណត្ជារ ននូវ៖ a) និយារកា (NEZ ឬ XYZ) របស្ Total Station (Occupied point) b) ករពស្របស្ Total Station (Ins.HT) c) ករពស្របស្ព្រីស (R.HT) d) រ ុំរបស្ទគ្មលទៅ Backsight point"
+        }
+      ]
+    },
+    {
+      "term": "backsight",
+      "matches": [
+        {
+          "page": 48,
+          "snippet": "48 6.1. អនុវតតការវាស់និយមកា ❖ ព្តូវកុំណត្ជារ ននូវ៖ a) និយារកា (NEZ ឬ XYZ) របស្ Total Station (Occupied point) b) ករពស្របស្ Total Station (Ins.HT) c) ករពស្របស្ព្រីស (R.HT) d) រ ុំរបស្ទគ្មលទៅ Backsight point"
+        },
+        {
+          "page": 52,
+          "snippet": "52 d. ការកាំណត់មុាំរបស់ដា ដៅ Backsight • ការកុំណត្ទនះទ ើរ្បី ួយឱ្យការោក្ទីតុំង្ទលើន្ទនទីបានព្តូវរ ុំលអ 1. ទបើក ុំទណើរការ True North កនុង្ iPhone 2. ទបើកករមវិធីព្តីវិស័យ ោក្ព្សបជារួយន្កវឆែុះ Total Station រួចងាកទៅ រកទិសខ្"
+        },
+        {
+          "page": 53,
+          "snippet": "53 d. ការកាំណត់មុាំរបស់ដា ដៅ Backsight • ឧទ រណ៍លនការរិនកុំណត្រ ុំ Backsight តរ True North 0° N"
+        }
+      ]
+    },
+    {
+      "term": "QGIS",
+      "matches": [
+        {
+          "page": 55,
+          "snippet": "55 • ទព្បើករមវិធី ូចជា Google Earth Pro, ArcGIS, QGIS… 6.3. ការបងាាញ ទ្ធផ"
+        }
+      ]
+    }
+  ]
+}

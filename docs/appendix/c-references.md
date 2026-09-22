@@ -34,3 +34,14 @@
 - [Google Fonts source](https://github.com/google/fonts). Bundled Siemreap, Battambang and Moul; SIL OFL licenses in assets/fonts.
 
 New diagrams and synthetic data use the course CC BY-SA 4.0 license. Original datasets retain original provenance and terms. New worked examples are teaching scenarios, not official Cambodian statistics.
+
+## ឯកសារបង្រៀនដើមដែលបានសំយោគក្នុងមគ្គុទ្ទេសក៍វាល
+
+មគ្គុទ្ទេសក៍វាលក្នុងកំណែនេះសង្ខេប និងរៀបចំឡើងវិញពី slide មុខវិជ្ជារបស់ YAM Sarath / ដេប៉ាតឺម៉ង់ភូមិវិទ្យា និងរៀបចំដែនដី។ រូបភាព ស៊ីម្យូឡេសិន ករណីសិក្សា និងសំណួរត្រូវបានបង្កើតថ្មីសម្រាប់សៀវភៅនេះ; screenshot ឬរូបពី slide មិនត្រូវបានចម្លងចូលគម្រោងទេ។
+
+- *Chap 1 General*; *Chap 2 Shape of the Earth*; *Chap 3 Geography Map*; *Chap 4 Type of Mapbook*; *Chap 5 Using Map*.
+- *Chap 5a Assignment: Download data for map*.
+- *Chap 6 What is GPS*; *Chap 6a Using AVENZA Maps*; *Chap 6b Practice GPS*; *Chap 6c How to GPS*.
+- *Chap 7 Google Earth*; *Chap 8 Google Map*; *Chap 9 Total Station KH*.
+
+សម្រាប់ workflow របស់កម្មវិធី ត្រូវពិនិត្យឈ្មោះ menu ក្នុងកំណែដែលកំពុងប្រើ ព្រោះចំណុចប្រទាក់អាចផ្លាស់ប្តូរ។

@@ -1,0 +1,183 @@
+{
+  "html_pages": 43,
+  "missing_local_targets": [],
+  "missing_anchors": [],
+  "external_runtime_assets": [],
+  "lessons": [
+    {
+      "lesson": 1,
+      "original_chars": 13569,
+      "upgraded_chars": 18338,
+      "growth_percent": 35,
+      "simulators": [
+        "simplify",
+        "map-elements"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 2,
+      "original_chars": 12037,
+      "upgraded_chars": 16721,
+      "growth_percent": 39,
+      "simulators": [
+        "datum-shift"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 3,
+      "original_chars": 11132,
+      "upgraded_chars": 15900,
+      "growth_percent": 43,
+      "simulators": [
+        "projection"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 4,
+      "original_chars": 9898,
+      "upgraded_chars": 14297,
+      "growth_percent": 44,
+      "simulators": [
+        "scale",
+        "zoom-scale"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 5,
+      "original_chars": 9949,
+      "upgraded_chars": 14597,
+      "growth_percent": 47,
+      "simulators": [
+        "contour"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 6,
+      "original_chars": 9940,
+      "upgraded_chars": 14385,
+      "growth_percent": 45,
+      "simulators": [
+        "visual-variables"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 7,
+      "original_chars": 10640,
+      "upgraded_chars": 15185,
+      "growth_percent": 43,
+      "simulators": [
+        "classification"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 8,
+      "original_chars": 10028,
+      "upgraded_chars": 14451,
+      "growth_percent": 44,
+      "simulators": [
+        "colour",
+        "palette-lab"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 9,
+      "original_chars": 10213,
+      "upgraded_chars": 14506,
+      "growth_percent": 42,
+      "simulators": [
+        "normalise",
+        "unit-size"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 10,
+      "original_chars": 9797,
+      "upgraded_chars": 14122,
+      "growth_percent": 44,
+      "simulators": [
+        "symbols",
+        "symbol-editor"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 11,
+      "original_chars": 9599,
+      "upgraded_chars": 13933,
+      "growth_percent": 45,
+      "simulators": [
+        "isoline"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 12,
+      "original_chars": 9226,
+      "upgraded_chars": 13679,
+      "growth_percent": 48,
+      "simulators": [
+        "flow",
+        "bivariate",
+        "time-player"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 13,
+      "original_chars": 9306,
+      "upgraded_chars": 13773,
+      "growth_percent": 48,
+      "simulators": [
+        "labels",
+        "label-studio"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 14,
+      "original_chars": 8930,
+      "upgraded_chars": 13324,
+      "growth_percent": 49,
+      "simulators": [
+        "layout",
+        "layout-studio"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    },
+    {
+      "lesson": 15,
+      "original_chars": 10377,
+      "upgraded_chars": 15199,
+      "growth_percent": 46,
+      "simulators": [
+        "generalise",
+        "web-map"
+      ],
+      "quiz_questions": 3,
+      "new_comparison_images": 2
+    }
+  ]
+}

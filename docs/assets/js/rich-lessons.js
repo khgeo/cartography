@@ -35,6 +35,16 @@
       out.textContent=`Zoom ${z}× · 1:${f(scale,0)} (គំរូបោះពុម្ព) · ទទឹងមើលឃើញ ${f(extent)} km។ ការពង្រីកមិនបង្កើតទិន្នន័យថ្មីទេ។ RF លើអេក្រង់គ្រាន់តែជាគំរូ; ប្រើរបារមាត្រដ្ឋានសម្រាប់ទិដ្ឋភាពនេះ។`;
     }wire(el,draw,()=>$(el,'.rz').value=1);
   };
+  sims['gps-quality']=el=>{
+    const {stage,out}=shell(el,'គុណភាពទីតាំង GNSS / Position quality',`<label>មេឃមើលឃើញ <input class="sky" type="range" min="1" max="5" value="4"></label><label>ការឆ្លុះសញ្ញា <input class="multi" type="range" min="0" max="4" value="1"></label><label>រយៈពេល average <input class="avg" type="range" min="1" max="30" value="10"></label>`);
+    function draw(){const sky=+$(el,'.sky').value,multi=+$(el,'.multi').value,avg=+$(el,'.avg').value;const err=clamp(18/sky+multi*2.2-0.22*Math.sqrt(avg),1.2,25);let b=box(0,0,640,300,'#e0f2fe');for(let i=0;i<sky+2;i++){const x=55+i*85;b+=circle(x,45,9,'#f59e0b')+line(x,55,320,225,'#60a5fa',2);}b+=box(40,185,130,115,'#94a3b8')+box(470,155,130,145,'#64748b')+circle(320,225,7,'#d32f2f')+`<circle cx="320" cy="225" r="${err*4}" fill="#ef4444" fill-opacity=".17" stroke="#d32f2f" stroke-dasharray="6 5"/>`+text(270,280,'Receiver',17);stage.innerHTML=svg(b,'Schematic GNSS sky visibility and uncertainty',300);out.textContent=`ភាពមិនប្រាកដប្រជាគំរូ ≈ ${f(err,1)} m។ មេឃបើកចំហ និង average ជួយបាន ប៉ុន្តែ multipath ពីជញ្ជាំងអាចបង្កលំអៀង។ នេះជាគំរូបង្រៀន មិនមែនការទស្សន៍ទាយឧបករណ៍។`;}
+    wire(el,draw,()=>{$(el,'.sky').value=4;$(el,'.multi').value=1;$(el,'.avg').value=10;});
+  };
+  sims['total-station']=el=>{
+    const {stage,out}=shell(el,'ពីមុំ និងចម្ងាយទៅកូអរដោនេ / Polar calculation',`<label>Azimuth ° <input class="az" type="range" min="0" max="359" value="40"></label><label>ចម្ងាយ m <input class="dist" type="range" min="10" max="200" value="100"></label><label>កំហុស orientation ″ <input class="sec" type="range" min="0" max="120" value="0"></label>`);
+    function draw(){const az=+$(el,'.az').value,d=+$(el,'.dist').value,sec=+$(el,'.sec').value,a=az*Math.PI/180,ae=(az+sec/3600)*Math.PI/180;const e=500000+d*Math.sin(a),n=1280000+d*Math.cos(a),shift=2*d*Math.sin((sec/3600*Math.PI/180)/2);let b=box(0,0,640,310,'#f8fafc')+line(320,260,320,30,'#64748b',2)+text(327,45,'N',18)+circle(320,260,7,'#d32f2f');const x=320+180*Math.sin(a),y=260-180*Math.cos(a);b+=line(320,260,x,y,'#3949ab',5)+circle(x,y,10,'#f59e0b')+text(x+20,y,'P',20)+`<path d="M320 205 A55 55 0 0 1 ${320+55*Math.sin(a)} ${260-55*Math.cos(a)}" fill="none" stroke="#f59e0b" stroke-width="7"/>`;stage.innerHTML=svg(b,'Total station azimuth and distance diagram',310);out.textContent=`P ≈ E ${f(e,3)} m, N ${f(n,3)} m។ orientation error ${sec}″ នៅ ${d} m បង្ក side shift ប្រហែល ${f(shift*1000,1)} mm (គំរូ 2D)។`;}
+    wire(el,draw,()=>{$(el,'.az').value=40;$(el,'.dist').value=100;$(el,'.sec').value=0;});
+  };
   sims['symbol-editor']=el=>{
     const {stage,out}=shell(el,'ផ្ទៃរង្វង់ និងប្រជាជន / Proportional symbols',`<label>ប្រជាជន B <input class="pop" type="range" min="0" max="900000" step="25000" value="400000"></label><label><input class="wrong" type="checkbox"> សាកល្បងកំហុស r ∝ value</label>`);
     function draw(){const v=+$(el,'.pop').value,wrong=$(el,'.wrong').checked,ratio=v/100000,r=12*(wrong?ratio:Math.sqrt(ratio));

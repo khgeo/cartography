@@ -1,5 +1,8 @@
 # មេរៀនទី១៥៖ ការធ្វើឲ្យទូទៅ សីលធម៌ផែនទី និងការចេញផ្សាយ
 
+!!! tip "ខ្សែសង្វាក់ផលិតកម្មឌីជីថល"
+    មើល [Google Earth/Maps](../field/earth-maps.md) សម្រាប់ digitizing និង georeferencing និង [Total Station ទៅ QGIS](../field/total-station.md) សម្រាប់ provenance និង QC ពីឧបករណ៍ដល់ផែនទី។
+
 !!! info "ព័ត៌មានមេរៀន"
     **រយៈពេលបង្រៀនដែលស្នើ៖ ៣ ម៉ោង** · មេរៀនទី ១៥ ក្នុងចំណោម ១៥
 

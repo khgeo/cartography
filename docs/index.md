@@ -12,6 +12,10 @@
 
 មេរៀននីមួយៗមានសិក្ខាសាលារូបភាព គូប្រៀបធៀបមុន/ក្រោយ ការគណនា សំណួរព្យាករណ៍ បញ្ហាប្រឈម និងសំណួរមាន feedback។ ចាប់ផ្តើមពី [មេរៀនទី១](lessons/lesson-01.md) ឬ [កញ្ចប់អនុវត្ត offline](appendix/d-offline-practice.md)។ Tab ជ្រើស control, ព្រួញកែ slider ឬផ្លាស់ស្លាក, Enter បើកព័ត៌មាន។
 
+## មគ្គុទ្ទេសក៍វាល និងឌីជីថលថ្មី
+
+ឯកសារបង្រៀនដើមរបស់មុខវិជ្ជាត្រូវបានសំយោគជាមគ្គុទ្ទេសក៍អនុវត្ត ៥ ផ្នែក៖ [សន្លឹកផែនទី និងការប្រើផែនទី](field/mapbook-use.md), [GPS/GNSS](field/gps-field.md), [Avenza Maps](field/mobile-mapping.md), [Google Earth/Maps](field/earth-maps.md) និង [Total Station ទៅ QGIS](field/total-station.md)។ មគ្គុទ្ទេសក៍ទាំងនេះមាន checklist, worked example, QC, mini challenge និងសំណួរមានចម្លើយ ហើយមិនបន្ថែមម៉ោងទ្រឹស្ដីក្នុងរចនាសម្ព័ន្ធ ១៥ មេរៀនទេ។
+
 ## ស៊េរីសៀវភៅទាំង ៤
 
 សៀវភៅនេះជាផ្នែកមួយនៃស៊េរីសម្រាប់ឆ្នាំទី២ និងទី៣។ មើលស៊េរីទាំងមូលនៅ [khgeo.github.io](https://khgeo.github.io/)។
@@ -43,6 +47,10 @@
 - :material-map-search: **សៀវភៅអនុវត្ត**
 
     [លំហាត់ទី១](workbook/lab-01.md) ដល់ [លំហាត់ទី១៥](workbook/lab-15.md)៖ ធ្វើផែនទីពិតប្រាកដក្នុង QGIS ពីទិន្នន័យកម្ពុជា។
+
+- :material-crosshairs-gps: **ការងារវាល**
+
+    ចាប់ផ្ដើមពី [GPS/GNSS និងការប្រមូលទិន្នន័យ](field/gps-field.md) ហើយបន្តទៅផែនទីចល័ត ឧបករណ៍អនឡាញ និង Total Station។
 
 - :material-translate: **អំពីវាក្យសព្ទ**
 

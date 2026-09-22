@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="img" aria-labelledby="t d">
+<title id="t">Map-sheet field workflow</title><desc id="d">Four stages from map margin to location, measurement and field record.</desc>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#3949ab"/></marker></defs>
+<rect width="900" height="360" rx="18" fill="#f8fafc"/>
+<g font-family="Battambang, sans-serif" text-anchor="middle">
+<g transform="translate(30 65)"><rect width="180" height="210" rx="10" fill="#fff" stroke="#3949ab" stroke-width="3"/><rect x="24" y="28" width="132" height="96" fill="#e8eaf6" stroke="#64748b"/><path d="M24 60h132M68 28v96M112 28v96" stroke="#94a3b8"/><text x="90" y="155" font-size="22">គែមសន្លឹក</text><text x="90" y="184" font-size="16">លេខ · ឆ្នាំ · CRS</text></g>
+<g transform="translate(250 65)"><rect width="180" height="210" rx="10" fill="#fff" stroke="#3949ab" stroke-width="3"/><path d="M25 120 Q70 35 155 90" fill="none" stroke="#0284c7" stroke-width="12"/><circle cx="80" cy="85" r="10" fill="#d32f2f"/><path d="M80 85l25 45" stroke="#d32f2f" stroke-width="3"/><text x="90" y="155" font-size="22">ទីតាំង</text><text x="90" y="184" font-size="16">Easting → Northing</text></g>
+<g transform="translate(470 65)"><rect width="180" height="210" rx="10" fill="#fff" stroke="#3949ab" stroke-width="3"/><path d="M20 110 Q75 20 160 105" fill="none" stroke="#2e7d32" stroke-width="5"/><path d="M25 130h130" stroke="#f59e0b" stroke-width="7"/><text x="90" y="155" font-size="22">វាស់ផ្លូវ</text><text x="90" y="184" font-size="16">ចម្រៀក · មាត្រដ្ឋាន</text></g>
+<g transform="translate(690 65)"><rect width="180" height="210" rx="10" fill="#fff" stroke="#3949ab" stroke-width="3"/><path d="M40 35h100v100H40z" fill="#fff7ed" stroke="#64748b"/><path d="M55 58h70M55 80h70M55 102h45" stroke="#64748b" stroke-width="3"/><text x="90" y="155" font-size="22">កំណត់ត្រា</text><text x="90" y="184" font-size="16">ប្រភព · ភាពជឿជាក់</text></g>
+<g stroke="#3949ab" stroke-width="4" marker-end="url(#a)"><path d="M215 170h28"/><path d="M435 170h28"/><path d="M655 170h28"/></g>
+<text x="450" y="325" font-size="18">ការសម្រេចចិត្តល្អចាប់ផ្ដើមពី metadata មិនមែនពីការវាស់តែប៉ុណ្ណោះ</text>
+</g></svg>

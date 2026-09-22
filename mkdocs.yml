@@ -123,6 +123,12 @@ nav:
       - លំហាត់ទី១៣៖ អក្សរ និងការដាក់ស្លាកលើផែនទី: workbook/lab-13.md
       - លំហាត់ទី១៤៖ ប្លង់ផែនទី និងឋានានុក្រមមើលឃើញ: workbook/lab-14.md
       - លំហាត់ទី១៥៖ ការធ្វើឲ្យទូទៅ សីលធម៌ផែនទី និងការចេញផ្សាយ: workbook/lab-15.md
+  - មគ្គុទ្ទេសក៍វាល និងឌីជីថល:
+      - ១៖ សន្លឹកផែនទី និងការប្រើផែនទី: field/mapbook-use.md
+      - ២៖ GPS/GNSS និងការប្រមូលទិន្នន័យ: field/gps-field.md
+      - ៣៖ Avenza Maps និងផែនទីចល័ត Offline: field/mobile-mapping.md
+      - ៤៖ Google Earth និង Google Maps: field/earth-maps.md
+      - ៥៖ Total Station និង QGIS: field/total-station.md
   - ឧបសម្ព័ន្ធ:
       - ក៖ ដំឡើង QGIS: appendix/a-qgis-install.md
       - ខ៖ ទិន្នន័យកម្ពុជា: appendix/b-cambodia-data.md

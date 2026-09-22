@@ -1,5 +1,14 @@
 # Validation — Cartography v2
 
+## v3 document integration — 22 September 2026
+
+- Inspected 13 source PDFs comprising 603 pages; combined extracted text with visual review of 39 representative pages.
+- Strict MkDocs build passed and generated 43 HTML pages.
+- Link/asset audit passed with no missing local targets, missing fragment targets, or external runtime assets.
+- Three new SVG figures passed XML parsing; both new field simulator keys resolve to JavaScript initializers; the updated JavaScript passes Node syntax checking.
+- New modules use local assets and the existing responsive course components. Original course typography and figure rules remain unchanged.
+- Source screenshots and third-party illustrations were not copied into the course.
+
 Validated on 20 September 2026 in headless desktop Chrome on Windows, with network access disabled in the browser context and direct `file://` page access.
 
 ## Passed

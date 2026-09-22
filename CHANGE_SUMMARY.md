@@ -1,5 +1,16 @@
 # Cartography v2 — rich interactive edition
 
+## v3 — existing teaching documents integrated
+
+- Reviewed 13 existing Cartography PDFs (603 pages) using text extraction plus representative visual page inspection.
+- Added five detailed field and digital practice modules: map sheets/map use, GPS/GNSS, Avenza offline mapping, Google Earth/Maps, and Total Station-to-QGIS.
+- Added original local SVG diagrams for the map-sheet workflow, GNSS data chain, and Total Station orientation.
+- Added offline interactive models for GNSS position quality and Total Station polar calculation/orientation error.
+- Added Cambodia-specific examples, field checklists, good/bad practice comparisons, worked calculations, QC procedures, mini challenges, answer-reveal checks, and QGIS handoffs.
+- Linked the new resources from relevant existing lessons and the home page while preserving the 15-lesson, 45-hour course architecture.
+- Preserved the restored original fonts, sizes, heading styles, and figure/caption treatment. No source-slide screenshots were copied.
+- Strict build now contains 43 HTML pages and remains self-contained for offline use.
+
 The original Khmer-first MkDocs architecture, 15 lessons, 15 QGIS labs, syllabus, glossary, existing graphics, and original datasets are preserved.
 
 ## Added across every lesson

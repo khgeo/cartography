@@ -340,7 +340,7 @@
   /* ============ L7 · Line simplification ============ */
   SIMS["simplify"] = (el) => {
     const { q, out } = shell(el, "ចំនួនចំណុចកំពូល និងការសម្រួលបន្ទាត់ (Douglas–Peucker)",
-      `<label>កម្រិតអត់ធ្មត់ <b class="sp-v"></b> <input type="range" class="sp-t" min="0" max="60" value="0"></label>`);
+      `<label>កម្រិតអនុញ្ញាត (tolerance) <b class="sp-v"></b> <input type="range" class="sp-t" min="0" max="60" value="0"></label>`);
     const W = 600, H = 300, orig = []; for (let i = 0; i <= 480; i++) { const x = 20 + i * 1.17; orig.push([x, 150 + 70 * Math.sin(x / 60) + 22 * Math.sin(x / 13) + 8 * Math.sin(x / 4.3)]); }
     const dp = (P, eps) => { if (P.length < 3) return P; const [a, b] = [P[0], P.at(-1)], L = Math.hypot(b[0] - a[0], b[1] - a[1]); let dmax = 0, k = 0;
       for (let i = 1; i < P.length - 1; i++) { const d = Math.abs((b[1] - a[1]) * P[i][0] - (b[0] - a[0]) * P[i][1] + b[0] * a[1] - b[1] * a[0]) / L; if (d > dmax) { dmax = d; k = i; } }
@@ -495,7 +495,7 @@
                  ["focal", "Focal mean 3×3 នៃ A", "ជិតខាង (focal)"], ["zonal", "Zonal mean A តាម B", "តំបន់ (zonal)"]];
     el.innerHTML = `<div class="sim-title">ពីជគណិតផែនទី (Map algebra)</div>
       <div class="sim-controls"><span class="sim-seg">${OPS.map(([k, n], i) => `<button type="button" data-o="${k}" class="${i ? "" : "on"}">${n}</button>`).join("")}</span></div>
-      <div class="ma-grids"><div><b>A៖ កម្ពស់ (ម)</b><div class="ma-g" data-g="A"></div></div><div><b>B៖ ក្រប់ដី</b> <span class="sim-hint">១ ស្រែ · ២ ព្រៃ · ៣ ទឹក</span><div class="ma-g" data-g="B"></div></div>
+      <div class="ma-grids"><div><b>A៖ កម្ពស់ (ម)</b><div class="ma-g" data-g="A"></div></div><div><b>B៖ គម្របដី</b> <span class="sim-hint">១ ស្រែ · ២ ព្រៃ · ៣ ទឹក</span><div class="ma-g" data-g="B"></div></div>
       <div><b>លទ្ធផល</b><div class="ma-g" data-g="O"></div></div></div><div class="sim-out">ចុចលើក្រឡាលទ្ធផល ដើម្បីមើលការគណនា។</div>`;
     let op = "add";
     const calc = (r, c) => {
@@ -656,7 +656,7 @@
       ["ភាពជិតឆ្ងាយ៖ ឆ្ងាយប៉ុនណា?", "តើភូមិណានៅឆ្ងាយពីមណ្ឌលសុខភាពជាង ៥ គម?"], ["ការស្ថិតក្នុងតំបន់៖ នៅក្នុងព្រំប្រទល់ណា?", "តើតំបន់ការពារនីមួយៗបាត់បង់ព្រៃប៉ុន្មាន?"],
       ["ការប្រែប្រួល៖ ផ្លាស់ប្ដូរដូចម្ដេច?", "តើព្រៃឈើកោះកុងប្រែប្រួលយ៉ាងណាពីឆ្នាំ ១៩៩៧ ដល់ ២០១៥?"], ["សេណារីយ៉ូ៖ បើលក្ខខណ្ឌប្រែប្រួល?", "បើទឹកទន្លេឡើង ១ ម៉ែត្រ តើភូមិណាខ្លះនឹងលិច?"]] },
     "l04-scales": { title: "ផ្គូផ្គងវាល និងកម្រិតរង្វាស់", pairs: [
-      ["Nominal (ឈ្មោះ/ប្រភេទ)", "ប្រភេទក្រប់ដី៖ ព្រៃ ស្រែ ទឹក"], ["Ordinal (លំដាប់)", "ស្ថានភាពផ្លូវ៖ ល្អ មធ្យម ខូច"],
+      ["Nominal (ឈ្មោះ/ប្រភេទ)", "ប្រភេទគម្របដី៖ ព្រៃ ស្រែ ទឹក"], ["Ordinal (លំដាប់)", "ស្ថានភាពផ្លូវ៖ ល្អ មធ្យម ខូច"],
       ["Interval (ចន្លោះ)", "សីតុណ្ហភាព °C"], ["Ratio (សមាមាត្រ)", "ចំនួនប្រជាជន"]] },
     "l06-sources": { title: "ទិន្នន័យបឋម ឬ ទិន្នន័យបន្ទាប់បន្សំ?", pairs: [
       ["បឋម៖ វាស់ដោយខ្លួនឯង", "វាស់ទីតាំងអណ្ដូងដោយ GPS"], ["បឋម៖ ស្ទង់មតិ", "សម្ភាសន៍គ្រួសារអំពីចម្ងាយទៅសាលា"],

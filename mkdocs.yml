@@ -76,6 +76,7 @@ plugins:
   - offline
 
 extra:
+  homepage: https://khgeo.github.io/
   polyfills:
     - assets/js/iframe-worker-shim.js
   social:
@@ -107,6 +108,7 @@ nav:
       - មេរៀនទី១៣៖ អក្សរ និងការដាក់ស្លាកលើផែនទី: lessons/lesson-13.md
       - មេរៀនទី១៤៖ ប្លង់ផែនទី និងឋានានុក្រមមើលឃើញ: lessons/lesson-14.md
       - មេរៀនទី១៥៖ ការធ្វើឲ្យទូទៅ សីលធម៌ផែនទី និងការចេញផ្សាយ: lessons/lesson-15.md
+  - ស្លាយបង្រៀន: slides/index.md
   - សៀវភៅអនុវត្ត (លំហាត់ QGIS):
       - លំហាត់ទី១៖ ផែនទី និងដំណើរការធ្វើផែនទី: workbook/lab-01.md
       - លំហាត់ទី២៖ រាងផែនដី ដាតុម និងប្រព័ន្ធកូអរដោនេ: workbook/lab-02.md

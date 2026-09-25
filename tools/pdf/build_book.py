@@ -32,7 +32,10 @@ import cover
 # ---------------------------------------------------------------- nav
 class L(yaml.SafeLoader): pass
 L.add_multi_constructor("", lambda l, s, n: None)
-NAV = yaml.load(open(os.path.join(ROOT, "mkdocs.yml"), encoding="utf-8"), Loader=L)["nav"]
+CFG = yaml.load(open(os.path.join(ROOT, "mkdocs.yml"), encoding="utf-8"), Loader=L)
+NAV = CFG["nav"]
+LOCAL = lambda xs: ["/" + x.lstrip("/") for x in (xs or []) if isinstance(x, str) and not x.startswith("http")]
+EXTRA_CSS, EXTRA_JS = LOCAL(CFG.get("extra_css")), LOCAL(CFG.get("extra_javascript"))
 
 def flatten():
     """[(kind, title, md_path, part_title)] in reading order; index.md skipped."""
@@ -40,14 +43,21 @@ def flatten():
     for entry in NAV:
         (t, v), = entry.items()
         if isinstance(v, str):
-            if v != "index.md": items.append(("page", t, v, None))
+            if v != "index.md" and not v.startswith("slides/"): items.append(("page", t, v, None))
         else:
             items.append(("divider", t, None, None))
             for sub in v:
                 (st, sv), = sub.items(); items.append(("page", st, sv, t))
     return items
 
-def url_of(md): return "/" + (md[:-3] + "/" if not md.endswith("index.md") else md[:-8])
+def html_file(md):
+    """Built file for a page: works with use_directory_urls on (x/index.html) or off (x.html)."""
+    stem = md[:-3]
+    for cand in (stem + ".html", os.path.join(stem, "index.html")) if not md.endswith("index.md") else (stem + ".html",):
+        if os.path.exists(os.path.join(SITE, cand)): return cand
+    raise FileNotFoundError(md)
+def url_of(md): return "/" + html_file(md).replace(os.sep, "/").replace("index.html", "")
+def norm(path): return re.sub(r"(/index)?\.html$|/$", "", path)
 def slug_of(md): return re.sub(r"[^a-z0-9]+", "-", md[:-3].lower()).strip("-")
 
 # ---------------------------------------------------------------- qr
@@ -58,7 +68,7 @@ def qr_svg(url, size=78):
 
 # ---------------------------------------------------------------- page extraction
 def extract(md, pages_in_book):
-    path = os.path.join(SITE, url_of(md).strip("/"), "index.html")
+    path = os.path.join(SITE, html_file(md))
     soup = BeautifulSoup(open(path, encoding="utf-8").read(), "html.parser")
     art = soup.select_one("article.md-content__inner")
     for sel in ["a.md-content__button", "a.headerlink", "aside.md-source-file", ".md-source-file", "form.md-feedback"]:
@@ -70,7 +80,7 @@ def extract(md, pages_in_book):
         if h.startswith("#"): a["href"] = f"#{slug}--{h[1:]}"; continue
         u = urlparse(urljoin("http://x" + base, h))
         if u.netloc != "x": continue
-        target = next((m for m in pages_in_book if url_of(m) == u.path), None)
+        target = next((m for m in pages_in_book if norm(url_of(m)) == norm(u.path)), None)
         if target: a["href"] = f"#{slug_of(target)}" + (f"--{u.fragment}" if u.fragment else "")
         else: a["href"] = ONLINE.rstrip("/") + u.path
     for tag, attr in (("img", "src"), ("source", "src")):
@@ -107,23 +117,25 @@ html, body { background: #fff !important; }
 body { font-size: 10.5pt; }
 .md-typeset { font-size: 10.5pt !important; line-height: 1.75; }
 .book-section { break-before: page; }
-.book-section > article > h1:first-of-type { font-size: 21pt; color: #00695c; border-bottom: 3px solid #ff7043; padding-bottom: 6pt; margin-top: 0; }
-.md-typeset h2 { font-size: 15pt; color: #00695c; break-after: avoid; margin-top: 1.4em; }
+.book-section > article > h1:first-of-type { font-size: 21pt; color: #283593; border-bottom: 3px solid #ffa000; padding-bottom: 6pt; margin-top: 0; }
+.md-typeset h2 { font-size: 15pt; color: #283593; break-after: avoid; margin-top: 1.4em; }
 .md-typeset h3 { font-size: 12.5pt; break-after: avoid; }
 .md-typeset h4 { break-after: avoid; }
 .md-typeset figure, .md-typeset table, .admonition, .lab-chart, .sim, .lab-map, .match-quiz, .raster-sim, .print-qr, .self-check, pre { break-inside: avoid; }
 .md-typeset table:not([class]) { font-size: 9pt; display: table; width: 100%; }
 .md-typeset figure { margin: 1em 0; } .md-typeset figcaption { font-size: 9pt; color: #555; }
-.md-typeset a { color: #00695c; text-decoration: none; }
+.md-typeset a { color: #283593; text-decoration: none; }
 .divider { break-before: page; height: 245mm; display: flex; flex-direction: column; justify-content: center; }
-.divider .kicker { font-family: 'Battambang'; color: #ff7043; font-size: 14pt; letter-spacing: .05em; }
-.divider h1 { font-family: 'Moul', 'Battambang'; font-weight: 400; font-size: 26pt; color: #00493f; line-height: 1.6; margin: .3em 0; border: 0; }
-.divider .rule { width: 60mm; height: 4px; background: #ff7043; }
+.divider .kicker { font-family: 'Battambang'; color: #ffa000; font-size: 14pt; letter-spacing: .05em; }
+.divider h1 { font-family: 'Moul', 'Battambang'; font-weight: 400; font-size: 26pt; color: #1a237e; line-height: 1.6; margin: .3em 0; border: 0; }
+.divider .rule { width: 60mm; height: 4px; background: #ffa000; }
 .divider ul { font-family: 'Battambang'; color: #333; font-size: 12pt; margin-top: 2em; list-style: none; padding: 0; }
 .divider li { margin: .4em 0; }
-.print-qr { display: flex; gap: 10pt; align-items: center; border: 1px dashed #80cbc4; border-radius: 6px; padding: 6pt 10pt; font-size: 8.5pt; color: #444; margin: -.4em 0 1em; background: #f4fbfa; }
-.print-qr .u { font-family: monospace; font-size: 8pt; color: #00695c; }
+.print-qr { display: flex; gap: 10pt; align-items: center; border: 1px dashed #9fa8da; border-radius: 6px; padding: 6pt 10pt; font-size: 8.5pt; color: #444; margin: -.4em 0 1em; background: #f5f6fc; }
+.print-qr .u { font-family: monospace; font-size: 8pt; color: #283593; }
 .print-answer { margin-top: .4em; color: #777; }
+.md-typeset .admonition-title, .md-typeset summary { padding-left: 2.6em !important; }
+.md-typeset .admonition-title::before, .md-typeset summary::before { left: .75em !important; top: 50% !important; transform: translateY(-50%); width: 1.15em !important; height: 1.15em !important; }
 .self-check .sc-row, .map-tasks, .attr-table, .leaflet-control-zoom, .leaflet-control-layers, .leaflet-control-attribution, .mq-score, .mq-hint, .mt-restart, .sim-btn, .md-button { display: none !important; }
 .ch-bar { transition: none !important; width: var(--w) !important; }
 .lab-map { height: 380px !important; }
@@ -147,16 +159,16 @@ def front_matter(toc):
 body {{ font-family: 'Siemreap','Battambang',sans-serif; font-size: 10.5pt; color: #222; }}
 .pg {{ break-after: page; height: 246mm; position: relative; overflow: hidden; }}
 .toc {{ break-before: page; }}
-.title h1 {{ font-family: 'Moul'; font-weight: 400; font-size: 30pt; color: #00493f; line-height: 1.7; margin: 45mm 0 4mm; }}
-.title .en {{ font-family: Georgia, serif; font-style: italic; font-size: 16pt; color: #00695c; }}
-.title .rule {{ width: 50mm; height: 4px; background: #ff7043; margin: 8mm 0; }}
+.title h1 {{ font-family: 'Moul'; font-weight: 400; font-size: 30pt; color: #1a237e; line-height: 1.7; margin: 45mm 0 4mm; }}
+.title .en {{ font-family: Georgia, serif; font-style: italic; font-size: 16pt; color: #283593; }}
+.title .rule {{ width: 50mm; height: 4px; background: #ffa000; margin: 8mm 0; }}
 .title .au {{ font-family: Georgia, serif; font-size: 16pt; font-weight: 700; margin-top: 30mm; }}
 .title .meta {{ font-family: 'Battambang'; color: #555; margin-top: 3mm; }}
 .copy {{ font-size: 9.5pt; color: #444; position: absolute; bottom: 0; line-height: 1.9; }}
 .copy b {{ font-family: 'Battambang'; }}
-h2 {{ font-family: 'Battambang'; color: #00695c; font-size: 18pt; border-bottom: 3px solid #ff7043; padding-bottom: 4pt; }}
+h2 {{ font-family: 'Battambang'; color: #283593; font-size: 18pt; border-bottom: 3px solid #ffa000; padding-bottom: 4pt; }}
 .t-part, .t-page {{ display: flex; align-items: baseline; gap: 6pt; }}
-.t-part {{ font-family: 'Battambang'; font-weight: 700; color: #00695c; margin-top: 9pt; font-size: 11pt; }}
+.t-part {{ font-family: 'Battambang'; font-weight: 700; color: #283593; margin-top: 9pt; font-size: 11pt; }}
 .t-page {{ padding-left: 12pt; font-size: 10pt; line-height: 1.8; }}
 .dots {{ flex: 1; border-bottom: 1px dotted #aaa; transform: translateY(-3pt); }}
 .n {{ font-family: 'Battambang'; min-width: 18pt; text-align: right; }}
@@ -195,19 +207,23 @@ async def render(chrome_path=None):
     items = flatten(); pages = [p for k, _, p, _ in items if k == "page"]
     dfont = khmer_digit_font()
     css_links = [f"/assets/stylesheets/{f}" for f in sorted(os.listdir(os.path.join(SITE, "assets", "stylesheets"))) if f.endswith(".css")]
-    extra = ["/assets/css/khmer.css", "/assets/css/workbook.css", "/assets/css/lesson-sims.css"]
+    extra = EXTRA_CSS
     leaflet_css = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"; leaflet_js = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
     if os.path.exists(os.path.join(SITE, "vendor", "leaflet.js")): leaflet_css, leaflet_js = "/vendor/leaflet.css", "/vendor/leaflet.js"
     body = []
     for idx, (kind, title, md, part) in enumerate(items):
         if kind == "divider":
             members = [t for k, t, p, pt in items if pt == title]
-            body.append(f'<section class="divider"><span class="mark">ZZ|div{idx}|ZZ</span><div class="kicker">ផ្នែក</div><h1>{html.escape(title)}</h1><div class="rule"></div><ul>{"".join(f"<li>{html.escape(m)}</li>" for m in members)}</ul></section>')
+            body.append(f'<section class="divider"><span class="mark">ZZ|div{idx}|ZZ</span><h1>{html.escape(title)}</h1><div class="rule"></div><ul>{"".join(f"<li>{html.escape(m)}</li>" for m in members)}</ul></section>')
         else:
             body.append(f'<section class="book-section md-typeset" id="{slug_of(md)}"><span class="mark">ZZ|{slug_of(md)}|ZZ</span>{extract(md, pages)}</section>')
     book_dir = os.path.join(SITE, "print", "book"); os.makedirs(book_dir, exist_ok=True)
     head = "".join(f'<link rel="stylesheet" href="{h}">' for h in css_links + extra + [leaflet_css])
-    doc = f'<!doctype html><html lang="km"><head><meta charset="utf-8">{head}<style>{PRINT_CSS}</style></head><body data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"><div class="md-typeset">{"".join(body)}</div><script src="{leaflet_js}"></script><script src="/assets/js/lesson-sims.js"></script><script src="/assets/js/workbook.js"></script></body></html>'
+    scripts = "".join('<script src="%s"></script>' % x for x in EXTRA_JS)
+    pal = (CFG.get("theme") or {}).get("palette") or [{}]
+    pal = pal[0] if isinstance(pal, list) else pal
+    primary, accent = pal.get("primary", "teal"), pal.get("accent", "deep-orange")
+    doc = f'<!doctype html><html lang="km"><head><meta charset="utf-8">{head}<style>{PRINT_CSS}</style></head><body data-md-color-scheme="default" data-md-color-primary="{primary}" data-md-color-accent="{accent}"><div class="md-typeset">{"".join(body)}</div><script src="{leaflet_js}"></script>{scripts}</body></html>'
     open(os.path.join(book_dir, "index.html"), "w", encoding="utf-8").write(doc)
     cover.write(OUT)
     httpd = serve()

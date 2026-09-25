@@ -36,18 +36,20 @@ def art(ox,oy,w,h,sk,gap):
             for ring in poly:
                 d.append("M"+" L".join(f"{fx+u*k:.1f} {fy+(1-v)*k*D['aspect']:.1f}" for u,v in ring)+"Z")
         return " ".join(d)
-    k=560; fx=120; fy=440
+    k=520; fx=130; fy=420
     for idx,poly in enumerate(D["prov"]):
         col = PAL[(idx*7)%5]
         L.append(f'<path d="{paths([poly],fx,fy,k)}" fill="{col}" stroke="#1a237e" stroke-width="1" opacity=".92"/>')
     L.append(f'<path d="{paths(D["lake"],fx,fy,k)}" fill="#4fc3f7" stroke="none" opacity=".9"/>')
     # compass rose
-    rx, ry = 690, 835
+    rx, ry = 690, 800
     L.append(f'<g transform="translate({rx} {ry})"><circle r="46" fill="none" stroke="rgba(255,255,255,.5)"/><circle r="30" fill="none" stroke="rgba(255,255,255,.3)"/>'
              '<path d="M0 -58 L9 0 L0 58 L-9 0Z" fill="#ffd54f"/><path d="M-58 0 L0 9 L58 0 L0 -9Z" fill="rgba(255,255,255,.7)"/>'
              '<text x="0" y="-64" text-anchor="middle" font-size="14" font-weight="700">ជ</text></g>')
     # scale bar
-    L.append('<g transform="translate(120 880)">' + "".join(f'<rect x="{i*48.85:.1f}" y="0" width="48.85" height="7" fill="{"#fff" if i%2 else "#ffd54f"}"/>' for i in range(4)) + '<text x="0" y="24" font-size="12">០</text><text x="195" y="24" font-size="12" text-anchor="middle">២០០ គម</text></g>')
+    seg = k * 50 / 573.2          # px per 50 km (map width k spans ~573 km of UTM easting)
+    sy = fy + k * D['aspect'] + 24   # just below the southern coast
+    L.append(f'<g transform="translate({fx} {sy:.0f})">' + "".join(f'<rect x="{i*seg:.1f}" y="0" width="{seg:.1f}" height="7" fill="{"#fff" if i%2 else "#ffd54f"}"/>' for i in range(4)) + f'<text x="0" y="24" font-size="12">០</text><text x="{4*seg:.0f}" y="24" font-size="12" text-anchor="middle">២០០ គម</text></g>')
     return "".join(L)
 def qr_svg(url, size):
     q=qrcode.QRCode(border=1, box_size=10); q.add_data(url); q.make(fit=True); m=q.get_matrix(); n=len(m); c=size/n

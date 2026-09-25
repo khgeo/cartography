@@ -3,7 +3,7 @@ Build a print-ready PDF of the whole book.
 
     pip install -r tools/pdf/requirements.txt && playwright install chromium
     mkdocs build
-    python tools/pdf/build_book.py            # -> book/fundamentals-of-gis.pdf
+    python tools/pdf/build_book.py            # -> book/cartography.pdf
 
 Needs the Khmer fonts Battambang, Siemreap and Moul installed on the machine
 (Google Fonts, SIL OFL). Interactive parts are printed in their initial state
@@ -254,7 +254,7 @@ async def render(chrome_path=None):
         else: w.add_outline_item(title, offset + page - 1, parent=parent if _ else None)
     for pgx in PdfReader(os.path.join(OUT, "backcover.pdf")).pages: w.add_page(pgx)
     w.add_metadata({"/Title": TITLE + " (Cartography)", "/Author": "YAM Sarath (យាំ សារដ្ឋ)", "/Subject": "Khmer-language cartography textbook", "/Keywords": "GIS, QGIS, Cambodia, Khmer"})
-    final = os.path.join(OUT, "fundamentals-of-gis.pdf")
+    final = os.path.join(OUT, "cartography.pdf")
     with open(final, "wb") as f: w.write(f)
     # ---- wraparound cover for a print shop (spine from page count)
     html_wrap, wmm, hmm, spine = cover.wrap(len(w.pages))

@@ -43,6 +43,7 @@ extra_javascript:
   - assets/js/offline-data.js
   - assets/js/rich-lessons.js
   - assets/js/carto-sims.js
+  - assets/js/slide-widgets.js
   - assets/js/lesson-sims.js
   - assets/js/workbook.js
 

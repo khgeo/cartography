@@ -7,7 +7,7 @@ INSIDE the slides (same scripts as the website, bundled data, works offline).
 Keys: → / Space next · ← back · Home/End · F fullscreen · N teacher notes · O overview · P print/PDF.
 Edit the lesson markdown, never the decks; the deploy workflow rebuilds them.
 """
-import os, re, html, io
+import os, re, html, io, json
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DOCS = os.path.join(ROOT, "docs")
@@ -20,7 +20,8 @@ ONLINE = "https://khgeo.github.io/cartography/"
 PAGE_EXT = ".html"
 C1, C2, C3, BG = "#283593", "#ffa000", "#1a237e", "#f5f6fc"
 CSS_FILES = ["assets/css/lesson-sims.css", "assets/css/rich-lessons.css"]
-JS_FILES = ["assets/js/offline-data.js", "assets/js/rich-lessons.js", "assets/js/carto-sims.js", "assets/js/lesson-sims.js"]
+JS_FILES = ["assets/js/offline-data.js", "assets/js/rich-lessons.js", "assets/js/carto-sims.js", "assets/js/slide-widgets.js", "assets/js/lesson-sims.js"]
+VISUALS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "visuals.json")
 # -----------------------------------------------------------------------------
 
 KM = "០១២៣៤៥៦៧៨៩"
@@ -146,8 +147,13 @@ def idea(par):
     """One paragraph → headline sentence + supporting sentences."""
     ss = split_sent(par)
     if not ss: return ""
-    head, rest = ss[0], " ".join(ss[1:4])
-    return f'<p class="headline">{inline(clip(head, 200))}</p>' + (f'<p class="support">{inline(clip(rest, 420))}</p>' if rest else "")
+    head, rest = ss[0], ss[1:6]
+    body = ""
+    if len(rest) >= 3:
+        body = '<ul class="pts">' + "".join(f"<li>{inline(clip(x, 200))}</li>" for x in rest) + "</ul>"
+    elif rest:
+        body = f'<p class="support">{inline(clip(" ".join(rest), 620))}</p>'
+    return f'<p class="headline">{inline(clip(head, 220))}</p>' + body
 
 ADM = {"note": ("ចំណាំ", "#1565c0"), "tip": ("គន្លឹះ", "#2e7d32"), "warning": ("ប្រុងប្រយ័ត្ន", "#e65100"),
        "info": ("ព័ត៌មាន", "#00838f"), "abstract": ("គំនិតស្នូល", C1), "example": ("ឧទាហរណ៍", "#6a1b9a"), "quote": ("", C1)}
@@ -268,6 +274,16 @@ def deck(n, md):
         body.append(s); since += 1
     # workshop comes after the worked example in teaching order, so split
     ws_at = next((i for i, s in enumerate(body) if s["kind"] == "divider" and s["cls"] == "workshop"), len(body))
+    vis = [v for v in (json.load(open(VISUALS, encoding="utf-8")) if os.path.exists(VISUALS) else []) if v["lesson"] == n]
+    region = body[:ws_at]; start = 1 if region and region[0]["kind"] == "divider" else 0
+    for v in sorted(vis, key=lambda v: -v["where"]):
+        pos = start + int(round(v["where"] * (len(region) - start)))
+        if "sim" in v:
+            sl = S("sim", v["title"], f'<p class="instr">{inline(v["bullets"][0])}</p><div class="simfit"><div class="sim" data-sim="{v["sim"]}"></div></div>', v["bullets"][0])
+        else:
+            sl = S("visual", v["title"], f'<div class="viswrap"><div class="vfig">{svg_inline(v["file"])}</div><div class="vnotes"><div class="vlab">សង្កេត</div>{ul(v["bullets"])}</div></div>', " ".join(v["bullets"]))
+        region.insert(pos, sl)
+    body = region + body[ws_at:]; ws_at = len(region)
     out += body[:ws_at]
     if data["steps"]:
         out.append(S("divider", "ឧទាហរណ៍ដែលបានដោះស្រាយ", "", cls="ex"))
@@ -343,6 +359,10 @@ blockquote{font-size:34px;line-height:1.7;color:C3;border-left:10px solid C2;mar
 .agenda{list-style:none;padding:0;counter-reset:a} .agenda li{display:flex;justify-content:space-between;border-bottom:1px dashed #ccd;padding:6px 0;font-size:24px;counter-increment:a}
 .agenda li span::before{content:counter(a) ". ";color:C2;font-weight:700} .agenda li b{color:C1;white-space:nowrap;margin-left:20px}
 .splitwrap{display:flex;gap:34px;align-items:flex-start} .splitwrap .txt{flex:1 1 44%} .splitwrap .fig{flex:1 1 56%} .splitwrap .art{height:440px} .splitwrap .headline{font-size:28px} .splitwrap .support{font-size:22px}
+ .viswrap{display:flex;gap:26px;align-items:stretch;height:535px} .vfig{flex:1 1 68%;display:flex;align-items:center;justify-content:center;background:#fff}
+.vfig svg{width:100%;height:auto;max-height:535px} .vfig .ftitle{display:none} .vfig .fsub{font-size:18px} .vnotes{flex:0 0 30%;background:BG;border-radius:12px;padding:18px 20px;border-top:6px solid C2}
+.vlab{font-weight:700;color:C1;font-size:22px;margin-bottom:6px} .vnotes ul{font-size:21px;line-height:1.65;padding-left:1em} .vnotes li{margin:.45em 0}
+.visual h2{margin-bottom:14px;font-size:32px} ul.pts{font-size:24px;line-height:1.7} ul.pts li{margin:.35em 0}
 .instr{font-size:21px;line-height:1.6;color:#444;margin:-8px 0 10px} .simfit{width:760px;margin:0 auto;transform-origin:top center} .quizfit{transform-origin:top center}
 .simfit .sim{margin:0;border-width:1px} .quizfit .rich-quiz{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;font-size:21px;line-height:1.6;border:0;padding:0;margin:0;background:none}
 .quizfit fieldset{border:2px solid #dde;border-radius:10px;padding:14px 16px;margin:0} .quizfit legend{font-weight:700;color:C3;font-size:22px;padding:0 6px}
@@ -377,7 +397,7 @@ function fit(){if(document.body.classList.contains('overview'))return;const k=Ma
 const frame=()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
 async function fitInner(s){await frame();const k=(st.getBoundingClientRect().width/1280)||1;
  for(const w of s.querySelectorAll('.simfit')){w.style.transform='';dispatchEvent(new Event('resize'));await frame();
-   const top=(w.getBoundingClientRect().top-s.getBoundingClientRect().top)/k,avail=638-top,h=w.offsetHeight;
+   const top=(w.getBoundingClientRect().top-s.getBoundingClientRect().top)/k,avail=620-top,h=w.offsetHeight;
    const sc=Math.min(1136/w.offsetWidth,avail/h);w.style.transform=`scale(${sc})`;}
  s.querySelectorAll('.quizfit').forEach(w=>{w.style.transform='';const top=(w.getBoundingClientRect().top-s.getBoundingClientRect().top)/k,avail=650-top,h=w.offsetHeight;
    w.style.transform=h>avail?`scale(${avail/h})`:'';});}

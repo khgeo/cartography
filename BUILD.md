@@ -26,3 +26,9 @@ python tools/slides/build_slides.py
 ```
 
 The deploy workflow runs this automatically before `mkdocs build`. Keys in a deck: → / Space next · ← back · O overview · F fullscreen · N teacher notes · P print or save as PDF.
+
+### Slide visuals
+
+`tools/slides/build_visuals.py` draws the 98 figures used only in the slides (maps, diagrams, charts and satellite-image panels in `docs/assets/svg/slides/` and `docs/assets/img/slides/`) and writes `tools/slides/visuals.json`, which `build_slides.py` uses to place each figure, with its "សង្កេត" notes, inside the lesson's theory section. Five interactive widgets (`docs/assets/js/slide-widgets.js`: projection, classification, colour and proportional-symbol explorers) are placed the same way.
+
+The figures are committed to the repository, so the deploy workflow only runs `build_slides.py`. Rerun `build_visuals.py` only when you change a figure. Data sources: the book's own Cambodia datasets, Natural Earth (public domain, `tools/slides/data/`), and Landsat 8 (USGS) / Sentinel-2 (Copernicus) imagery from Book 3, which must be available locally to regenerate the image panels.

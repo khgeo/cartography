@@ -7,18 +7,18 @@
 
 | មេរៀន | ចំណងជើង | ស្លាយ | ពិសោធន៍ផ្ទាល់ |
 |---|---|---|---|
-| ១ | <a href="lesson-01.html" target="_blank">ផែនទី និងដំណើរការធ្វើផែនទី</a> | ៧៣ | ២ |
-| ២ | <a href="lesson-02.html" target="_blank">រាងផែនដី ដាតុម និងប្រព័ន្ធកូអរដោនេ</a> | ៧១ | ១ |
-| ៣ | <a href="lesson-03.html" target="_blank">ចំណោលផែនទី និងការខូចទ្រង់ទ្រាយ</a> | ៧២ | ២ |
-| ៤ | <a href="lesson-04.html" target="_blank">មាត្រដ្ឋាន និងការវាស់វែងលើផែនទី</a> | ៦៨ | ២ |
-| ៥ | <a href="lesson-05.html" target="_blank">ផែនទីទីសណ្ឋាន ខ្សែវណ្ឌ និងក្រឡាកូអរដោនេ</a> | ៦៨ | ១ |
-| ៦ | <a href="lesson-06.html" target="_blank">អថេរមើលឃើញ និងការរចនានិមិត្តសញ្ញា</a> | ៦៦ | ១ |
-| ៧ | <a href="lesson-07.html" target="_blank">ការចាត់ថ្នាក់ទិន្នន័យសម្រាប់ផែនទី</a> | ៦៧ | ១ |
-| ៨ | <a href="lesson-08.html" target="_blank">ពណ៌ក្នុងផែនទីវិទ្យា</a> | ៧០ | ២ |
-| ៩ | <a href="lesson-09.html" target="_blank">ផែនទី Choropleth និងការធ្វើឲ្យស្តង់ដារ</a> | ៧១ | ២ |
-| ១០ | <a href="lesson-10.html" target="_blank">និមិត្តសញ្ញាសមាមាត្រ និងផែនទីចំណុចដង់ស៊ីតេ</a> | ៦៩ | ២ |
-| ១១ | <a href="lesson-11.html" target="_blank">ផែនទីអ៊ីសូលីន និងការបង្ហាញរលកដី</a> | ៦៦ | ១ |
-| ១២ | <a href="lesson-12.html" target="_blank">ផែនទីលំហូរ ពហុអថេរ និងពេលវេលា</a> | ៦៦ | ៣ |
-| ១៣ | <a href="lesson-13.html" target="_blank">អក្សរ និងការដាក់ស្លាកលើផែនទី</a> | ៦៧ | ២ |
-| ១៤ | <a href="lesson-14.html" target="_blank">ប្លង់ផែនទី និងឋានានុក្រមមើលឃើញ</a> | ៦៥ | ២ |
-| ១៥ | <a href="lesson-15.html" target="_blank">ការធ្វើឲ្យទូទៅ សីលធម៌ផែនទី និងការចេញផ្សាយ</a> | ៧៣ | ២ |
+| ១ | <a href="lesson-01.html" target="_blank">ផែនទី និងដំណើរការធ្វើផែនទី</a> | ៨១ | ២ |
+| ២ | <a href="lesson-02.html" target="_blank">រាងផែនដី ដាតុម និងប្រព័ន្ធកូអរដោនេ</a> | ៧៩ | ១ |
+| ៣ | <a href="lesson-03.html" target="_blank">ចំណោលផែនទី និងការខូចទ្រង់ទ្រាយ</a> | ៨២ | ៣ |
+| ៤ | <a href="lesson-04.html" target="_blank">មាត្រដ្ឋាន និងការវាស់វែងលើផែនទី</a> | ៧៥ | ២ |
+| ៥ | <a href="lesson-05.html" target="_blank">ផែនទីទីសណ្ឋាន ខ្សែវណ្ឌ និងក្រឡាកូអរដោនេ</a> | ៧៦ | ១ |
+| ៦ | <a href="lesson-06.html" target="_blank">អថេរមើលឃើញ និងការរចនានិមិត្តសញ្ញា</a> | ៧៣ | ១ |
+| ៧ | <a href="lesson-07.html" target="_blank">ការចាត់ថ្នាក់ទិន្នន័យសម្រាប់ផែនទី</a> | ៧៣ | ២ |
+| ៨ | <a href="lesson-08.html" target="_blank">ពណ៌ក្នុងផែនទីវិទ្យា</a> | ៧៩ | ៣ |
+| ៩ | <a href="lesson-09.html" target="_blank">ផែនទី Choropleth និងការធ្វើឲ្យស្តង់ដារ</a> | ៧៧ | ៣ |
+| ១០ | <a href="lesson-10.html" target="_blank">និមិត្តសញ្ញាសមាមាត្រ និងផែនទីចំណុចដង់ស៊ីតេ</a> | ៧៦ | ៣ |
+| ១១ | <a href="lesson-11.html" target="_blank">ផែនទីអ៊ីសូលីន និងការបង្ហាញរលកដី</a> | ៧១ | ១ |
+| ១២ | <a href="lesson-12.html" target="_blank">ផែនទីលំហូរ ពហុអថេរ និងពេលវេលា</a> | ៧២ | ៣ |
+| ១៣ | <a href="lesson-13.html" target="_blank">អក្សរ និងការដាក់ស្លាកលើផែនទី</a> | ៧៣ | ២ |
+| ១៤ | <a href="lesson-14.html" target="_blank">ប្លង់ផែនទី និងឋានានុក្រមមើលឃើញ</a> | ៧០ | ២ |
+| ១៥ | <a href="lesson-15.html" target="_blank">ការធ្វើឲ្យទូទៅ សីលធម៌ផែនទី និងការចេញផ្សាយ</a> | ៧៨ | ២ |

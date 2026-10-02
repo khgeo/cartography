@@ -932,4 +932,97 @@
     el.querySelectorAll("select,input").forEach((x) => x.addEventListener("change", draw)); draw();
     window.addEventListener("resize", () => el.isConnected && draw());
   };
+
+  /* ---------- L10 · Cartograms: contiguous (Dougenik), Olson, Dorling ---------- */
+  window.EXTRA_SIMS["cartogram"] = async (el) => {
+    const D = await load();
+    const { cv, ctx, out, q } = shellC(el, "កាតូក្រាម៖ ពីផែនទីដើម ទៅផ្ទៃតាមប្រជាជន",
+      `<span class="sim-seg cg-m"><button type="button" data-m="cont" class="on">បន្តជាប់</button><button type="button" data-m="olson">Olson</button><button type="button" data-m="dorling">Dorling</button></span>
+       <label>ការប្រែរាង <b class="cg-tv"></b> <input type="range" class="cg-t" min="0" max="100" value="100"></label>
+       <button type="button" class="cg-play">▶ ចលនា</button>`);
+    const P = D.prov.map((p) => ({ name: p.name, pop: +p.pop, dens: +p.dens, r: p.r.map((ring) => ring.map(([x, y]) => [x, y])) }));
+    const ringArea = (r) => { let a = 0; for (let i = 0, n = r.length; i < n; i++) { const [x1, y1] = r[i], [x2, y2] = r[(i + 1) % n]; a += x1 * y2 - x2 * y1; } return a / 2; };
+    const geom = (rings) => { let A = 0, cx = 0, cy = 0;
+      rings.forEach((r) => { const a = Math.abs(ringArea(r)); let sx = 0, sy = 0; r.forEach(([x, y]) => { sx += x; sy += y; }); A += a; cx += a * sx / r.length; cy += a * sy / r.length; });
+      return { A, c: [cx / A, cy / A] }; };
+    const G0 = P.map((p) => geom(p.r)), TA = G0.reduce((a, g) => a + g.A, 0), TV = P.reduce((a, p) => a + p.pop, 0);
+    // contiguous cartogram: Dougenik, Chrisman & Niemeyer (1985), rubber-sheet iterations
+    const CONT = P.map((p) => p.r.map((r) => r.map((v) => v.slice())));
+    for (let it = 0; it < 12; it++) {
+      const G = CONT.map(geom), tot = G.reduce((a, g) => a + g.A, 0);
+      const F = G.map((g, j) => { const des = tot * P[j].pop / TV, rad = Math.sqrt(g.A / Math.PI); return { c: g.c, rad, mass: Math.sqrt(des / Math.PI) - rad, err: Math.max(des, g.A) / Math.min(des, g.A) }; });
+      const red = 1 / (1 + F.reduce((a, f) => a + f.err - 1, 0) / F.length);
+      CONT.forEach((rings) => rings.forEach((r) => r.forEach((v) => {
+        let dx = 0, dy = 0;
+        F.forEach((f) => { const ex = v[0] - f.c[0], ey = v[1] - f.c[1], d = Math.hypot(ex, ey) || 1e-6;
+          const fij = d > f.rad ? f.mass * f.rad / d : f.mass * (d * d / (f.rad * f.rad)) * (4 - 3 * d / f.rad);
+          dx += fij * red * ex / d; dy += fij * red * ey / d; });
+        v[0] += dx; v[1] += dy; })));
+    }
+    // Olson: shrink each province around its centroid; the densest keeps its size
+    const maxD = Math.max(...P.map((p) => p.dens)), OLS = P.map((p) => Math.sqrt(p.dens / maxD));
+    // Dorling: circles with area ∝ population, pushed apart until they no longer overlap
+    const sR = Math.sqrt(0.42 * TA / Math.PI / TV);
+    const DOR = P.map((p, j) => ({ x: G0[j].c[0], y: G0[j].c[1], r: sR * Math.sqrt(p.pop) }));
+    for (let it = 0; it < 400; it++) {
+      for (let a = 0; a < DOR.length; a++) for (let b = a + 1; b < DOR.length; b++) {
+        const A = DOR[a], B = DOR[b], dx = B.x - A.x, dy = B.y - A.y, d = Math.hypot(dx, dy) || 1e-6, o = A.r + B.r + 0.8 - d;
+        if (o > 0) { const m = o / 2 / d; A.x -= dx * m; A.y -= dy * m; B.x += dx * m; B.y += dy * m; } }
+      DOR.forEach((c, j) => { c.x += (G0[j].c[0] - c.x) * 0.03; c.y += (G0[j].c[1] - c.y) * 0.03; });
+    }
+    const W = 640, H = 340; let sc = 1.3, ox = 8, oy = 4; const X = (x) => ox + x * sc, Y = (y) => oy + y * sc;
+    const FIT = {};   // per mode: fit both the original map and the full cartogram inside a 400 × 330 box
+    const fitMode = (m) => { if (FIT[m]) return FIT[m]; let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+      const add = (x, y) => { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); };
+      P.forEach((p, j) => { p.r.forEach((r) => r.forEach(([x, y]) => add(x, y)));
+        if (m === "cont") CONT[j].forEach((r) => r.forEach(([x, y]) => add(x, y)));
+        if (m === "dorling") { const c = DOR[j]; add(c.x - c.r, c.y - c.r); add(c.x + c.r, c.y + c.r); } });
+      const k = Math.min(400 / (x1 - x0), 330 / (y1 - y0)); return (FIT[m] = { sc: k, ox: 6 + (400 - (x1 - x0) * k) / 2 - x0 * k, oy: 5 + (330 - (y1 - y0) * k) / 2 - y0 * k }); };
+    const shape = (j, m, t) => {
+      if (m === "cont") return P[j].r.map((r, ri) => r.map((v, vi) => { const w = CONT[j][ri][vi]; return [v[0] + (w[0] - v[0]) * t, v[1] + (w[1] - v[1]) * t]; }));
+      if (m === "olson") { const k = 1 + (OLS[j] - 1) * t, c = G0[j].c; return P[j].r.map((r) => r.map(([x, y]) => [c[0] + (x - c[0]) * k, c[1] + (y - c[1]) * k])); }
+      return P[j].r;
+    };
+    const draw = () => {
+      fitC(cv, ctx, W, H);
+      const m = el.querySelector(".cg-m .on").dataset.m, t = +q(".cg-t").value / 100; q(".cg-tv").textContent = kh(Math.round(t * 100)) + "%";
+      ({ sc, ox, oy } = fitMode(m));
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      const areas = [];
+      if (m === "olson" && t > 0) { ctx.strokeStyle = "#bbb"; ctx.lineWidth = .6; P.forEach((p) => { ctx.beginPath(); p.r.forEach((r) => r.forEach(([x, y], i) => (i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y))))); ctx.closePath(); ctx.stroke(); }); }
+      P.forEach((p, j) => {
+        if (m === "dorling") {
+          ctx.globalAlpha = 1 - t; ctx.beginPath(); p.r.forEach((r) => r.forEach(([x, y], i) => (i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y))))); ctx.closePath();
+          ctx.fillStyle = col(p.dens); ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = .7; ctx.stroke(); ctx.globalAlpha = 1;
+          const c = DOR[j], cx = G0[j].c[0] + (c.x - G0[j].c[0]) * t, cy = G0[j].c[1] + (c.y - G0[j].c[1]) * t, r = c.r * t;
+          if (r > 0.2) { ctx.beginPath(); ctx.arc(X(cx), Y(cy), r * sc, 0, 7); ctx.fillStyle = col(p.dens); ctx.fill(); ctx.strokeStyle = "#555"; ctx.lineWidth = .8; ctx.stroke(); }
+          areas.push((1 - t) * G0[j].A + t * Math.PI * c.r * c.r);
+        } else {
+          const S = shape(j, m, t); ctx.beginPath(); S.forEach((r) => r.forEach(([x, y], i) => (i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y))))); ctx.closePath();
+          ctx.fillStyle = col(p.dens); ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = .7; ctx.stroke();
+          areas.push(geom(S).A);
+        }
+      });
+      const tot = areas.reduce((a, b) => a + b, 0), err = P.reduce((a, p, j) => a + Math.abs(areas[j] / tot - p.pop / TV), 0) / 2 * 100;
+      const pp = P.findIndex((p) => p.name === "ភ្នំពេញ"), mk = P.findIndex((p) => p.name === "មណ្ឌលគិរី");
+      const hx = 420; ctx.textAlign = "left"; ctx.fillStyle = "#333"; ctx.font = `bold 13px ${font()}`; ctx.fillText("ចំណែកផ្ទៃ ធៀបនឹងប្រជាជន", hx, 26);
+      ctx.font = `12px ${font()}`;
+      [[pp, "ភ្នំពេញ"], [mk, "មណ្ឌលគិរី"]].forEach(([j, nm], i) => { if (j < 0) return; const y = 48 + i * 52, a = areas[j] / tot * 100, v = P[j].pop / TV * 100;
+        ctx.fillStyle = "#333"; ctx.fillText(nm, hx, y + 10);
+        ctx.fillStyle = "#90a4ae"; ctx.fillRect(hx + 70, y, Math.min(140, a * 8), 10); ctx.fillStyle = "#e34a33"; ctx.fillRect(hx + 70, y + 14, Math.min(140, v * 8), 10);
+        ctx.fillStyle = "#333"; ctx.fillText(`ផ្ទៃ ${fmtN(a, 1)}%`, hx + 76 + Math.min(140, a * 8), y + 9); ctx.fillText(`ប្រជាជន ${fmtN(v, 1)}%`, hx + 76 + Math.min(140, v * 8), y + 23); });
+      ctx.font = `bold 13px ${font()}`; ctx.fillText(`កំហុសផ្ទៃសរុប៖ ${fmtN(err, 1)}%`, hx, 170);
+      ctx.font = `11px ${font()}`; ctx.fillStyle = "#666"; ctx.fillText("ប្រជាជនដែលនៅលើផ្ទៃខុស · ០% = ល្អ", hx, 188);
+      ctx.fillStyle = "#333"; ctx.font = `12px ${font()}`; ctx.fillText("ដង់ស៊ីតេ (នាក់/គម²)", hx, 218);
+      PAL.forEach((c, i) => { ctx.fillStyle = c; ctx.fillRect(hx, 228 + i * 19, 16, 12); ctx.strokeStyle = "#999"; ctx.strokeRect(hx, 228 + i * 19, 16, 12); ctx.fillStyle = "#333"; ctx.fillText(LAB[i], hx + 22, 238 + i * 19); });
+      const note = { cont: "បន្តជាប់៖ ខេត្តនៅជាប់គ្នា ប៉ុន្តែរាងខូច។ ភ្នំពេញ កណ្ដាល និងតាកែវ រីកធំ ខេត្តភាគឦសានរួមតូច។",
+        olson: "Olson៖ ខេត្តនីមួយៗរួមតូចនៅកន្លែងដើម ដោយរក្សារាង។ ភ្នំពេញ (ដង់ស៊ីតេខ្ពស់បំផុត) នៅដដែល ហើយចន្លោះទទេបង្ហាញ «ដីដែលមានមនុស្សតិច»។",
+        dorling: "Dorling៖ ខេត្តក្លាយជារង្វង់ដែលផ្ទៃតាមប្រជាជន ហើយត្រូវរុញកុំឲ្យត្រួតគ្នា។ ងាយប្រៀបធៀបទំហំ ប៉ុន្តែបាត់រាងខេត្ត។" }[m];
+      out.innerHTML = `${t === 0 ? "ផែនទីដើម៖ ផ្ទៃតាមក្រឡាផ្ទៃដី។ រំកិលរបារ «ការប្រែរាង» ដើម្បីមើលការប្ដូរ។" : note}<br><span class="sim-hint">ទិន្នន័យ៖ ប្រជាជន ២០១៧ ពី Kh_Province_Boundary · បន្តជាប់ គណនាដោយវិធី Dougenik (១៩៨៥) ក្នុងកម្មវិធីរុករក</span>`;
+    };
+    let anim = null;
+    q(".cg-play").onclick = () => { if (anim) cancelAnimationFrame(anim); let t = 0; const step = () => { t += 0.02; q(".cg-t").value = Math.min(100, t * 100); draw(); if (t < 1) anim = requestAnimationFrame(step); }; step(); };
+    el.querySelectorAll(".cg-m button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".cg-m button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
+    q(".cg-t").addEventListener("input", draw); draw(); window.addEventListener("resize", () => el.isConnected && draw());
+  };
 })();

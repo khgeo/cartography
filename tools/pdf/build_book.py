@@ -288,4 +288,10 @@ async def render(chrome_path=None):
     print(f"PDF: {final} · {len(w.pages)} pages" + (f" · no page number for: {missing}" if missing else ""))
 
 if __name__ == "__main__":
+    # Khmer must be shaped by the book fonts; without them Chromium falls back and breaks subscripts.
+    import subprocess
+    have = subprocess.run(["fc-list"], capture_output=True, text=True).stdout if __import__("shutil").which("fc-list") else ""
+    missing = [f for f in ("Battambang", "Moul", "Siemreap") if f not in have]
+    if missing:
+        raise SystemExit("Missing Khmer fonts: " + ", ".join(missing) + ". Install docs/assets/fonts/*.ttf into ~/.fonts and run fc-cache -f.")
     asyncio.run(render(os.environ.get("CHROME_PATH")))

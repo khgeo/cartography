@@ -188,4 +188,83 @@
     seg(el, ".st-p", (v) => { proj = v; draw(); }); seg(el, ".st-v", (v) => { view = v; draw(); });
     draw(); window.addEventListener("resize", () => el.isConnected && draw());
   };
+
+  /* ============================================================
+     L14 · QGIS Atlas: one layout, one page per province
+     ============================================================ */
+  window.EXTRA_SIMS["atlas"] = async (el) => {
+    const D = await window.cartoData("../../assets/data/cambodia_provinces_svg.json");
+    const PAL = ["#fef0d9", "#fdcc8a", "#fc8d59", "#e34a33", "#b30000"], BR = [0, 50, 100, 200, 400];
+    const col = (d) => PAL[BR.filter((b) => d >= b).length - 1];
+    const MPU = (D.bounds[2] - D.bounds[0]) / D.W;              // metres per data unit
+    el.innerHTML = `<div class="sim-title">Atlas៖ ប្លង់តែមួយ ផែនទីមួយសន្លឹកក្នុងមួយខេត្ត</div>
+      <div class="sim-controls">
+        <button type="button" class="sim-btn at-prev">◀</button><b class="at-pg"></b><button type="button" class="sim-btn at-next">▶</button>
+        <button type="button" class="sim-btn at-play">▶ Preview Atlas</button>
+        <span class="sim-seg at-sc"><button type="button" data-v="margin" class="on">Margin ១០%</button><button type="button" data-v="pre">Predefined</button><button type="button" data-v="fixed">Fixed ១:២ ៥០០ ០០០</button></span>
+      </div>
+      <div class="sim-controls">
+        <label>តម្រៀប <select class="at-sort"><option value="name">ឈ្មោះខេត្ត</option><option value="pop">ប្រជាជន (ច្រើន → តិច)</option><option value="dens">ដង់ស៊ីតេ</option></select></label>
+        <label><input type="checkbox" class="at-fade" checked> ធ្វើឲ្យខេត្តផ្សេងស្លេក</label><label><input type="checkbox" class="at-ins" checked> ផែនទីទីតាំង (overview)</label>
+      </div>
+      <div class="sim-body"><div class="sim-canvas-wrap at-page"></div></div><div class="sim-out"></div>`;
+    const q = (x) => el.querySelector(x);
+    const PW = 297, PH = 210, MX = 10, MY = 24, MWmm = 190, MHmm = 172;     // A4 landscape, mm
+    const PRE = [100000, 250000, 500000, 1000000, 1500000, 2500000];
+    let order = [], i = 0, mode = "margin", timer = null;
+    const bbox = (rings) => { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; rings.forEach((r) => r.forEach(([x, y]) => { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); })); return [x0, y0, x1, y1]; };
+    const sortBy = () => { const k = q(".at-sort").value; order = D.prov.slice().sort((a, b) => k === "name" ? a.name.localeCompare(b.name, "km") : (b[k] || 0) - (a[k] || 0)); };
+    const path = (rings, f) => rings.map((r) => "M" + r.map((p) => f(p).map((v) => v.toFixed(2)).join(" ")).join(" L") + "Z").join(" ");
+    const draw = () => {
+      const P = order[i], [x0, y0, x1, y1] = bbox(P.r), cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+      // scale: data units per mm of paper
+      const need = Math.max(((x1 - x0) * 1.2) / MWmm, ((y1 - y0) * 1.2) / MHmm) * MPU * 1000;    // margin 10% each side
+      const sc = mode === "margin" ? need : mode === "pre" ? (PRE.find((v) => v >= need) || PRE[PRE.length - 1]) : 2500000;
+      const u = sc / 1000 / MPU;                                   // data units per mm
+      const f = ([x, y]) => [MX + MWmm / 2 + (x - cx) / u, MY + MHmm / 2 + (y - cy) / u];
+      const fade = q(".at-fade").checked;
+      let svg = `<svg viewBox="0 0 ${PW} ${PH}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;background:#fff;border:1px solid #bbb;box-shadow:0 2px 8px rgba(0,0,0,.15)">
+        <style>text{font-family:var(--md-text-font-family,'Battambang');fill:#212121}</style>
+        <defs><clipPath id="atclip"><rect x="${MX}" y="${MY}" width="${MWmm}" height="${MHmm}"/></clipPath></defs>
+        <text x="${MX}" y="12" font-size="7" font-weight="700" fill="#1a237e">ខេត្ត${P.name}</text>
+        <text x="${MX}" y="19" font-size="3.6" fill="#555">ដង់ស៊ីតេប្រជាជន ២០១៧ · ${P.en} · ${kh(i + 1)}/${kh(order.length)}</text>
+        <g clip-path="url(#atclip)"><rect x="${MX}" y="${MY}" width="${MWmm}" height="${MHmm}" fill="#e3f2fd"/>`;
+      D.prov.forEach((p) => { const cur = p === P;
+        svg += `<path d="${path(p.r, f)}" fill="${col(p.dens)}" fill-opacity="${cur || !fade ? 1 : 0.22}" stroke="${cur ? "#212121" : "#fff"}" stroke-width="${cur ? 0.6 : 0.25}"/>`; });
+      if (D.lake) svg += `<path d="${path(D.lake, f)}" fill="#90caf9"/>`;
+      svg += `</g><rect x="${MX}" y="${MY}" width="${MWmm}" height="${MHmm}" fill="none" stroke="#424242" stroke-width=".4"/>`;
+      // right panel: overview, legend, stats, scale
+      const RX = MX + MWmm + 8, RW = PW - RX - MX;
+      if (q(".at-ins").checked) { const k2 = RW / D.W, g = ([x, y]) => [RX + x * k2, MY + y * k2];
+        svg += `<rect x="${RX}" y="${MY}" width="${RW}" height="${D.H * k2}" fill="#f5f5f5" stroke="#9e9e9e" stroke-width=".3"/>`;
+        D.prov.forEach((p) => (svg += `<path d="${path(p.r, g)}" fill="${p === P ? "#e53935" : "#cfd8dc"}" stroke="#fff" stroke-width=".15"/>`));
+        const [a, b] = g([cx - (MWmm / 2) * u, cy - (MHmm / 2) * u]), [c, d] = g([cx + (MWmm / 2) * u, cy + (MHmm / 2) * u]);
+        svg += `<rect x="${Math.max(RX, a)}" y="${Math.max(MY, b)}" width="${Math.min(RX + RW, c) - Math.max(RX, a)}" height="${Math.min(MY + D.H * k2, d) - Math.max(MY, b)}" fill="none" stroke="#1565c0" stroke-width=".6"/>`; }
+      let ly = MY + (q(".at-ins").checked ? D.H * (RW / D.W) + 9 : 4);
+      svg += `<text x="${RX}" y="${ly}" font-size="3.8" font-weight="700">នាក់/គម²</text>`;
+      ["< ៥០", "៥០–១០០", "១០០–២០០", "២០០–៤០០", "> ៤០០"].forEach((t, j) => (svg += `<rect x="${RX}" y="${ly + 2 + j * 5}" width="6" height="3.6" fill="${PAL[j]}" stroke="#999" stroke-width=".2"/><text x="${RX + 8}" y="${ly + 5.2 + j * 5}" font-size="3.3">${t}</text>`));
+      ly += 34;
+      const rank = D.prov.slice().sort((a, b) => b.dens - a.dens).indexOf(P) + 1;
+      svg += `<text x="${RX}" y="${ly}" font-size="3.6">ប្រជាជន ${fmtN(P.pop)} នាក់</text><text x="${RX}" y="${ly + 5.5}" font-size="3.6">ដង់ស៊ីតេ ${fmtN(P.dens)} នាក់/គម²</text><text x="${RX}" y="${ly + 11}" font-size="3.6">ចំណាត់ថ្នាក់ ${kh(rank)} ក្នុង ២៥</text>`;
+      // scale bar: round length ≈ 1/4 of the frame
+      const tgt = (MWmm / 4) * sc / 1000, nice = [1, 2, 5, 10, 20, 25, 50, 100, 200].map((v) => v * 1000).reverse().find((v) => v <= tgt) || 1000, Lmm = nice / (sc / 1000);
+      const sy = MY + MHmm + 6;
+      svg += `<rect x="${MX}" y="${sy}" width="${Lmm / 2}" height="1.6" fill="#212121"/><rect x="${MX + Lmm / 2}" y="${sy}" width="${Lmm / 2}" height="1.6" fill="#fff" stroke="#212121" stroke-width=".2"/>
+        <text x="${MX + Lmm + 2}" y="${sy + 1.8}" font-size="3.4">${fmtN(nice / 1000)} គម · ១:${fmtN(Math.round(sc / 1000) * 1000)}</text>
+        <text x="${PW - MX}" y="${PH - 4}" font-size="3" text-anchor="end" fill="#777">ប្រភព៖ Kh_Province_Boundary (POP2017) · EPSG:32648 · ទំព័រ ${kh(i + 1)}</text></svg>`;
+      q(".at-page").innerHTML = svg; q(".at-pg").textContent = ` ${kh(i + 1)} / ${kh(order.length)} `;
+      const note = { margin: "មាត្រដ្ឋានប្ដូររាល់ទំព័រ៖ ខេត្តតូចពង្រីកខ្លាំង ខេត្តធំបង្រួម។ អ្នកអានមិនអាចប្រៀបធៀបទំហំខេត្តពីទំព័រមួយទៅទំព័រមួយបានទេ ដូច្នេះរបារមាត្រដ្ឋាននៅគ្រប់ទំព័រចាំបាច់។",
+        pre: "QGIS ជ្រើសមាត្រដ្ឋានមូលពីបញ្ជី ដែលតូចជាងគេ តែនៅតែឲ្យខេត្តចូលពេញ។ មាត្រដ្ឋានមូលងាយអាន ហើយខេត្តដែលមានទំហំប្រហាក់ប្រហែល ប្រើមាត្រដ្ឋានដូចគ្នា។",
+        fixed: "មាត្រដ្ឋានដូចគ្នាគ្រប់ទំព័រ៖ ប្រៀបធៀបទំហំបានត្រឹមត្រូវ ប៉ុន្តែខេត្តតូចដូចជាភ្នំពេញ ឬកែប ស្ទើរមើលមិនឃើញ ហើយខេត្តធំអាចលើសប្រអប់ផែនទី។" }[mode];
+      q(".sim-out").innerHTML = `<b>មាត្រដ្ឋានទំព័រនេះ ១:${fmtN(Math.round(sc / 1000) * 1000)}</b> — ${note}<br><span class="sim-hint">ចំណងជើងក្នុង QGIS៖ <code>concat('ខេត្ត', attribute(@atlas_feature, 'Name_KH'))</code> · លេខទំព័រ៖ <code>concat(@atlas_featurenumber, '/', @atlas_totalfeatures)</code> · ធ្វើឲ្យខេត្តផ្សេងស្លេក៖ rule <code>$id = @atlas_featureid</code></span>`;
+    };
+    const go = (d) => { i = (i + d + order.length) % order.length; draw(); };
+    q(".at-prev").onclick = () => go(-1); q(".at-next").onclick = () => go(1);
+    q(".at-play").onclick = () => { if (timer) { clearInterval(timer); timer = null; q(".at-play").textContent = "▶ Preview Atlas"; return; }
+      q(".at-play").textContent = "■ ឈប់"; timer = setInterval(() => (el.isConnected ? go(1) : clearInterval(timer)), 1200); };
+    seg(el, ".at-sc", (v) => { mode = v; draw(); });
+    q(".at-sort").onchange = () => { const cur = order[i]; sortBy(); i = Math.max(0, order.indexOf(cur)); draw(); };
+    el.querySelectorAll("input").forEach((c) => (c.onchange = draw));
+    sortBy(); i = order.findIndex((p) => p.en === "Kampong Chhnang"); if (i < 0) i = 0; draw();
+  };
 })();

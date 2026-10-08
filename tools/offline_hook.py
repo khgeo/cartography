@@ -15,7 +15,7 @@ def on_pre_build(config):
     data=docs/'assets/data'
     bundle={p.relative_to(data).as_posix():json.loads(p.read_text(encoding='utf-8'))
             for p in data.rglob('*') if p.suffix in ('.json','.geojson')}
-    loader=''';\nwindow.cartoData=async function(path){const key=String(path).split('assets/data/').pop();if(Object.prototype.hasOwnProperty.call(window.CARTO_DATA,key))return window.CARTO_DATA[key];throw new Error('Missing bundled dataset: '+key);};\n'''
+    loader=''';\nwindow.cartoData=async function(path){const key=String(path).split('assets/data/').pop();if(Object.prototype.hasOwnProperty.call(window.CARTO_DATA,key))return window.CARTO_DATA[key];try{const r=await fetch(path,{cache:'no-cache'});if(r.ok)return(window.CARTO_DATA[key]=await r.json());}catch(e){}throw new Error('Missing bundled dataset: '+key+' (reload the page with Ctrl/Cmd+Shift+R)');};\n'''
     (docs/'assets/js/offline-data.js').write_text('/* Generated from local course datasets. */\nwindow.CARTO_DATA='+json.dumps(bundle,ensure_ascii=False,separators=(',',':'))+loader,encoding='utf-8')
 
 def on_post_build(config):

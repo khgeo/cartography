@@ -44,6 +44,7 @@ extra_javascript:
   - assets/js/rich-lessons.js
   - assets/js/carto-sims.js
   - assets/js/chart-sims.js
+  - assets/js/tacmap-sim.js
   - assets/js/slide-widgets.js
   - assets/js/lesson-sims.js
   - assets/js/workbook.js

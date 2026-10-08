@@ -45,6 +45,7 @@ extra_javascript:
   - assets/js/carto-sims.js
   - assets/js/chart-sims.js
   - assets/js/tacmap-sim.js
+  - assets/js/special-sims.js
   - assets/js/slide-widgets.js
   - assets/js/lesson-sims.js
   - assets/js/workbook.js

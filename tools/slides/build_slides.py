@@ -20,7 +20,7 @@ ONLINE = "https://khgeo.github.io/cartography/"
 PAGE_EXT = ".html"
 C1, C2, C3, BG = "#283593", "#ffa000", "#1a237e", "#f5f6fc"
 CSS_FILES = ["assets/css/lesson-sims.css", "assets/css/rich-lessons.css"]
-JS_FILES = ["assets/js/offline-data.js", "assets/js/rich-lessons.js", "assets/js/carto-sims.js", "assets/js/chart-sims.js", "assets/js/tacmap-sim.js", "assets/js/slide-widgets.js", "assets/js/lesson-sims.js"]
+JS_FILES = ["assets/js/offline-data.js", "assets/js/rich-lessons.js", "assets/js/carto-sims.js", "assets/js/chart-sims.js", "assets/js/tacmap-sim.js", "assets/js/special-sims.js", "assets/js/slide-widgets.js", "assets/js/lesson-sims.js"]
 VISUALS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "visuals.json")
 # -----------------------------------------------------------------------------
 

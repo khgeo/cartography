@@ -49,6 +49,7 @@ extra_javascript:
   - assets/js/slide-widgets.js
   - assets/js/lesson-sims.js
   - assets/js/workbook.js
+  - assets/js/offline-pwa.js
 
 markdown_extensions:
   - admonition
@@ -144,3 +145,4 @@ nav:
 
 hooks:
   - tools/offline_hook.py
+  - tools/offline/offline_hook.py

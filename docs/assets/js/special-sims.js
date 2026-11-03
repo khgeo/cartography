@@ -205,7 +205,7 @@
       </div>
       <div class="sim-controls">
         <label>តម្រៀប <select class="at-sort"><option value="name">ឈ្មោះខេត្ត</option><option value="pop">ប្រជាជន (ច្រើន → តិច)</option><option value="dens">ដង់ស៊ីតេ</option></select></label>
-        <label><input type="checkbox" class="at-fade" checked> ធ្វើឲ្យខេត្តផ្សេងស្លេក</label><label><input type="checkbox" class="at-ins" checked> ផែនទីទីតាំង (overview)</label>
+        <label><input type="checkbox" class="at-fade" checked> ធ្វើឱ្យខេត្តផ្សេងស្លេក</label><label><input type="checkbox" class="at-ins" checked> ផែនទីទីតាំង (overview)</label>
       </div>
       <div class="sim-body"><div class="sim-canvas-wrap at-page"></div></div><div class="sim-out"></div>`;
     const q = (x) => el.querySelector(x);
@@ -254,9 +254,9 @@
         <text x="${PW - MX}" y="${PH - 4}" font-size="3" text-anchor="end" fill="#777">ប្រភព៖ Kh_Province_Boundary (POP2017) · EPSG:32648 · ទំព័រ ${kh(i + 1)}</text></svg>`;
       q(".at-page").innerHTML = svg; q(".at-pg").textContent = ` ${kh(i + 1)} / ${kh(order.length)} `;
       const note = { margin: "មាត្រដ្ឋានប្ដូររាល់ទំព័រ៖ ខេត្តតូចពង្រីកខ្លាំង ខេត្តធំបង្រួម។ អ្នកអានមិនអាចប្រៀបធៀបទំហំខេត្តពីទំព័រមួយទៅទំព័រមួយបានទេ ដូច្នេះរបារមាត្រដ្ឋាននៅគ្រប់ទំព័រចាំបាច់។",
-        pre: "QGIS ជ្រើសមាត្រដ្ឋានមូលពីបញ្ជី ដែលតូចជាងគេ តែនៅតែឲ្យខេត្តចូលពេញ។ មាត្រដ្ឋានមូលងាយអាន ហើយខេត្តដែលមានទំហំប្រហាក់ប្រហែល ប្រើមាត្រដ្ឋានដូចគ្នា។",
+        pre: "QGIS ជ្រើសមាត្រដ្ឋានមូលពីបញ្ជី ដែលតូចជាងគេ តែនៅតែឱ្យខេត្តចូលពេញ។ មាត្រដ្ឋានមូលងាយអាន ហើយខេត្តដែលមានទំហំប្រហាក់ប្រហែល ប្រើមាត្រដ្ឋានដូចគ្នា។",
         fixed: "មាត្រដ្ឋានដូចគ្នាគ្រប់ទំព័រ៖ ប្រៀបធៀបទំហំបានត្រឹមត្រូវ ប៉ុន្តែខេត្តតូចដូចជាភ្នំពេញ ឬកែប ស្ទើរមើលមិនឃើញ ហើយខេត្តធំអាចលើសប្រអប់ផែនទី។" }[mode];
-      q(".sim-out").innerHTML = `<b>មាត្រដ្ឋានទំព័រនេះ ១:${fmtN(Math.round(sc / 1000) * 1000)}</b> — ${note}<br><span class="sim-hint">ចំណងជើងក្នុង QGIS៖ <code>concat('ខេត្ត', attribute(@atlas_feature, 'Name_KH'))</code> · លេខទំព័រ៖ <code>concat(@atlas_featurenumber, '/', @atlas_totalfeatures)</code> · ធ្វើឲ្យខេត្តផ្សេងស្លេក៖ rule <code>$id = @atlas_featureid</code></span>`;
+      q(".sim-out").innerHTML = `<b>មាត្រដ្ឋានទំព័រនេះ ១:${fmtN(Math.round(sc / 1000) * 1000)}</b> — ${note}<br><span class="sim-hint">ចំណងជើងក្នុង QGIS៖ <code>concat('ខេត្ត', attribute(@atlas_feature, 'Name_KH'))</code> · លេខទំព័រ៖ <code>concat(@atlas_featurenumber, '/', @atlas_totalfeatures)</code> · ធ្វើឱ្យខេត្តផ្សេងស្លេក៖ rule <code>$id = @atlas_featureid</code></span>`;
     };
     const go = (d) => { i = (i + d + order.length) % order.length; draw(); };
     q(".at-prev").onclick = () => go(-1); q(".at-next").onclick = () => go(1);

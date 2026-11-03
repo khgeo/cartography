@@ -220,7 +220,7 @@
       <div class="sim-controls tm-row">
         <button type="button" class="sim-btn tm-demo">📂 បើកឧទាហរណ៍</button><button type="button" class="sim-btn tm-clear">🗑 លុបទាំងអស់</button>
         <button type="button" class="sim-btn tm-gj">⬇ GeoJSON (QGIS)</button><button type="button" class="sim-btn tm-png">⬇ PNG</button>
-        <label><input type="checkbox" class="tm-hill" checked> ស្រមោលភ្នំ</label><label><input type="checkbox" class="tm-cont" checked> ខ្សែវណ្ឌ</label><label><input type="checkbox" class="tm-grid" checked> ក្រឡា UTM ១ គម</label>
+        <label><input type="checkbox" class="tm-hill" checked> ស្រមោលភ្នំ</label><label><input type="checkbox" class="tm-cont" checked> ខ្សែរយៈកម្ពស់</label><label><input type="checkbox" class="tm-grid" checked> ក្រឡា UTM ១ គម</label>
       </div>
       <div class="sim-out tm-status"></div>
       <div class="tm-leg"></div>`;

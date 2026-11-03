@@ -14,10 +14,10 @@
 | ស្រទាប់ | ថត | ប្រើសម្រាប់ |
 |---|---|---|
 | `Kh_Province_Boundary` | `Admin/` | ផែនទីរដ្ឋបាល · Choropleth (`POP2017` `Density` `Area_Km2`) |
-| `Kh_Commune_area` · `Kh_District_area` | `Admin/` | ផែនទីមាត្រដ្ឋានធំ · ការធ្វើឲ្យទូទៅ |
+| `Kh_Commune_area` · `Kh_District_area` | `Admin/` | ផែនទីមាត្រដ្ឋានធំ · ការធ្វើឱ្យទូទៅ |
 | `Int_Outside_Cambodia_DIVA` · `Int_Sea` | `Admin/` · `Water/` | ផែនទីទីតាំង និងបរិបទ |
 | `Census_2008/*` | `Census_2008/` | ផែនទីប្រធានបទ · និមិត្តសញ្ញាសមាមាត្រ · ចំណុចដង់ស៊ីតេ |
-| `Kh_Lake_n_Mekong` · `Kh_Stream` | `Water/` | ផែនទីយោង · ការធ្វើឲ្យទូទៅបន្ទាត់ |
+| `Kh_Lake_n_Mekong` · `Kh_Stream` | `Water/` | ផែនទីយោង · ការធ្វើឱ្យទូទៅបន្ទាត់ |
 | `Kh_Main_Roads_MPWT2014` | `Infrastructure/` | និមិត្តសញ្ញាបន្ទាត់តាមថ្នាក់ |
 | `Kh_School` · `Kh_Health_Center` | `School/` · `Health/` | និមិត្តសញ្ញាចំណុច · ស្លាក |
 

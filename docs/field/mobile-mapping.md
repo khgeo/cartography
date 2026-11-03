@@ -14,7 +14,7 @@
 1. Find your current location និងបញ្ជាក់ថាអ្នកស្ថិតក្នុង extent ផែនទី។
 2. ពិនិត្យ coordinate display និង datum។
 3. Mark location ជាមួយ ID និង attribute មុនចាកចេញពីចំណុច។
-4. Start tracking ពេលចាប់ផ្ដើមផ្លូវ ហើយ stop នៅចុងផ្លូវ; កុំទុកឲ្យ track រត់នៅពេលជិះទៅផ្ទះ។
+4. Start tracking ពេលចាប់ផ្ដើមផ្លូវ ហើយ stop នៅចុងផ្លូវ; កុំទុកឱ្យ track រត់នៅពេលជិះទៅផ្ទះ។
 5. Measure distance ហើយប្រៀបធៀបជាមួយប្រវែង track; ខុសគ្នា ព្រោះមួយជាបន្ទាត់គូស មួយជាផ្លូវបានធ្វើ។
 6. Export ទៅ GPX/KML/CSV និងរក្សាច្បាប់ចម្លងដើម។
 

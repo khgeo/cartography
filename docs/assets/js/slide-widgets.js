@@ -63,7 +63,7 @@
       const msg = { plate: "Plate Carrée៖ ក្រឡាការ៉េ · ផ្ទៃ និងរាងខូចឆ្ពោះទៅប៉ូល", merc: "Mercator៖ រង្វង់នៅតែជារង្វង់ (រក្សារាង) ប៉ុន្តែធំឡើងខ្លាំងនៅរយៈទទឹងខ្ពស់",
         robin: "Robinson៖ សម្របសម្រួល · មិនរក្សារាង ឬផ្ទៃត្រឹមត្រូវទាំងស្រុង ប៉ុន្តែមើលទៅធម្មជាតិ", moll: "Mollweide៖ រង្វង់ទាំងអស់ផ្ទៃស្មើគ្នា (រក្សាផ្ទៃ) ប៉ុន្តែរាងខូចនៅគែម",
         sin: "Sinusoidal៖ រក្សាផ្ទៃ · ខូចរាងខ្លាំងនៅជ្រុង", ortho: "Orthographic៖ មើលផែនដីពីអវកាស · ឃើញតែពាក់កណ្ដាល" }[kind];
-      out.innerHTML = msg + `<br><span class="sim-hint">ចំណុចលឿង = កម្ពុជា · ប្ដូរខ្សែបណ្ដោយកណ្ដាល ដើម្បីឲ្យកម្ពុជានៅកណ្ដាល</span>`;
+      out.innerHTML = msg + `<br><span class="sim-hint">ចំណុចលឿង = កម្ពុជា · ប្ដូរខ្សែបណ្ដោយកណ្ដាល ដើម្បីឱ្យកម្ពុជានៅកណ្ដាល</span>`;
     };
     el.querySelectorAll(".pe-k button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".pe-k button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
     el.querySelectorAll("input").forEach((i) => i.addEventListener("input", draw)); draw();

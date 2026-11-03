@@ -145,7 +145,7 @@
     };
     const { cv, ctx, out, q } = shellC(el, "ចំណោលផែនទី និងរង្វង់ Tissot",
       `<span class="sim-seg">${Object.entries(P).map(([k, v], i) => `<button type="button" data-p="${k}" class="${i ? "" : "on"}">${v[0].split(" (")[0]}</button>`).join("")}</span>
-       <span class="sim-hint">រង្វង់ទាំងអស់មានទំហំស្មើគ្នាលើផែនដី។ មើលថាវាប្ដូររាង និងទំហំយ៉ាងណាលើផែនទី។ ទំហំបង្ហាញត្រូវបានពង្រីកឲ្យងាយមើល។</span>`);
+       <span class="sim-hint">រង្វង់ទាំងអស់មានទំហំស្មើគ្នាលើផែនដី។ មើលថាវាប្ដូររាង និងទំហំយ៉ាងណាលើផែនទី។ ទំហំបង្ហាញត្រូវបានពង្រីកឱ្យងាយមើល។</span>`);
     let key = "plate"; const W = 640, H = 400;
     const draw = () => {
       fitC(cv, ctx, W, H); const f = P[key][1];
@@ -268,8 +268,8 @@
 
   window.EXTRA_SIMS["contour"] = async (el) => {
     const T = await loadTerrain();
-    const { cv, ctx, out, q } = shellC(el, "ខ្សែវណ្ឌ ជម្រាល និងផ្នែកកាត់បញ្ឈរ",
-      `<label>ចន្លោះខ្សែវណ្ឌ <select class="ct-i"><option>10</option><option selected>20</option><option>50</option><option>100</option></select> ម</label>
+    const { cv, ctx, out, q } = shellC(el, "ខ្សែរយៈកម្ពស់ ជម្រាល និងផ្នែកកាត់បញ្ឈរ",
+      `<label>ចន្លោះខ្សែរយៈកម្ពស់ <select class="ct-i"><option>10</option><option selected>20</option><option>50</option><option>100</option></select> ម</label>
        <label><input type="checkbox" class="ct-sh" checked> ពណ៌តាមកម្ពស់</label>
        <label><input type="checkbox" class="ct-v" checked> ភូមិ</label>
        <span class="sim-hint">ដាក់កណ្ដុរលើផែនទី ដើម្បីអានកម្ពស់ និងកូអរដោនេ · អូសចំណុច A និង B ដើម្បីប្ដូរខ្សែកាត់</span>`);
@@ -327,7 +327,7 @@
       const dz = Math.max(...zs) - Math.min(...zs), slope = len > 0 ? (Math.abs(zB - zA) / len) * 100 : 0;
       out.innerHTML = (hover ? `កម្ពស់ក្រោមកណ្ដុរ៖ <b>${fmtN(hover.z)} ម</b> · E ${fmtN(hover.E)} · N ${fmtN(hover.N)} · លេខយោងក្រឡា ៦ ខ្ទង់៖ <b>${hover.gr}</b><br>` : "") +
         `ខ្សែ A–B៖ ប្រវែង <b>${fmtN(len)} ម</b> · កម្ពស់ A ${fmtN(zA)} ម · B ${fmtN(zB)} ម · ជួរកម្ពស់ ${fmtN(dz)} ម · ជម្រាលមធ្យម A→B <b>${fmtN(slope, 1)}%</b>
-         <br><span class="sim-hint">ខ្សែវណ្ឌជិតគ្នា = ជម្រាលចោត · ខ្សែឆ្ងាយគ្នា = ជម្រាលរាប។ កម្ពស់ក្នុងគំរូនេះជាតម្លៃសំយោគសម្រាប់បង្រៀន។</span>`;
+         <br><span class="sim-hint">ខ្សែរយៈកម្ពស់ជិតគ្នា = ជម្រាលចោត · ខ្សែឆ្ងាយគ្នា = ជម្រាលរាប។ កម្ពស់ក្នុងគំរូនេះជាតម្លៃសំយោគសម្រាប់បង្រៀន។</span>`;
     };
     const endpointControls=document.createElement('div'); endpointControls.className='sim-controls';
     endpointControls.innerHTML=['A','B'].map(name=>[0,1].map(axis=>`<label>${name} ${axis?'N':'E'} (%) <input type="range" min="0" max="100" value="${Math.round((name==='A'?A:B)[axis]*100)}" data-endpoint="${name}" data-axis="${axis}"></label>`).join('')).join('');
@@ -371,7 +371,7 @@
       "orient-nominal": "ទិសដៅប្រើបានសម្រាប់ប្រភេទតិច ប៉ុន្តែពិបាកអានជាងរាង ឬពណ៌។",
       "orient-ordinal": "ទិសដៅមិនបង្ហាញលំដាប់ច្បាស់។", "orient-ratio": "ទិសដៅមិនបង្ហាញបរិមាណ។",
       "texture-nominal": "វាយនភាព (ខ្សែ ចំណុច) ប្រើបានពេលបោះពុម្ពសខ្មៅ។",
-      "texture-ordinal": "ដង់ស៊ីតេវាយនភាពអាចបង្ហាញលំដាប់បាន ប៉ុន្តែងាយធ្វើឲ្យភ្នែករំខាន។",
+      "texture-ordinal": "ដង់ស៊ីតេវាយនភាពអាចបង្ហាញលំដាប់បាន ប៉ុន្តែងាយធ្វើឱ្យភ្នែករំខាន។",
       "texture-ratio": "វាយនភាពមិនផ្ដល់ការអានបរិមាណច្បាស់ទេ។" };
     el.innerHTML = `<div class="sim-title">អថេរមើលឃើញ៖ តើអថេរណាសមនឹងទិន្នន័យណា?</div>
       <div class="sim-controls"><span class="sim-seg vv-v">${VARS.map(([k, n], i) => `<button type="button" data-k="${k}" class="${i ? "" : "on"}">${n}</button>`).join("")}</span>
@@ -529,7 +529,7 @@
   };
   window.EXTRA_SIMS["normalise"] = async (el) => {
     const D = await load();
-    const { cv, ctx, out, q } = shellC(el, "ចំនួនដុល ឬអត្រា? ការធ្វើឲ្យស្តង់ដារ",
+    const { cv, ctx, out, q } = shellC(el, "ចំនួនដុល ឬអត្រា? ការធ្វើឱ្យស្តង់ដារ",
       `<span class="sim-seg nm-v"><button type="button" data-v="pop" class="on">ចំនួនប្រជាជន (ដុល)</button><button type="button" data-v="dens">ដង់ស៊ីតេ (នាក់/គម²)</button><button type="button" data-v="area">ផ្ទៃខេត្ត (គម²)</button></span>
        <span class="sim-hint">ទិន្នន័យដដែល ខេត្តដដែល ប៉ុន្តែសារខុសគ្នា</span>`);
     const W = 640, H = 330;
@@ -732,7 +732,7 @@
       const shown = flows.filter((f) => f.v >= th).length;
       out.innerHTML = `បង្ហាញលំហូរ <b>${kh(shown)}</b> ក្នុងចំណោម ${kh(flows.length)} · ` +
         (mode === "sqrt" ? "ទទឹង ∝ √តម្លៃ៖ លំហូរតូចនៅតែមើលឃើញ ហើយលំហូរធំមិនលេបផែនទី។" : "ទទឹង ∝ តម្លៃ៖ លំហូរធំក្រាស់ពេក ហើយលំហូរតូចស្ទើរបាត់។") +
-        `<br><span class="sim-hint">ទិន្នន័យលំហូរនេះជាតម្លៃគំរូសម្រាប់បង្រៀន មិនមែនស្ថិតិចំណាកស្រុកពិតទេ។ ការត្រងលំហូរតូច ធ្វើឲ្យផែនទីអានបាន ប៉ុន្តែលាក់ព័ត៌មាន។</span>`;
+        `<br><span class="sim-hint">ទិន្នន័យលំហូរនេះជាតម្លៃគំរូសម្រាប់បង្រៀន មិនមែនស្ថិតិចំណាកស្រុកពិតទេ។ ការត្រងលំហូរតូច ធ្វើឱ្យផែនទីអានបាន ប៉ុន្តែលាក់ព័ត៌មាន។</span>`;
     };
     el.querySelectorAll(".fl-s button").forEach((b) => (b.onclick = () => { el.querySelectorAll(".fl-s button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); draw(); }));
     el.querySelectorAll("input").forEach((x) => x.addEventListener("input", draw));
@@ -813,7 +813,7 @@
       });
       out.innerHTML = `បង្ហាញស្លាក <b>${kh(drawn)}</b> · លាក់ដោយសារជាន់គ្នា <b>${kh(skipped)}</b>` +
         (avoid ? "" : ` · ស្លាកជាន់គ្នា <b class="sim-warn">${kh(overlaps)}</b>`) +
-        `<br><span class="sim-hint">QGIS ដោះស្រាយការជាន់គ្នាដោយស្វ័យប្រវត្តិ ដោយលាក់ស្លាកខ្លះ។ ការបង្កើនទំហំអក្សរ ធ្វើឲ្យស្លាកបាត់ច្រើន។ ស្រទាប់ស (halo) ជួយឲ្យអក្សរអានបានលើផ្ទៃពណ៌។</span>`;
+        `<br><span class="sim-hint">QGIS ដោះស្រាយការជាន់គ្នាដោយស្វ័យប្រវត្តិ ដោយលាក់ស្លាកខ្លះ។ ការបង្កើនទំហំអក្សរ ធ្វើឱ្យស្លាកបាត់ច្រើន។ ស្រទាប់ស (halo) ជួយឱ្យអក្សរអានបានលើផ្ទៃពណ៌។</span>`;
     };
     el.querySelectorAll("input").forEach((x) => x.addEventListener("input", draw)); draw();
     window.addEventListener("resize", () => el.isConnected && draw());
@@ -892,7 +892,7 @@
         ctx.fillStyle = "#212121"; ctx.font = `bold 17px ${font()}`; ctx.fillText("ដង់ស៊ីតេប្រជាជនតាមខេត្ត ២០១៧", ix, iy + 18);
         mapBox(ix, iy + 30, iw * 0.58, ih * 0.55);
         legendBox(ix, iy + ih - 96, iw * 0.34, 86);
-        notes = ["ធាតុប្រមូលផ្ដុំខាងឆ្វេងខាងលើ", "ចន្លោះទំនេរធំនៅខាងស្ដាំ និងខាងក្រោម", "ទំហំផែនទីមិនប្រើផ្ទៃក្រដាសឲ្យអស់"];
+        notes = ["ធាតុប្រមូលផ្ដុំខាងឆ្វេងខាងលើ", "ចន្លោះទំនេរធំនៅខាងស្ដាំ និងខាងក្រោម", "ទំហំផែនទីមិនប្រើផ្ទៃក្រដាសឱ្យអស់"];
       }
       out.innerHTML = notes.map((n) => `• ${n}`).join("<br>") +
         (p === "good" ? `<br><span class="sim-hint">សាកល្បងបើក «ក្រឡាតម្រឹម» ដើម្បីមើលការតម្រឹមធាតុ។</span>` : `<br><span class="sim-warn">សូមប្ដូរទៅ «ប្លង់ល្អ» ដើម្បីប្រៀបធៀប។</span>`);
@@ -906,7 +906,7 @@
   const loadGen = async () => gcache || (gcache = await window.cartoData("../../assets/data/generalise_levels.json"));
   window.EXTRA_SIMS["generalise"] = async (el) => {
     const G = await loadGen();
-    const { cv, ctx, out, q } = shellC(el, "ការធ្វើឲ្យទូទៅ៖ មាត្រដ្ឋានកំណត់អ្វីដែលបង្ហាញ",
+    const { cv, ctx, out, q } = shellC(el, "ការធ្វើឱ្យទូទៅ៖ មាត្រដ្ឋានកំណត់អ្វីដែលបង្ហាញ",
       `<label>មាត្រដ្ឋាន ១ : <select class="gn-s"><option value="50000">៥០ ០០០</option><option value="250000">២៥០ ០០០</option><option value="1000000" selected>១ ០០០ ០០០</option><option value="5000000">៥ ០០០ ០០០</option></select></label>
        <label><input type="checkbox" class="gn-o" checked> បង្ហាញខ្សែលម្អិត ១ : ៥០ ០០០ (ស្រាល)</label>`);
     const W = 640, H = 340;
@@ -927,7 +927,7 @@
       ctx.font = `12px ${font()}`; ctx.fillStyle = "#333"; ctx.fillText("អ្វីដែលបង្ហាញនៅមាត្រដ្ឋាននេះ៖", 350, 40);
       show[+S].forEach((t, i) => { ctx.fillStyle = "#2e7d32"; ctx.fillText("✓", 352, 66 + i * 21); ctx.fillStyle = "#333"; ctx.fillText(t, 372, 66 + i * 21); });
       out.innerHTML = `ចំណុចកំពូល៖ <b>${fmtN(base.n)}</b> → <b>${fmtN(lev.n)}</b> (${fmtN((100 * lev.n) / base.n, 0)}%) · មាត្រដ្ឋាន ១ : ${fmtN(+S)}<br>` +
-        `<span class="sim-hint">ខ្សែត្រូវបានធ្វើឲ្យសាមញ្ញដោយរក្សា <b>ឋានលេខា</b>៖ ព្រំរួមរវាងខេត្តពីរនៅតែជាប់គ្នា គ្មានចន្លោះ ឬការត្រួតគ្នា។ មាត្រដ្ឋានតូចក៏ត្រូវការការជ្រើសរើសស្រទាប់ និងស្លាកផងដែរ។</span>`;
+        `<span class="sim-hint">ខ្សែត្រូវបានធ្វើឱ្យសាមញ្ញដោយរក្សា <b>ឋានលេខា</b>៖ ព្រំរួមរវាងខេត្តពីរនៅតែជាប់គ្នា គ្មានចន្លោះ ឬការត្រួតគ្នា។ មាត្រដ្ឋានតូចក៏ត្រូវការការជ្រើសរើសស្រទាប់ និងស្លាកផងដែរ។</span>`;
     };
     el.querySelectorAll("select,input").forEach((x) => x.addEventListener("change", draw)); draw();
     window.addEventListener("resize", () => el.isConnected && draw());
@@ -1017,7 +1017,7 @@
       PAL.forEach((c, i) => { ctx.fillStyle = c; ctx.fillRect(hx, 228 + i * 19, 16, 12); ctx.strokeStyle = "#999"; ctx.strokeRect(hx, 228 + i * 19, 16, 12); ctx.fillStyle = "#333"; ctx.fillText(LAB[i], hx + 22, 238 + i * 19); });
       const note = { cont: "បន្តជាប់៖ ខេត្តនៅជាប់គ្នា ប៉ុន្តែរាងខូច។ ភ្នំពេញ កណ្ដាល និងតាកែវ រីកធំ ខេត្តភាគឦសានរួមតូច។",
         olson: "Olson៖ ខេត្តនីមួយៗរួមតូចនៅកន្លែងដើម ដោយរក្សារាង។ ភ្នំពេញ (ដង់ស៊ីតេខ្ពស់បំផុត) នៅដដែល ហើយចន្លោះទទេបង្ហាញ «ដីដែលមានមនុស្សតិច»។",
-        dorling: "Dorling៖ ខេត្តក្លាយជារង្វង់ដែលផ្ទៃតាមប្រជាជន ហើយត្រូវរុញកុំឲ្យត្រួតគ្នា។ ងាយប្រៀបធៀបទំហំ ប៉ុន្តែបាត់រាងខេត្ត។" }[m];
+        dorling: "Dorling៖ ខេត្តក្លាយជារង្វង់ដែលផ្ទៃតាមប្រជាជន ហើយត្រូវរុញកុំឱ្យត្រួតគ្នា។ ងាយប្រៀបធៀបទំហំ ប៉ុន្តែបាត់រាងខេត្ត។" }[m];
       out.innerHTML = `${t === 0 ? "ផែនទីដើម៖ ផ្ទៃតាមក្រឡាផ្ទៃដី។ រំកិលរបារ «ការប្រែរាង» ដើម្បីមើលការប្ដូរ។" : note}<br><span class="sim-hint">ទិន្នន័យ៖ ប្រជាជន ២០១៧ ពី Kh_Province_Boundary · បន្តជាប់ គណនាដោយវិធី Dougenik (១៩៨៥) ក្នុងកម្មវិធីរុករក</span>`;
     };
     let anim = null;

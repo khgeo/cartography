@@ -94,7 +94,7 @@
 **៣.** ទំហំអក្សរខ្មែរអប្បបរមាសម្រាប់បោះពុម្ព (pt)?
 </div>
 
-<div class="self-check" data-answer="ស្ដាំលើ|top right|ស្តាំលើ|ស្ដាំ លើ" markdown>
+<div class="self-check" data-answer="ស្ដាំលើ|top right|ស្ដាំលើ|ស្ដាំ លើ" markdown>
 **៤.** លំដាប់អាទិភាពទី១ សម្រាប់ស្លាកចំណុច?
 </div>
 

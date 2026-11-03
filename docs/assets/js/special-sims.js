@@ -51,7 +51,7 @@
         const use = B.use === "rice" && rnd() < 0.15 ? "orchard" : B.use === "orchard" && rnd() < 0.35 ? "rice" : B.use;
         P0.push({ id: pid++, ring, use }); } });
     const ORIG = nodes.map((n) => n.slice());
-    const USE = { home: ["ដីលំនៅឋាន", "#ffe0b2"], rice: ["ដីស្រែ", "#fff9c4"], orchard: ["ដីចម្ការ", "#dcedc8"] };
+    const USE = { home: ["ដីលំនៅដ្ឋាន", "#ffe0b2"], rice: ["ដីស្រែ", "#fff9c4"], orchard: ["ដីចម្ការ", "#dcedc8"] };
     const W = 680, H = 460; let scale = 2000, sel = null, view = { cx: XMAX / 2, cy: 150 }, drag = null;
     const pxPerM = () => 3.78 * 1000 / scale;                 // 96 dpi screen: 1 mm ≈ 3.78 px
     const toS = ([x, y]) => [W / 2 + (x - view.cx) * pxPerM(), H / 2 - (y - view.cy) * pxPerM()];

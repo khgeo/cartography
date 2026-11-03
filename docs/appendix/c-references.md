@@ -45,4 +45,4 @@ New diagrams and synthetic data use the course CC BY-SA 4.0 license. Original da
 - *Chap 6 What is GPS*; *Chap 6a Using AVENZA Maps*; *Chap 6b Practice GPS*; *Chap 6c How to GPS*.
 - *Chap 7 Google Earth*; *Chap 8 Google Map*; *Chap 9 Total Station KH*.
 
-សម្រាប់ workflow របស់កម្មវិធី ត្រូវពិនិត្យឈ្មោះ menu ក្នុងកំណែដែលកំពុងប្រើ ព្រោះចំណុចប្រទាក់អាចផ្លាស់ប្តូរ។
+សម្រាប់ workflow របស់កម្មវិធី ត្រូវពិនិត្យឈ្មោះ menu ក្នុងកំណែដែលកំពុងប្រើ ព្រោះចំណុចប្រទាក់អាចផ្លាស់ប្ដូរ។

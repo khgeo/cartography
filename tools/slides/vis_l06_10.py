@@ -186,7 +186,7 @@ def L07():
 
 def L08():
     # HSV dimensions
-    f = Fig(1000, 460).title("វិមាត្របីនៃពណ៌", "Hue · Value (ពន្លឺ) · Saturation (ភាពឆ្អិន)")
+    f = Fig(1000, 460).title("បីវិមាត្រនៃពណ៌", "Hue · Value (ពន្លឺ) · Saturation (ភាពឆ្អិន)")
     for i in range(12): f.circle(80 + i * 72, 150, 28, f"hsl({i*30},75%,50%)")
     f.text(40, 110, "Hue", 18, IND, weight="bold")
     for i in range(9): f.rect(40 + i * 100, 250, 90, 60, f"hsl(225,60%,{92-i*9}%)")

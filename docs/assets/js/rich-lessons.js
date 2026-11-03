@@ -59,7 +59,7 @@
     function draw(){const p=$(el,'.palette').value,gray=$(el,'.gray').checked,ink=$(el,'.ink').value,li=luminance(ink),ratios=[];
       let b='';palettes[p].forEach((c,i)=>{const l=luminance(c),g=Math.round(255*(l<=.0031308?l*12.92:1.055*l**(1/2.4)-.055));ratios.push((Math.max(li,l)+.05)/(Math.min(li,l)+.05));b+=box(20+i*124,60,120,145,gray?`rgb(${g},${g},${g})`:c)+`<text x="${45+i*124}" y="140" fill="${ink}" style="fill:${ink}" font-size="24">${i+1}</text>`+text(25+i*124,240,gray?'gray':c,14)+text(25+i*124,273,f(ratios[i],2)+':1',16);});
       stage.innerHTML=svg(b,'Palette swatches, grayscale and text contrast',310);
-      out.textContent=`Contrast អក្សរ/ផ្ទៃ៖ អប្បបរមា ${f(Math.min(...ratios),2)}:1។ ${p==='sequential'?'ពន្លឺត្រូវមានលំដាប់។':p==='diverging'?'កំណត់អត្ថន័យចំណុចកណ្តាលមុនប្រើ។':'ប្រើសម្រាប់ប្រភេទគ្មានលំដាប់។'} Contrast នេះវាស់តែអក្សរលើផ្ទៃ; មិនវាស់ភាពខុសគ្នារវាងថ្នាក់ទេ។`;
+      out.textContent=`Contrast អក្សរ/ផ្ទៃ៖ អប្បបរមា ${f(Math.min(...ratios),2)}:1។ ${p==='sequential'?'ពន្លឺត្រូវមានលំដាប់។':p==='diverging'?'កំណត់អត្ថន័យចំណុចកណ្ដាលមុនប្រើ។':'ប្រើសម្រាប់ប្រភេទគ្មានលំដាប់។'} Contrast នេះវាស់តែអក្សរលើផ្ទៃ; មិនវាស់ភាពខុសគ្នារវាងថ្នាក់ទេ។`;
     }wire(el,draw,()=>{$(el,'.palette').value='sequential';$(el,'.gray').checked=false;$(el,'.ink').value='#172554';});
   };
   const values=[[20,40,65,10,80,0],[30,45,70,25,80,10],[40,60,75,null,85,15]];
@@ -118,13 +118,13 @@
     function draw(){const yr=+$(el,'.layer').value,vals=values[yr];stage.innerHTML=svg(gridMap(vals,true,+$(el,'.zoom').value,+$(el,'.pan').value),'Selectable synthetic commune map')+`<div class="rich-table-wrap"><table><caption>តារាងជំនួសផែនទី · Synthetic coverage (%)</caption><thead><tr><th>ឃុំ</th><th>2020</th><th>2025</th><th>ព័ត៌មាន</th></tr></thead><tbody>${areas.map((a,i)=>`<tr><td>${a}</td><td>${values[0][i]}</td><td>${values[2][i]===null?'Missing':values[2][i]}</td><td><button type="button" data-area="${i}">មើល ${a}</button></td></tr>`).join('')}</tbody></table></div>`;
       const choose=i=>{out.textContent=`${areas[i]} · ឆ្នាំ ${yr===0?2020:2025} · ${vals[i]===null?'ទិន្នន័យខ្វះ (មិនមែន 0%)':vals[i]+'% គ្រួសារមានសេវាទឹក'}។ ទិន្នន័យ និងព្រំឃុំសំយោគ; មិនមែនស្ថិតិពិតនៃកម្ពុជា។`;};
       $$(stage,'[data-area]').forEach(x=>{x.onclick=()=>choose(+x.dataset.area);x.onkeydown=e=>{if(x.tagName.toLowerCase()==='g'&&['Enter',' '].includes(e.key)){e.preventDefault();choose(+x.dataset.area);}};});
-      out.textContent='ជ្រើសឃុំលើផែនទី ឬប្រើតារាង។ Tab → Enter ដើម្បីអានព័ត៌មាន។ ព្រំថ្នាក់ និងឯកតាត្រូវបានរក្សាទុកពេលប្តូរឆ្នាំ។';
+      out.textContent='ជ្រើសឃុំលើផែនទី ឬប្រើតារាង។ Tab → Enter ដើម្បីអានព័ត៌មាន។ ព្រំថ្នាក់ និងឯកតាត្រូវបានរក្សាទុកពេលប្ដូរឆ្នាំ។';
     }wire(el,draw,()=>{$(el,'.layer').value=2;$(el,'.zoom').value=1;$(el,'.pan').value=0;});
   };
   function enhance(){
     $$(document,'.rich-quiz').forEach(quiz=>{if(quiz.dataset.ready)return;quiz.dataset.ready='1';const score=document.createElement('p');score.className='quiz-score';score.setAttribute('role','status');quiz.append(score);
       const fields=$$(quiz,'fieldset');const update=()=>score.textContent=`ចម្លើយត្រឹមត្រូវ / Correct: ${fields.filter(x=>$(x,'input:checked')?.value===x.dataset.answer).length} / ${fields.length}`;
-      fields.forEach(field=>$$(field,'input').forEach(input=>input.addEventListener('change',()=>{const ok=input.value===field.dataset.answer,feedback=$(field,'.quiz-feedback');feedback.hidden=false;feedback.textContent=(ok?'✓ ត្រឹមត្រូវ។ ':'↺ សាកល្បងម្តងទៀត។ ')+$(field,'details p').textContent;field.classList.toggle('answered-correctly',ok);update();})));update();
+      fields.forEach(field=>$$(field,'input').forEach(input=>input.addEventListener('change',()=>{const ok=input.value===field.dataset.answer,feedback=$(field,'.quiz-feedback');feedback.hidden=false;feedback.textContent=(ok?'✓ ត្រឹមត្រូវ។ ':'↺ សាកល្បងម្ដងទៀត។ ')+$(field,'details p').textContent;field.classList.toggle('answered-correctly',ok);update();})));update();
       const reset=document.createElement('button');reset.type='button';reset.className='sim-btn';reset.textContent='សាកល្បងឡើងវិញ / Retry';reset.onclick=()=>{fields.forEach(x=>{$$(x,'input').forEach(i=>i.checked=false);$(x,'.quiz-feedback').hidden=true;x.classList.remove('answered-correctly');});update();};quiz.append(reset);
     });
     $$(document,'.rich-comparison').forEach(pair=>{if(pair.dataset.ready)return;pair.dataset.ready='1';const b=document.createElement('button');b.type='button';b.className='sim-btn compare-toggle';b.textContent='លាក់ការពន្យល់ ដើម្បីសាកល្បង / Hide explanations';b.setAttribute('aria-expanded','true');b.onclick=()=>{const hide=b.getAttribute('aria-expanded')==='true';$$(pair,'figcaption').forEach(x=>x.hidden=hide);b.setAttribute('aria-expanded',String(!hide));b.textContent=hide?'បង្ហាញការពន្យល់ / Show explanations':'លាក់ការពន្យល់ / Hide explanations';};pair.before(b);});

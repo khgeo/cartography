@@ -20,7 +20,7 @@ Total Station វាស់មុំផ្ដេក មុំឈរ និងច�
 
 ## ២. Setup checklist
 
-1. បោះ tripod ឱ្យមាំ និងកម្ពស់ងាយមើល។
+1. បោះ tripod ឲ្យមាំ និងកម្ពស់ងាយមើល។
 2. Center លើ occupied point ហើយ level; ធ្វើ center/level ម្ដងទៀត ព្រោះការកែមួយអាចប៉ះមួយទៀត។
 3. បញ្ចូល occupied coordinate, HI, prism type/constant និង HR។
 4. Sight backsight និងកំណត់ orientation ពី coordinate ឬ azimuth ដែលបានពិនិត្យ។
@@ -39,14 +39,14 @@ Prism សមសម្រាប់ចម្ងាយវែង និងគោល�
 - វាស់ check point ពេលបញ្ចប់; គណនា closure មុនរើឧបករណ៍។
 - បញ្ចូល code តាមបញ្ជីស្តង់ដារ (`BLDG`, `ROAD_EDGE`, `BM`)។
 - កុំកែ raw file; កត់ចំណុចដែលសង្ស័យជាមួយមូលហេតុ។
-- បែងចែក local coordinate និង national/project CRS ឱ្យច្បាស់។
+- បែងចែក local coordinate និង national/project CRS ឲ្យច្បាស់។
 
 ## ៥. ពីឧបករណ៍ទៅ QGIS
 
 Export CSV ដែលមាន `point_id, easting, northing, elevation, code, description`។ ពិនិត្យ delimiter និងខ្ទង់ទសភាគ។ ក្នុង QGIS ប្រើ **Add Delimited Text Layer**, ជ្រើស X=Easting, Y=Northing, CRS ត្រឹមត្រូវ រួច Save As GeoPackage។ Symbolize តាម code និងរក outlier/duplicate ID។ បើ coordinate ជាប្រព័ន្ធ local សូមកុំប្រកាសថាជា WGS84/UTM ដោយគ្មាន transformation។
 
 !!! example "Worked check"
-    Occupied point O និង backsight B មាន azimuth ដែលបានគណនា 40°00′00″។ ក្រោយវាស់ detail 20 ចំណុច អ្នកមើល B ម្ដងទៀតបាន 40°00′25″។ ការបែរទិស 25″ គឺសញ្ញាឱ្យពិនិត្យ stability និង tolerance របស់គម្រោង មុនទទួល detail ទាំងអស់។
+    Occupied point O និង backsight B មាន azimuth ដែលបានគណនា 40°00′00″។ ក្រោយវាស់ detail 20 ចំណុច អ្នកមើល B ម្ដងទៀតបាន 40°00′25″។ ការបែរទិស 25″ គឺសញ្ញាឲ្យពិនិត្យ stability និង tolerance របស់គម្រោង មុនទទួល detail ទាំងអស់។
 
 ## ៦. Mini challenge
 

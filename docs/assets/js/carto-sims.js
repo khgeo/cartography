@@ -101,7 +101,7 @@
       ["Indian 1954 / UTM 48N", "EPSG:23948", 492594, 1277185, "#2e7d32"],
       ["Indian 1960 / UTM 48N", "EPSG:3148", 492590, 1277180, "#e65100"],
       ["Indian 1975 / UTM 48N", "EPSG:24048", 492764, 1277137, "#c62828"]];
-    const { cv, ctx, out, q } = shellC(el, "ទីតាំងតែមួយ ដាតុមខុសគ្នា៖ វិមានឯករាជ្យ ភ្នំពេញ",
+    const { cv, ctx, out, q } = shellC(el, "ទីតាំងតែមួយ ដាទុមខុសគ្នា៖ វិមានឯករាជ្យ ភ្នំពេញ",
       `<label>អានកូអរដោនេក្នុង <select class="ds-c">${CRS.map((c, i) => `<option value="${i}">${c[0]}</option>`).join("")}</select></label>
        <label><input type="checkbox" class="ds-err"> បញ្ចូលលេខនេះក្នុងស្រទាប់ WGS 84 ដោយខុស</label>`);
     const W = 640, H = 380, S = 0.42, cx = 250, cy = 170; // px per metre
@@ -124,7 +124,7 @@
       ctx.fillStyle = "#212121"; ctx.fillRect(20, H - 30, 100 * S * 2, 5); ctx.fillText("២០០ ម", 20, H - 12);
       const d = Math.hypot(c[2] - CRS[0][2], c[3] - CRS[0][3]);
       out.innerHTML = `<b>${c[0]}</b> (${c[1]})៖ E = <b>${fmtN(c[2])}</b> ម · N = <b>${fmtN(c[3])}</b> ម<br>` +
-        (i === 0 ? "នេះជាប្រព័ន្ធដែលសៀវភៅ និងទិន្នន័យវគ្គសិក្សាប្រើ។ ជ្រើសដាតុមផ្សេង ដើម្បីមើលថាលេខប្ដូរ ទោះទីតាំងនៅដដែល។"
+        (i === 0 ? "នេះជាប្រព័ន្ធដែលសៀវភៅ និងទិន្នន័យវគ្គសិក្សាប្រើ។ ជ្រើសដាទុមផ្សេង ដើម្បីមើលថាលេខប្ដូរ ទោះទីតាំងនៅដដែល។"
           : `លេខខុសពី WGS 84 ប្រហែល <b>${fmtN(d)} ម</b>។ ` + (err ? `បើយកលេខនេះទៅដាក់ក្នុងស្រទាប់ WGS 84 ចំណុចនឹងធ្លាក់ខុសកន្លែង ${fmtN(d)} ម ដោយគ្មានសារព្រមាន។` : "ធីកប្រអប់ខាងលើ ដើម្បីមើលផលវិបាក។")) +
         `<br><span class="sim-hint">តម្លៃគណនាដោយ PROJ ជាមួយប៉ារ៉ាម៉ែត្របំប្លែង EPSG។ ប៉ារ៉ាម៉ែត្រផ្សេងអាចផ្ដល់លទ្ធផលខុសគ្នាច្រើនម៉ែត្រ។</span>`;
     };
@@ -145,7 +145,7 @@
     };
     const { cv, ctx, out, q } = shellC(el, "ចំណោលផែនទី និងរង្វង់ Tissot",
       `<span class="sim-seg">${Object.entries(P).map(([k, v], i) => `<button type="button" data-p="${k}" class="${i ? "" : "on"}">${v[0].split(" (")[0]}</button>`).join("")}</span>
-       <span class="sim-hint">រង្វង់ទាំងអស់មានទំហំស្មើគ្នាលើផែនដី។ មើលថាវាប្ដូររាង និងទំហំយ៉ាងណាលើផែនទី។ ទំហំបង្ហាញត្រូវបានពង្រីកឱ្យងាយមើល។</span>`);
+       <span class="sim-hint">រង្វង់ទាំងអស់មានទំហំស្មើគ្នាលើផែនដី។ មើលថាវាប្ដូររាង និងទំហំយ៉ាងណាលើផែនទី។ ទំហំបង្ហាញត្រូវបានពង្រីកឲ្យងាយមើល។</span>`);
     let key = "plate"; const W = 640, H = 400;
     const draw = () => {
       fitC(cv, ctx, W, H); const f = P[key][1];
@@ -217,7 +217,7 @@
       shape(lon, lat, false);
       const linear = Math.cos(srcLat * Math.PI / 180) / Math.cos(lat * Math.PI / 180), area = linear * linear;
       q(".ts-lat-v").textContent = labelLat(lat); q(".ts-lon-v").textContent = labelLon(lon);
-      out.innerHTML = `<b>${labelLat(lat)} · ${labelLon(lon)}</b>៖ ទំហំលើ Web Mercator ប្រហែល <b>${linear.toFixed(2)}×</b> តាមប្រវែង និង <b>${area.toFixed(2)}×</b> តាមផ្ទៃ ប្រៀបនឹងទីតាំងដើម។ ផ្ទៃពិតលើដីមិនផ្លាស់ប្តូរ។<br><span class="sim-hint">គំរូនេះរក្សាទំហំមូលដ្ឋានរបស់កម្ពុជា ហើយបង្ហាញ scale distortion តាមរយៈទទឹង។ វាជាគំរូបង្រៀន មិនមែនឧបករណ៍វាស់ផ្ទៃផ្លូវការ។</span>`;
+      out.innerHTML = `<b>${labelLat(lat)} · ${labelLon(lon)}</b>៖ ទំហំលើ Web Mercator ប្រហែល <b>${linear.toFixed(2)}×</b> តាមប្រវែង និង <b>${area.toFixed(2)}×</b> តាមផ្ទៃ ប្រៀបនឹងទីតាំងដើម។ ផ្ទៃពិតលើដីមិនផ្លាស់ប្ដូរ។<br><span class="sim-hint">គំរូនេះរក្សាទំហំមូលដ្ឋានរបស់កម្ពុជា ហើយបង្ហាញ scale distortion តាមរយៈទទឹង។ វាជាគំរូបង្រៀន មិនមែនឧបករណ៍វាស់ផ្ទៃផ្លូវការ។</span>`;
     };
     const sync = () => { lat = +q(".ts-lat").value; lon = +q(".ts-lon").value; draw(); };
     q(".ts-lat").addEventListener("input", sync); q(".ts-lon").addEventListener("input", sync); q(".ts-ghost").addEventListener("change", draw);

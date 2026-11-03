@@ -39,7 +39,7 @@
     sector_line: ["l", "ខ្សែវិស័យ", "Sector line"], boundary_dash: ["l", "ខ្សែព្រំ (ដាច់ៗ)", "Dashed boundary", 0, 1],
     boundary_dashdot: ["l", "ខ្សែព្រំអង្គភាព (ដាច់-ចុច)", "Unit boundary (dash-dot)", 0, 1],
     dimension: ["d", "ព្រួញវាស់ចម្ងាយ", "Dimension arrow", 0, 1],
-    def_area: ["a", "តំបន់ការពារ (លេណដ្ឋាន)", "Defended area (trench outline)"], assembly: ["a", "តំបន់ប្រមូលផ្តុំ", "Assembly area"],
+    def_area: ["a", "តំបន់ការពារ (លេណដ្ឋាន)", "Defended area (trench outline)"], assembly: ["a", "តំបន់ប្រមូលផ្ដុំ", "Assembly area"],
     zone: ["a", "តំបន់ (ព្រំដាច់ៗ)", "Zone (dashed)"], logistics_area: ["a", "តំបន់ភស្តុភារ", "Logistics area"],
     obstacle_area: ["a", "តំបន់ឧបសគ្គ", "Obstacle area (hatched)"], minefield_area: ["a", "វាលមីន", "Minefield"],
     objective: ["a", "គោលដៅ", "Objective"], impassable: ["a", "តំបន់ឆ្លងកាត់មិនបាន", "Impassable terrain (cross-hatch)"],
